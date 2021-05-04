@@ -260,6 +260,16 @@ Hooks.once("init", async function() {
     return html;
   });
 
+
+  Handlebars.registerHelper('inline-editable-text', function(parameter_name, blank_value, current_value, uniq_id, context){
+    let html = '';
+    if(current_value.length === 0){
+      current_value = blank_value;
+    }
+    html += `<input data-input="character-${uniq_id}-${parameter_name}" name="${parameter_name}" type="hidden" value="${current_value}" placeholder="${blank_value}"><span ${context.owner ? 'contenteditable="true"' : null} spellcheck="false" data-target="character-${uniq_id}-${parameter_name}" data-placeholder="${blank_value}">${current_value}</span>`;
+    return html;
+  });
+
 });
 
 /**

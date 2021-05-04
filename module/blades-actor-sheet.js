@@ -12,16 +12,16 @@ export class BladesActorSheet extends BladesSheet {
 	  return mergeObject(super.defaultOptions, {
   	  classes: ["blades-in-the-dark", "sheet", "actor"],
   	  template: "systems/blades-in-the-dark/templates/actor-sheet.html",
-      width: 700,
-      height: 970,
-      tabs: [{navSelector: ".tabs", contentSelector: ".tab-content", initial: "abilities"}]
+      width: 800,
+      height: 1200,
+      tabs: [{navSelector: ".tabs", contentSelector: ".tab-content", initial: "class"}]
     });
   }
 
   /* -------------------------------------------- */
 
   /** @override */
-  getData() {
+  async getData() {
     var data = super.getData();
 
     // Calculate Load
@@ -86,6 +86,16 @@ export class BladesActorSheet extends BladesSheet {
       this.actor.deleteOwnedItem(element.data("itemId"));
       element.slideUp(200, () => this.render(false));
     });
+
+    html.find('.toggle-allow-edit span').click(async (event) => {
+      event.preventDefault();
+
+      if(this.actor.getFlag('blades-in-the-dark', 'allow-edit')){
+        await this.actor.unsetFlag('blades-in-the-dark', 'allow-edit');
+      } else {
+        await this.actor.setFlag('blades-in-the-dark', 'allow-edit', true);
+    }
+  });
   }
 
   /* -------------------------------------------- */

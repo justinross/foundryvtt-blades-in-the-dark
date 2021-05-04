@@ -1,5 +1,28 @@
 <form class="{{cssClass}} actor-sheet" autocomplete="off">
+  <div id="tidy-redesign" class="{{#if actor.flags.blades-in-the-dark.allow-edit}}allow-edit{{/if}}">
+    <div class="toggle-allow-edit"><span><i class="fas fa-lock"></i><i class="fas fa-lock-open"></i></span></div>
+    <section class="minimized-view">
+      <section class="character-photo">
+        <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+        <div class="status-icon coin"></div>
+        <div class="status-icon harm"></div>
+        <div class="status-icon stress"></div>
+        <div class="status-icon vice"></div>
+      </section>
+      <div class="name-alias bio">
+        <span class="name">{{{inline-editable-text "name" (localize "BITD.Name") actor.name actor._id this}}}</span> <span class="alias">&bull; "{{{inline-editable-text "data.alias" (localize "BITD.Alias") data.alias actor._id this}}}"</span>
+      </div>
+      <div class="heritage-background bio">
+        {{{inline-editable-text "data.heritage" "Heritage" data.heritage actor._id this}}} &bull; {{{inline-editable-text "data.background" "Background" data.background actor._id this}}} &bull; {{{inline-editable-text "data.background-details" "Background Details" data.background-details actor._id this}}}
+      </div>
+      <div class="look bio">{{{inline-editable-text "data.look" "Look" data.look actor._id this}}}</div>
+      <section class="attributes-actions">
+        {{> "systems/blades-in-the-dark/templates/parts/attributes.html" actor=actor}}
+      </section>
+    </section>
+  </div>
 
+  <!--
   <section id="name-alias" class="flex-horizontal">
 
     <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
@@ -334,8 +357,6 @@
       </div>
 
     </div>
-    {{!-- Attributes --}}
-    {{> "systems/blades-in-the-dark/templates/parts/attributes.html" actor=actor}}
   </section>
-
+-->
 </form>
