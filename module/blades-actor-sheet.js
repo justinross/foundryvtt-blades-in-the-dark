@@ -14,7 +14,7 @@ export class BladesActorSheet extends BladesSheet {
   	  template: "systems/blades-in-the-dark/templates/actor-sheet.html",
       width: 800,
       height: 1200,
-      tabs: [{navSelector: ".tabs", contentSelector: ".tab-content", initial: "class"}]
+      tabs: [{navSelector: ".tabs", contentSelector: ".tab-content", initial: "playbook"}]
     });
   }
 
@@ -61,7 +61,29 @@ export class BladesActorSheet extends BladesSheet {
     
     data.load_levels = ["BITD.Light", "BITD.Normal", "BITD.Heavy"];
 
+    //load up playbook options/data
+    data.playbook_options = await game.packs.get("blades-in-the-dark.class").getIndex();
+    data.playbook_select = this.prepIndexForHelper(data.playbook_options);
+    data.selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getEntry(data.data.playbook);
+    data.selected_playbook_name = data.selected_playbook_full.name;
+    data.selected_playbook_description = data.selected_playbook_full.data.description;
+
+    //find skills for the selected playbook
+    data.all_abilities = await game.packs.get("blades-in-the-dark.ability").getContent();
+    data.playbook_abilities = data.all_abilities.filter(item => item.data.data.class == data.selected_playbook_name);
+
+    //find items for the selected playbook
+    data.all_items = await game.packs.get("blades-in-the-dark.item").getContent();
+    data.playbook_items = data.all_items.filter(item => item.data.data.class == data.selected_playbook_name);
+    data.generic_items = data.all_items.filter(item => item.data.data.class == "");
+
     return data;
+  }
+
+  prepIndexForHelper(index){
+    let prepped = {};
+    index.forEach(item => prepped[item._id] = item.name);
+    return prepped;
   }
 
   /* -------------------------------------------- */
