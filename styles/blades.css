@@ -227,7 +227,7 @@
   grid-template-rows: 2fr 1fr 1fr 4fr;
   grid-template-areas: "portrait main-row" "portrait sub-row-1" "portrait sub-row-2" "portrait actions";
 }
-#tidy-redesign .minimized-view .character-photo {
+#tidy-redesign .minimized-view .character-portrait {
   grid-area: portrait;
   place-self: center;
   width: 200px;
@@ -237,8 +237,9 @@
   flex-shrink: 0;
   flex-grow: 0;
   border: 6px solid #999;
+  position: relative;
 }
-#tidy-redesign .minimized-view .character-photo img {
+#tidy-redesign .minimized-view .character-portrait > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -246,6 +247,43 @@
   border: 0;
   border-radius: 50%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3) inset;
+}
+#tidy-redesign .minimized-view .character-portrait .status-icons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  padding: 0;
+  border-radius: 50%;
+  list-style: none;
+}
+#tidy-redesign .minimized-view .character-portrait .status-icons > * {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1em;
+  height: 1em;
+  margin: -0.5em;
+}
+#tidy-redesign .minimized-view .character-portrait .status-icons > *:nth-of-type(1) {
+  transform: rotate(0deg) translate(100px) rotate(0deg);
+}
+#tidy-redesign .minimized-view .character-portrait .status-icons > *:nth-of-type(2) {
+  transform: rotate(72deg) translate(100px) rotate(-72deg);
+}
+#tidy-redesign .minimized-view .character-portrait .status-icons > *:nth-of-type(3) {
+  transform: rotate(144deg) translate(100px) rotate(-144deg);
+}
+#tidy-redesign .minimized-view .character-portrait .status-icons > *:nth-of-type(4) {
+  transform: rotate(216deg) translate(100px) rotate(-216deg);
+}
+#tidy-redesign .minimized-view .character-portrait .status-icons > *:nth-of-type(5) {
+  transform: rotate(288deg) translate(100px) rotate(-288deg);
 }
 #tidy-redesign .minimized-view .name-alias {
   font-family: Kirsty, serif;
@@ -353,7 +391,6 @@
   text-transform: capitalize;
   padding: 5px 15px;
   font-size: 2.6em;
-  margin-bottom: 6px;
 }
 #tidy-redesign .tab-space .tab-item > div {
   margin: 5px 10px;
@@ -376,7 +413,7 @@
   margin-bottom: 0;
 }
 #tidy-redesign .tab-space .tab-item:not(.active) {
-  opacity: 0.6;
+  background-color: rgba(204, 204, 204, 0.5);
 }
 #tidy-redesign .tab-space .tab-content {
   flex-basis: 100%;
@@ -430,6 +467,9 @@
 #tidy-redesign .tab-space .tab-content .tab .playbook .playbook-items .free-item {
   font-style: italic;
 }
+#tidy-redesign .tab-space .tab-content .tab .playbook .item-list {
+  font-size: 1.2em;
+}
 #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block {
   padding-left: 5px;
 }
@@ -440,7 +480,7 @@
   margin-right: 0;
   margin-left: 0;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .strange-friends {
+#tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals {
   grid-area: friends;
   background: #CCC;
 }

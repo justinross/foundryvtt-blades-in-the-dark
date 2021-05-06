@@ -2,12 +2,15 @@
   <div id="tidy-redesign" class="{{#if actor.flags.blades-in-the-dark.allow-edit}}allow-edit{{/if}}">
     <div class="toggle-allow-edit"><span><i class="fas fa-lock"></i><i class="fas fa-lock-open"></i></span></div>
     <section class="minimized-view">
-      <section class="character-photo">
-        <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
-        <div class="status-icon coin"></div>
-        <div class="status-icon harm"></div>
-        <div class="status-icon stress"></div>
-        <div class="status-icon vice"></div>
+      <section class="character-portrait">
+        <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" >
+        <div class="status-icons">
+          <div class="status-icon coin">hi</div>
+          <div class="status-icon harm">hi</div>
+          <div class="status-icon stress">hi</div>
+          <div class="status-icon vice">hi</div>
+          <div class="status-icon vice">hi</div>
+        </div>
       </section>
       <div class="name-alias bio">
         <span class="name">{{{inline-editable-text "name" (localize "BITD.Name") actor.name actor._id this}}}</span> <span class="alias">&bull; "{{{inline-editable-text "data.alias" (localize "BITD.Alias") data.alias actor._id this}}}"</span>
@@ -62,26 +65,27 @@
             <section class="playbook-items item-list">
               <header class="full-bar">{{localize "BITD.Items"}}</header>
               {{#each playbook_items as |item index|}}
-                <div class="item-block">
-                  <input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-1">
-                  {{#if (gte item.data.data.load 2)}}<input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-2">{{/if}}
-                  {{#if (eq item.data.data.load 3)}}<input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3">{{/if}}
-                  <label class="item-name {{#if (eq item.data.data.load "0")}}free-item{{/if}}" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.data.description}}">{{item.name}}</label>
+                <div class="item-block" data-item-id="{{item._id}}">
+                  <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor._id}}-item-{{item._id}}-1" {{checked item.data.equipped}}>
+                  {{#if (gte item.data.load 2)}}<input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-2" {{checked item.data.equipped}}>{{/if}}
+                  {{#if (eq item.data.load 3)}}<input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3"{{checked item.data.equipped}}>{{/if}}
+                  <label class="item-name {{#if (eq item.data.load "0")}}free-item{{/if}}" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>
                 </div>
               {{/each}}
             </section>
-            <section class="strange-friends">
+            <section class="friends-rivals">
               <header class="full-bar">Strange Friends</header>
               No friends here!
             </section>
             <section class="all-items item-list">
               <header class="full-bar">&nbsp;</header>
               {{#each generic_items as |item index|}}
-                <div class="item-block">
-                  <input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-1">
-                  {{#if (gte item.data.data.load 2)}}<input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-2">{{/if}}
-                  {{#if (eq item.data.data.load 3)}}<input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3">{{/if}}
-                  <label class="item-name" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.data.description}}">{{item.name}}</label>
+              {{log item.data.equipped item.name}}
+                <div class="item-block" data-item-id="{{item._id}}">
+                  <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor._id}}-item-{{item._id}}-1" {{checked item.data.equipped}}>
+                  {{#if (gte item.data.load 2)}}<input type="checkbox" class="item-checkbox"  id="character-{{actor._id}}-item-{{item._id}}-2" {{checked item.data.equipped}} >{{/if}}
+                  {{#if (gte item.data.load 3)}}<input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3" {{checked item.data.equipped}} >{{/if}}
+                  <label class="item-name" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>
                 </div>
               {{/each}}
             </section>

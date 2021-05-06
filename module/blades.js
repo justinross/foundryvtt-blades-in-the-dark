@@ -293,7 +293,6 @@ Hooks.once("ready", function() {
  * Hooks
  */
 Hooks.on("preCreateOwnedItem", (parent_entity, child_data, options, userId) => {
-
   BladesHelpers.removeDuplicatedItemType(child_data, parent_entity);
 
   return true;
@@ -317,4 +316,67 @@ Hooks.on("renderSceneControls", async (app, html) => {
     simpleRollPopup();
   });
   html.append(dice_roller);
+});
+
+
+Hooks.on("createActor", async (actor, options, actorId)=>{
+  if(actor.data.type == "character"){
+    //check for class
+    if(actor.data.data.playbook == ""){
+      //pick a default class
+      let classIndex = await game.packs.get("blades-in-the-dark.class").getIndex();
+      //let defaultClass = await game.packs.get("blades-in-the-dark.class").getEntry(classIndex[0]._id);
+      //add default class
+      let data = {
+        data:{
+          playbook: classIndex[0]._id
+        }
+      }
+      await actor.update(data);
+    }
+
+    //add class abilities
+    let all_abilities = await game.packs.get("blades-in-the-dark.ability").getContent();
+    let selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getEntry(actor.data.data.playbook);
+    let selected_playbook_name = selected_playbook_full.name;
+    
+    let abilities = actor.items.filter(item => {
+      return getProperty(item, 'data.type') == "ability"
+    });
+
+    if(abilities.length <= 0){
+      console.log("Adding class abilities");
+      //add class abilities
+      let class_abilities = all_abilities.filter(item=>item.data.data.class == selected_playbook_name);
+      let addedAbilities = await actor.createEmbeddedEntity("OwnedItem", class_abilities);
+    }
+
+    let all_owned_items = actor.items.filter(item => item.data.type == "item");
+    let class_items = all_owned_items.filter(item => item.data.data.class == selected_playbook_name);
+    let generic_items = all_owned_items.filter(item => item.data.data.class == "");
+
+    if(class_items.length <= 0){
+      console.log("Adding class items");
+      let allAvailableItems = await BladesHelpers.getAllItemsByType('item', game);
+      let _class_items = allAvailableItems.filter(item => item.data.class == selected_playbook_name);
+      let addedClassItems = await actor.createEmbeddedEntity("OwnedItem", _class_items);
+    }
+
+    if(generic_items.length <= 0){
+      console.log("Adding generic items")
+      let allAvailableItems = await BladesHelpers.getAllItemsByType('item', game);
+      let _generic_items = allAvailableItems.filter(item => item.data.class == "");
+      let addedClassItems = await actor.createEmbeddedEntity("OwnedItem", _generic_items);
+    }
+
+    //check for items
+    //add generic items
+  }
+});
+
+Hooks.on("updateActor", async (actor, newData, meta, actorId) => {
+  //if(actor instanceof BladesActor && newData.data.playbook){
+    //remove all unused skills
+    //add class skills
+  //}
 });

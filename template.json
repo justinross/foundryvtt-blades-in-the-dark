@@ -161,7 +161,8 @@
     "ability": {
       "description": "",
       "class": "",
-      "price": 1
+      "price": 1,
+      "purchased": false
     },
     "logic": {
       "logic": ""
@@ -202,7 +203,8 @@
   "item": {
     "templates": ["default", "logic"],
     "class": "",
-    "load": 0
+    "load": 0,
+    "equipped" : false
   },
   "class": {
     "templates": ["default", "logic"],
