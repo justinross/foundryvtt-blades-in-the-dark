@@ -1,9 +1,19 @@
 {
   "Actor": {
-  "types": ["character", "npc", "crew", "\uD83D\uDD5B clock", "factions"],
+  
     "character": {
       "alias": "",
       "stress": {
+"Actor": {
+  "types": ["character", "npc", "crew", "\uD83D\uDD5B clock", "factions"],
+  "character": {
+    "alias": "",
+    "look": "",
+    "heritage": "",
+    "background": "",
+    "background-details": "",
+    "playbook": "",
+    "stress": {
       "value": [0],
         "max": 9,
         "max_default": 9,
@@ -19,7 +29,7 @@
       "list": [0]
       },
     "healing-clock": [0],
-    "experience": [0],
+    "experience": 0,
     "coins": [0],
     "coins_stashed": [0],
       "special_abilities": [],
@@ -49,68 +59,68 @@
       },
       "attributes": {
         "insight": {
-          "exp": [0],
+          "exp": 0,
           "label": "BITD.SkillsInsight",
           "skills": {
             "hunt": {
               "label": "BITD.SkillsHunt",
-              "value": [0]
+              "value": 0
             },
             "study": {
               "label": "BITD.SkillsStudy",
-              "value": [0]
+              "value": 0
             },
             "survey": {
               "label": "BITD.SkillsSurvey",
-              "value": [0]
+              "value": 0
             },
             "tinker": {
               "label": "BITD.SkillsTinker",
-              "value": [0]
+              "value": 0
             }
           }
         },
         "prowess": {
-          "exp": [0],
+          "exp": 0,
           "label": "BITD.SkillsProwess",
           "skills": {
             "finesse": {
               "label": "BITD.SkillsFinesse",
-              "value": [0]
+              "value": 0
             },
             "prowl": {
               "label": "BITD.SkillsProwl",
-              "value": [0]
+              "value": 0
             },
             "skirmish": {
               "label": "BITD.SkillsSkirmish",
-              "value": [0]
+              "value": 0
             },
             "wreck": {
               "label": "BITD.SkillsWreck",
-              "value": [0]
+              "value": 0
             }
           }
         },
         "resolve": {
-          "exp": [0],
+          "exp": 0,
           "label": "BITD.SkillsResolve",
           "skills": {
             "attune": {
               "label": "BITD.SkillsAttune",
-              "value": [0]
+              "value": 0
             },
             "command": {
               "label": "BITD.SkillsCommand",
-              "value": [0]
+              "value": 0
             },
             "consort": {
               "label": "BITD.SkillsConsort",
-              "value": [0]
+              "value": 0
             },
             "sway": {
               "label": "BITD.SkillsSway",
-              "value": [0]
+              "value": 0
             }
           }
         }
@@ -205,10 +215,11 @@
     },
     "item": {
     "templates": ["default", "logic"],
-      "class": "",
-      "load": 0
-    },
-    "class": {
+    "class": "",
+    "load": 0,
+    "equipped" : false
+  },
+  "class": {
     "templates": ["default", "logic"],
       "experience_clues": "",
       "base_skills": {

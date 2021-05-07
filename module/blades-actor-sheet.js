@@ -12,16 +12,16 @@ export class BladesActorSheet extends BladesSheet {
 	  return mergeObject(super.defaultOptions, {
   	  classes: ["blades-in-the-dark", "sheet", "actor"],
   	  template: "systems/blades-in-the-dark/templates/actor-sheet.html",
-      width: 700,
-      height: 970,
-      tabs: [{navSelector: ".tabs", contentSelector: ".tab-content", initial: "abilities"}]
+      width: 800,
+      height: 1200,
+      tabs: [{navSelector: ".tabs", contentSelector: ".tab-content", initial: "playbook"}]
     });
   }
 
   /* -------------------------------------------- */
 
   /** @override */
-  getData() {
+  async getData() {
     var data = super.getData();
 
     // Calculate Load
@@ -61,7 +61,43 @@ export class BladesActorSheet extends BladesSheet {
     
     data.load_levels = ["BITD.Light", "BITD.Normal", "BITD.Heavy"];
 
+    //load up playbook options/data
+    data.playbook_options = await game.packs.get("blades-in-the-dark.class").getIndex();
+    data.playbook_select = this.prepIndexForHelper(data.playbook_options);
+    if(data.data.playbook != ""){
+      data.selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getEntry(data.data.playbook);
+      data.selected_playbook_name = data.selected_playbook_full.name;
+      data.selected_playbook_description = data.selected_playbook_full.data.description;
+
+      // //find skills for the selected playbook
+      // data.all_abilities = await game.packs.get("blades-in-the-dark.ability").getContent();
+      // data.playbook_abilities = data.all_abilities.filter(item => item.data.data.class == data.selected_playbook_name);
+
+      // //find items for the selected playbook
+      // data.all_items = await game.packs.get("blades-in-the-dark.item").getContent();
+      // data.playbook_items = data.all_items.filter(item => item.data.data.class == data.selected_playbook_name);
+      // data.generic_items = data.all_items.filter(item => item.data.data.class == "");
+
+      let playbook_abilities = data.items.filter(item => item.type == "ability");
+      data.playbook_abilities = playbook_abilities.map(item => {
+        item.name = item.name.replace(/\([^)]*\)\s/, "");
+        return item;
+      });
+      let playbook_items = data.items.filter(item => item.type == "item" && item.data.class == data.selected_playbook_name);
+      data.playbook_items = playbook_items.map(item => {
+        item.name = item.name.replace(/\([^)]*\)\s/, "")
+        return item;
+      });
+      data.generic_items = data.items.filter(item => item.type == "item" && item.data.class == "");
+    }
+
     return data;
+  }
+
+  prepIndexForHelper(index){
+    let prepped = {};
+    index.forEach(item => prepped[item._id] = item.name);
+    return prepped;
   }
 
   /* -------------------------------------------- */
@@ -85,6 +121,23 @@ export class BladesActorSheet extends BladesSheet {
       const element = $(ev.currentTarget).parents(".item");
       this.actor.deleteOwnedItem(element.data("itemId"));
       element.slideUp(200, () => this.render(false));
+    });
+
+    html.find('.toggle-allow-edit span').click(async (event) => {
+      event.preventDefault();
+
+      if(this.actor.getFlag('blades-in-the-dark', 'allow-edit')){
+        await this.actor.unsetFlag('blades-in-the-dark', 'allow-edit');
+      } else {
+        await this.actor.setFlag('blades-in-the-dark', 'allow-edit', true);
+      }
+    });
+
+    html.find('.item-block .main-checkbox').change(ev => {
+      let checkbox = ev.target;
+      let itemId = checkbox.closest(".item-block").dataset.itemId;
+      let item = this.actor.getOwnedItem(itemId);
+      return item.update({data: {equipped : checkbox.checked}});
     });
   }
 

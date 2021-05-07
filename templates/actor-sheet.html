@@ -1,5 +1,112 @@
 <form class="{{cssClass}} actor-sheet" autocomplete="off">
+  <div id="tidy-redesign" class="{{#if actor.flags.blades-in-the-dark.allow-edit}}allow-edit{{/if}}">
+    <div class="toggle-allow-edit"><span><i class="fas fa-lock"></i><i class="fas fa-lock-open"></i></span></div>
+    <section class="minimized-view">
+      <section class="character-portrait">
+        <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" >
+        <div class="status-icons">
+          <div class="status-icon coin">hi</div>
+          <div class="status-icon harm">hi</div>
+          <div class="status-icon stress">hi</div>
+          <div class="status-icon vice">hi</div>
+          <div class="status-icon vice">hi</div>
+        </div>
+      </section>
+      <div class="name-alias bio">
+        <span class="name">{{{inline-editable-text "name" (localize "BITD.Name") actor.name actor._id this}}}</span> <span class="alias">&bull; "{{{inline-editable-text "data.alias" (localize "BITD.Alias") data.alias actor._id this}}}"</span>
+      </div>
+      <div class="heritage-background bio">
+        {{{inline-editable-text "data.heritage" "Heritage" data.heritage actor._id this}}} &bull; {{{inline-editable-text "data.background" "Background" data.background actor._id this}}} &bull; {{{inline-editable-text "data.background-details" "Background Details" data.background-details actor._id this}}}
+      </div>
+      <div class="look bio">{{{inline-editable-text "data.look" "Look" data.look actor._id this}}}</div>
+      <section class="attributes-actions">
+        {{> "systems/blades-in-the-dark/templates/parts/attributes.html" actor=actor}}
+      </section>
+    </section>
+    <section class="tab-space">
+      <nav class="tabs" data-group="primary-tabs">
+        <div class="tab-item playbook" data-tab="playbook">
+          {{#if actor.flags.blades-in-the-dark.allow-edit}}
+            <select name="data.playbook" class="dropdown">
+              {{selectOptions playbook_select selected=data.playbook localize=false}}
+            </select>
+          {{else}}
+          <div class="playbook-name">{{selected_playbook_name}}</div>
+          <div class="playbook-description">{{selected_playbook_description}}</div>
+          {{/if}}
+        </div>
+        <div class="tab-item downtime" data-tab="downtime">
+          <div class="">Downtime</div>
+        </div>
+      </nav>
+      <section class="tab-content">
+        <div class="tab" data-tab="playbook" data-group="primary-tabs">
+          <div class="playbook">
+            <section class="abilities">
+              <header class="full-bar">
+                {{localize "BITD.SpecialAbilities"}}
+                <div class="stripe-tooth-body">
+                {{#multiboxes data.experience}}
+                  <input type="radio" id="{{../actor._id}}-experience-0"
+                        name="data.experience" value="0" checked="checked" class="zero">
+                  {{#times_from_1 8}}
+                    <input type="radio" id="character-{{../../actor._id}}-experience-{{this}}" name="data.experience" value="{{this}}" dtype="Radio" class="radio-toggle" >
+                    <label for="character-{{../../actor._id}}-experience-{{this}}" class="{{#if (gte ../data.experience @this)}}on{{/if}} radio-toggle"  ></label>
+                  {{/times_from_1}}
+                {{/multiboxes}}
+                </div>
+              </header>
+              <section class="ability-list check-list">
+                {{#each playbook_abilities as |ability index|}}
+                  <div class="ability">{{> "systems/blades-in-the-dark/templates/parts/ability.html" actor=actor ability=ability}}</div>
+                {{/each}}
+              </section>
+            </section>
+            <section class="playbook-items item-list">
+              <header class="full-bar">{{localize "BITD.Items"}}</header>
+              {{#each playbook_items as |item index|}}
+                <div class="item-block" data-item-id="{{item._id}}">
+                  <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor._id}}-item-{{item._id}}-1" {{checked item.data.equipped}}>
+                  {{#if (gte item.data.load 2)}}<input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-2" {{checked item.data.equipped}}>{{/if}}
+                  {{#if (eq item.data.load 3)}}<input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3"{{checked item.data.equipped}}>{{/if}}
+                  <label class="item-name {{#if (eq item.data.load "0")}}free-item{{/if}}" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>
+                </div>
+              {{/each}}
+            </section>
+            <section class="friends-rivals">
+              <header class="full-bar">Strange Friends</header>
+              No friends here!
+            </section>
+            <section class="all-items item-list">
+              <header class="full-bar">&nbsp;</header>
+              {{#each generic_items as |item index|}}
+              {{log item.data.equipped item.name}}
+                <div class="item-block" data-item-id="{{item._id}}">
+                  <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor._id}}-item-{{item._id}}-1" {{checked item.data.equipped}}>
+                  {{#if (gte item.data.load 2)}}<input type="checkbox" class="item-checkbox"  id="character-{{actor._id}}-item-{{item._id}}-2" {{checked item.data.equipped}} >{{/if}}
+                  {{#if (gte item.data.load 3)}}<input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3" {{checked item.data.equipped}} >{{/if}}
+                  <label class="item-name" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>
+                </div>
+              {{/each}}
+            </section>
+            <section class="xp-notes">
+              <header class="full-bar">XP</header>
+              <ul>
+                <li>Every time you roll a desperate action, mark xp in that action's attribute.</li>
+                <p>At the end of each session, for each item below, mark 1 xp (in your playbook or an attribute) or 2 xp if that item occurred multiple times.</p>
+                <li>{{selected_playbook_full.data.experience_clues}}</li>
+                <li>You expressed your beliefs, drives, heritage, or background.</li>
+                <li>You struggled with issues from your vice or traumas during the session.</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+        <div class="tab" data-tab="downtime" data-group="primary-tabs">Downtime stuff</div>
+      </section>
+    </section>
+  </div>
 
+  <!--
   <section id="name-alias" class="flex-horizontal">
 
     <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
@@ -334,8 +441,6 @@
       </div>
 
     </div>
-    {{!-- Attributes --}}
-    {{> "systems/blades-in-the-dark/templates/parts/attributes.html" actor=actor}}
   </section>
-
+-->
 </form>

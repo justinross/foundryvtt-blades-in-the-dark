@@ -1,0 +1,7 @@
+{{#with ability}}
+<input type="checkbox" class="offset" id="character-{{../actor._id}}-ability-{{name}}">
+<label for="character-{{../actor._id}}-ability-{{name}}">
+    <span class="ability-name item-name">{{name}}:</span>
+    <span class="ability-description">{{data.description}}</span>
+</label>
+{{/with}}
