@@ -75,12 +75,19 @@
             </section>
             <section class="friends-rivals">
               <header class="full-bar">Strange Friends</header>
-              No friends here!
+              {{#each data.acquaintances}}
+                <div class="acquaintance">
+                  <i data-acquaintance="{{this._id}}" class="standing-toggle far 
+                    {{#if (eq this.standing "friend")}}fa-smile green-icon
+                    {{else if (eq this.standing "rival")}}fa-angry red-icon
+                    {{else}}fa-meh
+                    {{/if}}">
+                  </i> <strong>{{this.name}}</strong>, {{this.description_short}}</div>
+              {{/each}}
             </section>
             <section class="all-items item-list">
               <header class="full-bar">&nbsp;</header>
               {{#each generic_items as |item index|}}
-              {{log item.data.equipped item.name}}
                 <div class="item-block" data-item-id="{{item._id}}">
                   <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor._id}}-item-{{item._id}}-1" {{checked item.data.equipped}}>
                   {{#if (gte item.data.load 2)}}<input type="checkbox" class="item-checkbox"  id="character-{{actor._id}}-item-{{item._id}}-2" {{checked item.data.equipped}} >{{/if}}

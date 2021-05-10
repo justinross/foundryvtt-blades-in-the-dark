@@ -368,7 +368,26 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
       console.log("Adding generic items")
       let allAvailableItems = await BladesHelpers.getAllItemsByType('item', game);
       let _generic_items = allAvailableItems.filter(item => item.data.class == "");
-      let addedClassItems = await actor.createEmbeddedEntity("OwnedItem", _generic_items);
+      let addedGenericItems = await actor.createEmbeddedEntity("OwnedItem", _generic_items);
+    }
+
+    if(Object.keys(actor.data.data.acquaintances).length <= 0){
+      console.log("Adding class acquaintances");
+      //add class aquaintances
+      let all_npcs = await game.packs.get("blades-in-the-dark.npc").getContent();
+      let class_acquaintances = all_npcs.filter(obj => obj.data.data.associated_class == selected_playbook_name);
+      class_acquaintances = class_acquaintances.map(acq => {
+        console.log(acq);
+        return {
+          _id : acq._id,
+          name : acq.name,
+          description_short : acq.data.data.description_short,
+          standing: "neutral"
+        }
+      });
+      console.log(class_acquaintances);
+      actor.update({data: {acquaintances : class_acquaintances}});
+      //should this be a foreach to create each actor as a simpler array? set a neutral status?
     }
 
     //check for items

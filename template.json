@@ -8,6 +8,7 @@
     "background": "",
     "background-details": "",
     "playbook": "",
+    "acquaintances": [],
     "stress": {
       "value": [0],
         "max": 9,
@@ -162,7 +163,7 @@
     }
   },
   "Item": {
-  "types": ["faction", "item", "class", "ability", "heritage", "background", "vice", "crew_upgrade", "cohort", "crew_type", "crew_reputation", "crew_upgrade", "crew_ability"],
+    "types": ["faction", "item", "class", "ability", "heritage", "background", "vice", "crew_upgrade", "cohort", "crew_type", "crew_reputation", "crew_upgrade", "crew_ability"],
     "templates": {
       "default": {
         "description": ""
@@ -177,7 +178,7 @@
       }
     },
     "faction": {
-    "templates": ["default"],
+      "templates": ["default"],
       "type": "",
       "tier": 0,
       "goal_1": "",
@@ -194,14 +195,14 @@
       "goal_clock": 0,
       "notes": "",
       "hold": {
-    "value": [1],
+        "value": [1],
         "max": 2,
         "max_default": 2,
         "name_default": "BITD.Hold",
         "name": "BITD.Hold"
       },
       "status": {
-      "value": [4],
+        "value": [4],
         "max": 7,
         "max_default": 7,
         "name_default": "BITD.Status",
@@ -216,8 +217,8 @@
   },
   "class": {
     "templates": ["default", "logic"],
-      "experience_clues": "",
-      "base_skills": {
+    "experience_clues": "",
+    "base_skills": {
       "hunt": [0],
       "study": [0],
       "survey": [0],
@@ -230,7 +231,7 @@
       "command": [0],
       "consort": [0],
       "sway": [0]
-      }
+    }
     },
     "ability": {
     "templates": ["ability", "logic"]

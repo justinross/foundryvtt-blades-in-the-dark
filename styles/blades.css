@@ -483,6 +483,13 @@
 #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals {
   grid-area: friends;
   background: #CCC;
+  font-size: 1.2em;
+}
+#tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i.red-icon {
+  color: #880000;
+}
+#tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i.green-icon {
+  color: #006600;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .all-items {
   grid-area: all-items;

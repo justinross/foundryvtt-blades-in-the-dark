@@ -139,6 +139,30 @@ export class BladesActorSheet extends BladesSheet {
       let item = this.actor.getOwnedItem(itemId);
       return item.update({data: {equipped : checkbox.checked}});
     });
+
+    //this could probably be cleaner.
+    html.find('.standing-toggle').click(ev => {
+      let acquaintances = this.actor.data.data.acquaintances; 
+      let clickedAcqIdx = acquaintances.findIndex(item => item._id == ev.target.dataset.acquaintance);
+      let clickedAcq = acquaintances[clickedAcqIdx];
+      let oldStanding = clickedAcq.standing;
+      let newStanding;
+      switch(oldStanding){
+        case "friend":
+          newStanding = "neutral";
+          break;
+        case "rival":
+          newStanding = "friend";
+          break;
+        case "neutral":
+          newStanding = "rival";
+          break;
+      }
+      clickedAcq.standing = newStanding;
+      acquaintances.splice(clickedAcqIdx, 1, clickedAcq);
+      this.actor.update({data: {acquaintances : acquaintances}});
+    });
+
   }
 
   /* -------------------------------------------- */

@@ -368,6 +368,19 @@ $hover-brightness: 0.8;
             .friends-rivals{
               grid-area: friends;
               background: $lightgray;
+
+              font-size: 1.2em;
+              .acquaintance{
+                i{
+                  &.red-icon{
+                    color: #880000;
+                  }
+
+                  &.green-icon{
+                    color: #006600;
+                  }
+                }
+              }
             }
 
             .all-items{
