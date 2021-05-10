@@ -1,5 +1,5 @@
 // Colors
-$lightgray: #CCC;
+$lightgray: #bbb;
 $darkgray: #666;
 $gray: #999;
 $red: red;
@@ -354,6 +354,16 @@ $hover-brightness: 0.8;
               font-size: 1.2em;
               .item-block{
                 padding-left: 5px;
+                .join-line {
+                  border: 1px solid $darkgray;
+                  width: 1em;
+                  display: inline-block;
+                  height:0px;
+                  margin: 0 -.5em;
+                  top: .7em;
+                  position: relative;
+                  z-index: 0;
+                }
 
                 *{
                   vertical-align: top;
@@ -361,6 +371,8 @@ $hover-brightness: 0.8;
                 input{
                   margin-right: 0;
                   margin-left: 0;
+                  position: relative;
+                  z-index: 10;
                 }
               }
             }
@@ -372,6 +384,7 @@ $hover-brightness: 0.8;
               font-size: 1.2em;
               .acquaintance{
                 i{
+                  padding: 1px;
                   &.red-icon{
                     color: #880000;
                   }

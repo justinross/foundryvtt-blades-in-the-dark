@@ -359,15 +359,17 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
 
     if(class_items.length <= 0){
       console.log("Adding class items");
-      let allAvailableItems = await BladesHelpers.getAllItemsByType('item', game);
-      let _class_items = allAvailableItems.filter(item => item.data.class == selected_playbook_name);
+      //let allAvailableItems = await BladesHelpers.getAllItemsByType('item', game);
+      let allAvailableItems = await game.packs.get("blades-in-the-dark.item").getContent();
+      let _class_items = allAvailableItems.filter(item => item.data.data.class == selected_playbook_name);
       let addedClassItems = await actor.createEmbeddedEntity("OwnedItem", _class_items);
     }
 
     if(generic_items.length <= 0){
       console.log("Adding generic items")
-      let allAvailableItems = await BladesHelpers.getAllItemsByType('item', game);
-      let _generic_items = allAvailableItems.filter(item => item.data.class == "");
+      //let allAvailableItems = await BladesHelpers.getAllItemsByType('item', game);
+      let allAvailableItems = await game.packs.get("blades-in-the-dark.item").getContent();
+      let _generic_items = allAvailableItems.filter(item => item.data.data.class == "");
       let addedGenericItems = await actor.createEmbeddedEntity("OwnedItem", _generic_items);
     }
 
@@ -377,7 +379,6 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
       let all_npcs = await game.packs.get("blades-in-the-dark.npc").getContent();
       let class_acquaintances = all_npcs.filter(obj => obj.data.data.associated_class == selected_playbook_name);
       class_acquaintances = class_acquaintances.map(acq => {
-        console.log(acq);
         return {
           _id : acq._id,
           name : acq.name,
@@ -385,7 +386,6 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
           standing: "neutral"
         }
       });
-      console.log(class_acquaintances);
       actor.update({data: {acquaintances : class_acquaintances}});
       //should this be a foreach to create each actor as a simpler array? set a neutral status?
     }

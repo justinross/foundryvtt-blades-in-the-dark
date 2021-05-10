@@ -385,7 +385,7 @@
   display: inline-flex;
   justify-content: space-between;
   align-items: flex-end;
-  background-color: #CCC;
+  background-color: #bbb;
   border-radius: 20px 20px 0 0;
   font-family: Kirsty, serif;
   text-transform: capitalize;
@@ -413,7 +413,7 @@
   margin-bottom: 0;
 }
 #tidy-redesign .tab-space .tab-item:not(.active) {
-  background-color: rgba(204, 204, 204, 0.5);
+  background-color: rgba(187, 187, 187, 0.5);
 }
 #tidy-redesign .tab-space .tab-content {
   flex-basis: 100%;
@@ -428,14 +428,14 @@
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook::after {
   content: "";
-  background: #CCC;
+  background: #bbb;
   grid-area: gutter;
   height: 100%;
   width: 100%;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .abilities {
   grid-area: abilities;
-  background: #CCC;
+  background: #bbb;
   padding-bottom: 1em;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability {
@@ -462,7 +462,7 @@
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .playbook-items {
   grid-area: pb-items;
-  background: #CCC;
+  background: #bbb;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .playbook-items .free-item {
   font-style: italic;
@@ -473,17 +473,32 @@
 #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block {
   padding-left: 5px;
 }
+#tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block .join-line {
+  border: 1px solid #666;
+  width: 1em;
+  display: inline-block;
+  height: 0px;
+  margin: 0 -0.5em;
+  top: 0.7em;
+  position: relative;
+  z-index: 0;
+}
 #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block * {
   vertical-align: top;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block input {
   margin-right: 0;
   margin-left: 0;
+  position: relative;
+  z-index: 10;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals {
   grid-area: friends;
-  background: #CCC;
+  background: #bbb;
   font-size: 1.2em;
+}
+#tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i {
+  padding: 1px;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i.red-icon {
   color: #880000;
@@ -496,7 +511,7 @@
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes {
   grid-area: xp-notes;
-  background: #CCC;
+  background: #bbb;
   font-size: 1.2em;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes p {
