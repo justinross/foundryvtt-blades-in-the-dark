@@ -117,6 +117,9 @@
   border: none;
   border-radius: 3px;
 }
+#tidy-redesign .clickable-edit {
+  text-decoration: underline;
+}
 #tidy-redesign .rollable-text {
   cursor: pointer;
 }

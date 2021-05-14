@@ -239,7 +239,7 @@ export class BladesHelpers {
 
         //isn't triggering a rerender for some reason. Maybe because it's in preUpdate?
         let deleted = await actor.deleteEmbeddedEntity("OwnedItem", abilities_to_delete, {noHook: true});
-        console.log("Deleted playbook abilities: ", deleted);
+        // console.log("Deleted playbook abilities: ", deleted);
         return deleted;
   }
 
@@ -254,7 +254,7 @@ export class BladesHelpers {
       let all_abilities = await game.packs.get("blades-in-the-dark.ability").getContent();
       let new_playbook_abilities = all_abilities.filter(ability => ability.data.data.class == playbook_name);
       let added = await actor.createEmbeddedEntity("OwnedItem", new_playbook_abilities, {noHook: true});
-      console.log("Added playbook abilities: ", added);
+      // console.log("Added playbook abilities: ", added);
       return added;
   }
 
@@ -281,7 +281,7 @@ export class BladesHelpers {
         });
 
         let deleted = await actor.deleteEmbeddedEntity("OwnedItem", items_to_delete, {noHook: true});
-        console.log("Deleted playbook items: ", deleted);
+        // console.log("Deleted playbook items: ", deleted);
         return deleted;
   }
 
@@ -297,7 +297,7 @@ export class BladesHelpers {
       let all_items = await game.packs.get("blades-in-the-dark.item").getContent();
       let new_playbook_items = all_items.filter(item => item.data.data.class == playbook_name);
       let added = await actor.createEmbeddedEntity("OwnedItem", new_playbook_items, {noHook: true});
-      console.log("Added playbook items: ", added);
+      // console.log("Added playbook items: ", added);
       return added;
   }
 
@@ -312,7 +312,7 @@ export class BladesHelpers {
       let all_items = await game.packs.get("blades-in-the-dark.item").getContent();
       let new_items = all_items.filter(item => item.data.data.class == "");
       let added = await actor.createEmbeddedEntity("OwnedItem", new_items, {noHook: true});
-      console.log("Added playbook items: ", added);
+      // console.log("Added playbook items: ", added);
       return added;
   }
 
@@ -328,7 +328,7 @@ export class BladesHelpers {
         console.log("Deleting unnecessary playbook acquaintances ...");
         let new_acquaintances_array = current_acquaintances.filter(acq => keep_friends_and_rivals && acq.standing != "neutral");
         let update = await actor.update({data : {acquaintances : new_acquaintances_array}});
-        console.log("Deleted: ", update);
+        // console.log("Deleted: ", update);
         return update;
   }
 
@@ -340,7 +340,7 @@ export class BladesHelpers {
    * @returns {object} // the OwnedItems added
    */
   static async addPlaybookAcquaintances(actor, playbook_name){
-      console.log("Adding class acquaintances");
+      console.log("Adding new class acquaintances");
       //add class aquaintances
       let all_npcs = await game.packs.get("blades-in-the-dark.npc").getContent();
       let current_acquaintances = actor.data.data.acquaintances;

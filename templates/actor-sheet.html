@@ -62,42 +62,48 @@
               </header>
               <section class="ability-list check-list">
                 {{#each playbook_abilities as |ability index|}}
+                {{#with ../actor as |actor|}}
                   {{> "systems/blades-in-the-dark/templates/parts/ability.html" actor=actor ability=ability}}
+                {{/with}}
                 {{/each}}
               </section>
             </section>
             <section class="playbook-items item-list">
               <header class="full-bar">{{localize "BITD.Items"}}</header>
               {{#each playbook_items as |item index|}}
+                {{#with ../actor as |actor|}}
                 <div class="item-block" data-item-id="{{item._id}}">
                   <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor._id}}-item-{{item._id}}-1" {{checked item.data.equipped}}><!--
-                  -->{{#if (gte item.data.load 2)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-2" {{checked item.data.equipped}}>{{/if}}<!--
-                  -->{{#if (eq item.data.load 3)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3"{{checked item.data.equipped}}>{{/if}}
-                  <label class="item-name {{#if (eq item.data.load "0")}}free-item{{/if}}" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>
+                  -->{{#if (gte item.data.load 2)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor._id}}-item-{{item._id}}-2" {{checked item.data.equipped}}>{{/if}}<!--
+                  -->{{#if (eq item.data.load 3)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3"{{checked item.data.equipped}}>{{/if}}
+                  <label class="item-name {{#if (eq item.data.load "0")}}free-item{{/if}} {{#if actor.flags.blades-in-the-dark.allow-edit}}clickable-edit{{/if}}" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>
                 </div>
+                {{/with}}
               {{/each}}
             </section>
             <section class="friends-rivals">
               <header class="full-bar">Strange Friends</header>
               {{#each data.acquaintances}}
-                <div class="acquaintance">
+                <div class="acquaintance" data-acquaintance="{{this._id}}">
                   <i data-acquaintance="{{this._id}}" class="standing-toggle fas 
                     {{#if (eq this.standing "friend")}}fa-smile green-icon
                     {{else if (eq this.standing "rival")}}fa-angry red-icon
                     {{else}}fa-meh
                     {{/if}}">
-                  </i> <strong>{{this.name}}</strong>, {{this.description_short}}</div>
+                  </i> <strong class="standing-toggle">{{this.name}}</strong>, {{this.description_short}}</div>
               {{/each}}
             </section>
             <section class="all-items item-list">
               <header class="full-bar">&nbsp;</header>
               {{#each generic_items as |item index|}}
+                {{#with ../actor as |actor|}}
                 <div class="item-block" data-item-id="{{item._id}}">
                   <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor._id}}-item-{{item._id}}-1" {{checked item.data.equipped}}><!--
-                  -->{{#if (gte item.data.load 2)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox"  id="character-{{actor._id}}-item-{{item._id}}-2" {{checked item.data.equipped}} >{{/if}}<!--
-                  -->{{#if (gte item.data.load 3)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3" {{checked item.data.equipped}} >{{/if}}
-                  <label class="item-name" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>
+                  -->{{#if (gte item.data.load 2)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox"  id="character-{{actor._id}}-item-{{item._id}}-2" {{checked item.data.equipped}} >{{/if}}<!--
+                  -->{{#if (gte item.data.load 3)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3" {{checked item.data.equipped}} >{{/if}}
+                  <label class="item-name  {{#if (eq item.data.load "0")}}free-item{{/if}} {{#if actor.flags.blades-in-the-dark.allow-edit}}clickable-edit{{/if}}" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>
                 </div>
+                {{/with}}
               {{/each}}
             </section>
             <section class="xp-notes">

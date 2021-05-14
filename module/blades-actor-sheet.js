@@ -107,10 +107,18 @@ export class BladesActorSheet extends BladesSheet {
     if (!this.options.editable) return;
 
     // Update Inventory Item
-    html.find('.item-body').click(ev => {
-      const element = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(element.data("itemId"));
+    html.find('.item-block .clickable-edit').click(ev => {
+      ev.preventDefault();
+      let itemId = ev.currentTarget.closest(".item-block").dataset.itemId;
+      let item = this.actor.getOwnedItem(itemId);
       item.sheet.render(true);
+    });
+
+    html.find('.ability-block .clickable-edit').click(ev => {
+      ev.preventDefault();
+      let abilityId = ev.currentTarget.closest(".ability-block").dataset.abilityId;
+      let ability = this.actor.getOwnedItem(abilityId);
+      ability.sheet.render(true);
     });
 
     // Delete Inventory Item
@@ -122,7 +130,6 @@ export class BladesActorSheet extends BladesSheet {
 
     html.find('.toggle-allow-edit span').click(async (event) => {
       event.preventDefault();
-
       if(this.actor.getFlag('blades-in-the-dark', 'allow-edit')){
         await this.actor.unsetFlag('blades-in-the-dark', 'allow-edit');
       } else {
@@ -137,6 +144,12 @@ export class BladesActorSheet extends BladesSheet {
       return item.update({data: {equipped : checkbox.checked}});
     });
 
+    html.find('.item-block .child-checkbox').click(ev => {
+      let checkbox = ev.target;
+      let $main = $(checkbox).siblings(".main-checkbox");
+      $main.trigger('click');
+    });
+
     html.find('.ability-block .main-checkbox').change(ev => {
       let checkbox = ev.target;
       let abilityId = checkbox.closest(".ability-block").dataset.abilityId;
@@ -147,7 +160,8 @@ export class BladesActorSheet extends BladesSheet {
     //this could probably be cleaner. Numbers instead of text would be fine, but not much easier, really. 
     html.find('.standing-toggle').click(ev => {
       let acquaintances = this.actor.data.data.acquaintances; 
-      let clickedAcqIdx = acquaintances.findIndex(item => item._id == ev.target.dataset.acquaintance);
+      let acqId = ev.target.closest('.acquaintance').dataset.acquaintance;
+      let clickedAcqIdx = acquaintances.findIndex(item => item._id == acqId);
       let clickedAcq = acquaintances[clickedAcqIdx];
       let oldStanding = clickedAcq.standing;
       let newStanding;
