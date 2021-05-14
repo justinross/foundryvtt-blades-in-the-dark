@@ -110,7 +110,7 @@
 }
 #tidy-redesign [contenteditable] {
   user-select: auto !important;
-  padding: 3px;
+  text-decoration: underline;
 }
 #tidy-redesign [contenteditable]:active, #tidy-redesign [contenteditable]:focus {
   background-color: rgba(255, 255, 255, 0.5);

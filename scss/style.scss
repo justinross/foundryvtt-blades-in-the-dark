@@ -34,7 +34,8 @@ $hover-brightness: 0.8;
 
     [contenteditable]{
       user-select: auto !important;
-      padding: 3px;
+      text-decoration: underline;
+
       &:active, &:focus{
         background-color: rgba(255,255,255,0.5);
         border: none;
