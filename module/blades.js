@@ -327,12 +327,14 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
     if(actor.data.data.playbook == ""){
       //pick a default class
       let classIndex = await game.packs.get("blades-in-the-dark.class").getIndex();
+      let classContent = await game.packs.get("blades-in-the-dark.class").getContent();
       //add default class
-      let default_class = classIndex[0];
-      console.log(default_class);
+      let default_class = classContent[0];
+      let attributes = await BladesHelpers.getStartingAttributes(default_class.name); 
       let data = {
         data:{
           playbook: default_class._id,
+          attributes: attributes
         },
         new_character: true
       }
@@ -386,10 +388,12 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
 
 Hooks.on("updateActor", async (actor, newData, meta, actorId) => {
   if(actor.data.type == "character" && meta.diff && newData.data && newData.data.playbook && !newData.new_character /* && newData.data.playbook != actor.data.data.playbook */){
-    console.log("Update actor, new playbook", actor, newData, meta);
     let playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
     let new_playbook_name = playbooks_index.find(item => item._id == newData.data.playbook).name;
     //remove all skills, with an exception for new weird playbook selection
+    let new_attributes = await BladesHelpers.getStartingAttributes(new_playbook_name);
+    let updated = await actor.update({data:{attributes: new_attributes}});
+    console.log(updated);
     await BladesHelpers.clearAbilities(actor, new_playbook_name == "Ghost" || new_playbook_name == "Hull" || new_playbook_name == "Vampire");
     await BladesHelpers.addPlaybookAbilities(actor, new_playbook_name);
     await BladesHelpers.clearPlaybookItems(actor, true);

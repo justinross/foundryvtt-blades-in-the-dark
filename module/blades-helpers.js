@@ -216,6 +216,27 @@ export class BladesHelpers {
   /* -------------------------------------------- */
 
   /**
+   * Return an object with base skills/actions for the given playbook name
+   *
+   * @param {string} playbook_name 
+   * @returns {object}
+   */
+  static async getStartingAttributes(playbook_name) {
+        let empty_attributes = game.system.model.Actor.character.attributes;
+        let attributes_to_return = empty_attributes;
+        let all_playbooks = await game.packs.get("blades-in-the-dark.class").getContent();
+        let selected_playbook_base_skills = all_playbooks.find(pb => pb.name == playbook_name).data.data.base_skills;
+        for(const [key, value] of Object.entries(empty_attributes)){
+          for(const [childKey, childValue] of Object.entries(value.skills)){
+            if(selected_playbook_base_skills[childKey]){
+              attributes_to_return[key].skills[childKey].value = selected_playbook_base_skills[childKey];
+            }
+          }
+        }
+        return attributes_to_return;
+  }
+
+  /**
    * Deletes all "ability" OwnedItems, with an exception for owned "Ghost" abilities, if specified
    *
    * @param {object} actor 
@@ -237,7 +258,6 @@ export class BladesHelpers {
           }
         });
 
-        //isn't triggering a rerender for some reason. Maybe because it's in preUpdate?
         let deleted = await actor.deleteEmbeddedEntity("OwnedItem", abilities_to_delete, {noHook: true});
         // console.log("Deleted playbook abilities: ", deleted);
         return deleted;
@@ -272,7 +292,6 @@ export class BladesHelpers {
         current_playbook_items.forEach(async item => {
           let keep = false;
           if(keep_custom_items){
-            console.log(item);
             keep = false;
           }
           if(!keep){
