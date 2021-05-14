@@ -331,16 +331,20 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
       //add default class
       let data = {
         data:{
-          playbook: classIndex[0]._id
-        }
+          playbook: classIndex[0]._id,
+        },
+        new_character: true
       }
       await actor.update(data);
     }
 
     //add class abilities
-    let all_abilities = await game.packs.get("blades-in-the-dark.ability").getContent();
+    //let all_abilities = await game.packs.get("blades-in-the-dark.ability").getContent();
     let selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getEntry(actor.data.data.playbook);
     let selected_playbook_name = selected_playbook_full.name;
+    let all_owned_items = actor.items.filter(item => item.data.type == "item");
+    let class_items = all_owned_items.filter(item => item.data.data.class == selected_playbook_name);
+    let generic_items = all_owned_items.filter(item => item.data.data.class == "");
     
     let abilities = actor.items.filter(item => {
       return getProperty(item, 'data.type') == "ability"
@@ -349,55 +353,51 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
     if(abilities.length <= 0){
       console.log("Adding class abilities");
       //add class abilities
-      let class_abilities = all_abilities.filter(item=>item.data.data.class == selected_playbook_name);
-      let addedAbilities = await actor.createEmbeddedEntity("OwnedItem", class_abilities);
+      await BladesHelpers.addPlaybookAbilities(actor, selected_playbook_name);
     }
 
-    let all_owned_items = actor.items.filter(item => item.data.type == "item");
-    let class_items = all_owned_items.filter(item => item.data.data.class == selected_playbook_name);
-    let generic_items = all_owned_items.filter(item => item.data.data.class == "");
 
     if(class_items.length <= 0){
       console.log("Adding class items");
       //let allAvailableItems = await BladesHelpers.getAllItemsByType('item', game);
-      let allAvailableItems = await game.packs.get("blades-in-the-dark.item").getContent();
-      let _class_items = allAvailableItems.filter(item => item.data.data.class == selected_playbook_name);
-      let addedClassItems = await actor.createEmbeddedEntity("OwnedItem", _class_items);
+      await BladesHelpers.addPlaybookItems(actor, selected_playbook_name);
     }
 
     if(generic_items.length <= 0){
       console.log("Adding generic items")
       //let allAvailableItems = await BladesHelpers.getAllItemsByType('item', game);
-      let allAvailableItems = await game.packs.get("blades-in-the-dark.item").getContent();
-      let _generic_items = allAvailableItems.filter(item => item.data.data.class == "");
-      let addedGenericItems = await actor.createEmbeddedEntity("OwnedItem", _generic_items);
+      await BladesHelpers.addGenericItems(actor);
     }
 
     if(Object.keys(actor.data.data.acquaintances).length <= 0){
       console.log("Adding class acquaintances");
       //add class aquaintances
-      let all_npcs = await game.packs.get("blades-in-the-dark.npc").getContent();
-      let class_acquaintances = all_npcs.filter(obj => obj.data.data.associated_class == selected_playbook_name);
-      class_acquaintances = class_acquaintances.map(acq => {
-        return {
-          _id : acq._id,
-          name : acq.name,
-          description_short : acq.data.data.description_short,
-          standing: "neutral"
-        }
-      });
-      actor.update({data: {acquaintances : class_acquaintances}});
-      //should this be a foreach to create each actor as a simpler array? set a neutral status?
+      await BladesHelpers.addPlaybookAcquaintances(actor, selected_playbook_name);
     }
 
-    //check for items
-    //add generic items
+    //adding traumas for testing - doesn't render correctly on first load after creation, but it should also probably never get added this way, so *shrug*. 
+    //await actor.update({"data.trauma.list" : ["haunted", "reckless", "paranoid"]});
+
+    //clearing default [0] array
+    await actor.update({"data.trauma.list" : []});
   }
 });
 
 Hooks.on("updateActor", async (actor, newData, meta, actorId) => {
-  //if(actor instanceof BladesActor && newData.data.playbook){
-    //remove all unused skills
-    //add class skills
-  //}
+  if(actor.data.type == "character" && meta.diff && newData.data && newData.data.playbook && !newData.new_character /* && newData.data.playbook != actor.data.data.playbook */){
+    console.log("Update actor, new playbook", actor, newData, meta);
+    let playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
+    let new_playbook_name = playbooks_index.find(item => item._id == newData.data.playbook).name;
+    //remove all skills, with an exception for new weird playbook selection
+    await BladesHelpers.clearAbilities(actor, new_playbook_name == "Ghost" || new_playbook_name == "Hull" || new_playbook_name == "Vampire");
+    await BladesHelpers.addPlaybookAbilities(actor, new_playbook_name);
+    await BladesHelpers.clearPlaybookItems(actor, true);
+    await BladesHelpers.addPlaybookItems(actor, new_playbook_name);
+    await BladesHelpers.clearAcquaintances(actor, true);
+    await BladesHelpers.addPlaybookAcquaintances(actor, new_playbook_name);
+    
+  }
+  return true;
 });
+
+

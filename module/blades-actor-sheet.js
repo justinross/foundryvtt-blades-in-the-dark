@@ -61,29 +61,26 @@ export class BladesActorSheet extends BladesSheet {
     
     data.load_levels = ["BITD.Light", "BITD.Normal", "BITD.Heavy"];
 
-    //load up playbook options/data
+    //load up playbook options/data for playbook select 
     data.playbook_options = await game.packs.get("blades-in-the-dark.class").getIndex();
     data.playbook_select = this.prepIndexForHelper(data.playbook_options);
+
     if(data.data.playbook != ""){
       data.selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getEntry(data.data.playbook);
       data.selected_playbook_name = data.selected_playbook_full.name;
       data.selected_playbook_description = data.selected_playbook_full.data.description;
 
-      // //find skills for the selected playbook
-      // data.all_abilities = await game.packs.get("blades-in-the-dark.ability").getContent();
-      // data.playbook_abilities = data.all_abilities.filter(item => item.data.data.class == data.selected_playbook_name);
+      let playbook_abilities = data.items.filter(item => item.type == "ability" );
 
-      // //find items for the selected playbook
-      // data.all_items = await game.packs.get("blades-in-the-dark.item").getContent();
-      // data.playbook_items = data.all_items.filter(item => item.data.data.class == data.selected_playbook_name);
-      // data.generic_items = data.all_items.filter(item => item.data.data.class == "");
-
-      let playbook_abilities = data.items.filter(item => item.type == "ability");
+      //hide the playbook abbreviations for display
       data.playbook_abilities = playbook_abilities.map(item => {
         item.name = item.name.replace(/\([^)]*\)\s/, "");
         return item;
       });
+
       let playbook_items = data.items.filter(item => item.type == "item" && item.data.class == data.selected_playbook_name);
+
+      //hide the playbook abbreviations for display
       data.playbook_items = playbook_items.map(item => {
         item.name = item.name.replace(/\([^)]*\)\s/, "")
         return item;
@@ -140,7 +137,14 @@ export class BladesActorSheet extends BladesSheet {
       return item.update({data: {equipped : checkbox.checked}});
     });
 
-    //this could probably be cleaner.
+    html.find('.ability-block .main-checkbox').change(ev => {
+      let checkbox = ev.target;
+      let abilityId = checkbox.closest(".ability-block").dataset.abilityId;
+      let ability = this.actor.getOwnedItem(abilityId);
+      return ability.update({data: {purchased : checkbox.checked}});
+    });
+
+    //this could probably be cleaner. Numbers instead of text would be fine, but not much easier, really. 
     html.find('.standing-toggle').click(ev => {
       let acquaintances = this.actor.data.data.acquaintances; 
       let clickedAcqIdx = acquaintances.findIndex(item => item._id == ev.target.dataset.acquaintance);

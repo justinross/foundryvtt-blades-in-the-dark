@@ -3,13 +3,17 @@
     <div class="toggle-allow-edit"><span><i class="fas fa-lock"></i><i class="fas fa-lock-open"></i></span></div>
     <section class="minimized-view">
       <section class="character-portrait">
-        <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" >
-        <div class="status-icons">
-          <div class="status-icon coin">hi</div>
-          <div class="status-icon harm">hi</div>
-          <div class="status-icon stress">hi</div>
-          <div class="status-icon vice">hi</div>
-          <div class="status-icon vice">hi</div>
+        <div class="portrait">
+          <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" >
+        </div>
+        <div class="stress-box">
+        </div>
+        <div class="trauma-icons count-{{data.trauma.list.length}}">
+          {{#each data.trauma.list as |trauma index|}}
+            <div class="trauma-icon" title="{{trauma}}">
+              <img src="/systems/blades-in-the-dark/styles/assets/icons/status_icons/trauma-{{trauma}}.svg" alt="">
+            </div>
+          {{/each}}
         </div>
       </section>
       <div class="name-alias bio">
@@ -58,7 +62,7 @@
               </header>
               <section class="ability-list check-list">
                 {{#each playbook_abilities as |ability index|}}
-                  <div class="ability">{{> "systems/blades-in-the-dark/templates/parts/ability.html" actor=actor ability=ability}}</div>
+                  {{> "systems/blades-in-the-dark/templates/parts/ability.html" actor=actor ability=ability}}
                 {{/each}}
               </section>
             </section>

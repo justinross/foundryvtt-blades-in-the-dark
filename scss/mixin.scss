@@ -438,15 +438,18 @@
   }
 }
 
-@mixin on-circle($item-count, $circle-size, $item-size) {
-  position: relative;
-  width:  $circle-size;
-  height: $circle-size;
-  padding: 0;
-  border-radius: 50%; 
-  list-style: none;       
-  
-  > * {
+//draws items on a circle with a given start/end angle (going clockwise from top)
+@mixin on-circle($item-count, $circle-size, $start-angle, $end-angle, $item-selector: "*", $item-size, $style-parent) {
+  @if $style-parent{
+    position: relative;
+    width:  $circle-size;
+    height: $circle-size;
+    padding: 0;
+    border-radius: 50%; 
+    list-style: none;       
+  }
+
+  > #{$item-selector} {
     display: block;
     position: absolute;
     top:  50%; 
@@ -454,9 +457,56 @@
     width:  $item-size;
     height: $item-size;
     margin: -($item-size / 2);
-  
-    $angle: (360 / $item-count);
-    $rot: 0;
+
+    //adjust so that 0deg is at the top. Theoretically.
+    $start-angle: $start-angle - 90;
+    $end-angle: $end-angle - 90;
+    
+    $total-angle: $end-angle - $start-angle; 
+    $angle: ($total-angle / ($item-count - 1));
+    $rot: $start-angle;
+
+    @for $i from 1 through $item-count {
+      &:nth-of-type(#{$i}) {
+        transform: 
+          rotate($rot * 1deg) 
+          translate($circle-size / 2) 
+          rotate($rot * -1deg);
+      }
+
+      $rot: $rot + $angle;
+    }
+  }
+}
+
+//draws items on a circle with a given start/end angle (going clockwise from top)
+@mixin on-circle-from-center-angle($item-count, $circle-size, $center-angle, $angle-spacing, $item-selector: "*", $item-size, $style-parent) {
+  @if $style-parent{
+    position: relative;
+    width:  $circle-size;
+    height: $circle-size;
+    padding: 0;
+    border-radius: 50%; 
+    list-style: none;       
+  }
+
+  > #{$item-selector} {
+    display: block;
+    position: absolute;
+    top:  50%; 
+    left: 50%;
+    width:  $item-size;
+    height: $item-size;
+    margin: -($item-size / 2);
+
+    //adjust so that 0deg is at the top. Theoretically.
+    $center-angle: $center-angle - 90;
+    $total-angle: $angle-spacing * ($item-count - 1); 
+    $start-angle: $center-angle - ($total-angle / 2);
+    $end-angle: $center-angle + ($total-angle / 2);
+    
+    $angle: ($total-angle / ($item-count - 1));
+    $rot: $start-angle;
 
     @for $i from 1 through $item-count {
       &:nth-of-type(#{$i}) {

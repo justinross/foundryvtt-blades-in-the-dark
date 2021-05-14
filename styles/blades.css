@@ -232,14 +232,18 @@
   place-self: center;
   width: 200px;
   height: 200px;
-  border-radius: 100px;
-  overflow: hidden;
   flex-shrink: 0;
   flex-grow: 0;
-  border: 6px solid #999;
   position: relative;
 }
-#tidy-redesign .minimized-view .character-portrait > img {
+#tidy-redesign .minimized-view .character-portrait .portrait {
+  border-radius: 100px;
+  overflow: hidden;
+  border: 6px solid #999;
+  width: 100%;
+  height: 100%;
+}
+#tidy-redesign .minimized-view .character-portrait .portrait > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -248,42 +252,118 @@
   border-radius: 50%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3) inset;
 }
-#tidy-redesign .minimized-view .character-portrait .status-icons {
+#tidy-redesign .minimized-view .character-portrait .trauma-icons {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  position: relative;
   width: 200px;
   height: 200px;
-  padding: 0;
-  border-radius: 50%;
-  list-style: none;
+  pointer-events: none;
 }
-#tidy-redesign .minimized-view .character-portrait .status-icons > * {
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-1 > .trauma-icon {
   display: block;
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 1em;
-  height: 1em;
-  margin: -0.5em;
+  width: 30px;
+  height: 30px;
+  margin: -15px;
 }
-#tidy-redesign .minimized-view .character-portrait .status-icons > *:nth-of-type(1) {
-  transform: rotate(0deg) translate(100px) rotate(0deg);
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-1 > .trauma-icon:nth-of-type(1) {
+  transform: rotate(90deg) translate(92.5px) rotate(-90deg);
 }
-#tidy-redesign .minimized-view .character-portrait .status-icons > *:nth-of-type(2) {
-  transform: rotate(72deg) translate(100px) rotate(-72deg);
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-2 > .trauma-icon {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px;
 }
-#tidy-redesign .minimized-view .character-portrait .status-icons > *:nth-of-type(3) {
-  transform: rotate(144deg) translate(100px) rotate(-144deg);
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-2 > .trauma-icon:nth-of-type(1) {
+  transform: rotate(80deg) translate(92.5px) rotate(-80deg);
 }
-#tidy-redesign .minimized-view .character-portrait .status-icons > *:nth-of-type(4) {
-  transform: rotate(216deg) translate(100px) rotate(-216deg);
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-2 > .trauma-icon:nth-of-type(2) {
+  transform: rotate(100deg) translate(92.5px) rotate(-100deg);
 }
-#tidy-redesign .minimized-view .character-portrait .status-icons > *:nth-of-type(5) {
-  transform: rotate(288deg) translate(100px) rotate(-288deg);
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-3 > .trauma-icon {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px;
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-3 > .trauma-icon:nth-of-type(1) {
+  transform: rotate(70deg) translate(92.5px) rotate(-70deg);
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-3 > .trauma-icon:nth-of-type(2) {
+  transform: rotate(90deg) translate(92.5px) rotate(-90deg);
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-3 > .trauma-icon:nth-of-type(3) {
+  transform: rotate(110deg) translate(92.5px) rotate(-110deg);
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-4 > .trauma-icon {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px;
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-4 > .trauma-icon:nth-of-type(1) {
+  transform: rotate(60deg) translate(92.5px) rotate(-60deg);
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-4 > .trauma-icon:nth-of-type(2) {
+  transform: rotate(80deg) translate(92.5px) rotate(-80deg);
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-4 > .trauma-icon:nth-of-type(3) {
+  transform: rotate(100deg) translate(92.5px) rotate(-100deg);
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-4 > .trauma-icon:nth-of-type(4) {
+  transform: rotate(120deg) translate(92.5px) rotate(-120deg);
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-5 > .trauma-icon {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px;
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-5 > .trauma-icon:nth-of-type(1) {
+  transform: rotate(50deg) translate(92.5px) rotate(-50deg);
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-5 > .trauma-icon:nth-of-type(2) {
+  transform: rotate(70deg) translate(92.5px) rotate(-70deg);
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-5 > .trauma-icon:nth-of-type(3) {
+  transform: rotate(90deg) translate(92.5px) rotate(-90deg);
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-5 > .trauma-icon:nth-of-type(4) {
+  transform: rotate(110deg) translate(92.5px) rotate(-110deg);
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-5 > .trauma-icon:nth-of-type(5) {
+  transform: rotate(130deg) translate(92.5px) rotate(-130deg);
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons .trauma-icon {
+  background-color: #600;
+  text-align: center;
+  border-radius: 50%;
+  pointer-events: auto;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  padding: 3px;
+  border: 2px solid #666;
+}
+#tidy-redesign .minimized-view .character-portrait .trauma-icons .trauma-icon img {
+  border: none;
+  fill: currentColor;
 }
 #tidy-redesign .minimized-view .name-alias {
   font-family: Kirsty, serif;
@@ -426,6 +506,12 @@
   grid-template-rows: repeat(3, 1fr);
   grid-template-areas: "abilities gutter pb-items all-items" "abilities gutter friends all-items" "abilities gutter xp-notes xp-notes";
 }
+#tidy-redesign .tab-space .tab-content .tab .playbook select {
+  font-family: Kirsty, serif;
+  text-transform: capitalize;
+  font-size: 2.6em;
+  border: none;
+}
 #tidy-redesign .tab-space .tab-content .tab .playbook::after {
   content: "";
   background: #bbb;
@@ -438,15 +524,19 @@
   background: #bbb;
   padding-bottom: 1em;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability {
+#tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block {
   display: flex;
   align-items: flex-start;
   padding: 5px;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability:nth-child(even) {
+#tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block:nth-child(even) {
   background-color: rgba(255, 255, 255, 0.3);
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability input.offset {
+#tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block input {
+  margin: 0;
+  position: relative;
+}
+#tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block input.offset {
   margin-top: -3px;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list label {
@@ -479,12 +569,12 @@
   display: inline-block;
   height: 0px;
   margin: 0 -0.5em;
-  top: 0.7em;
+  top: -0.7em;
   position: relative;
   z-index: 0;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block * {
-  vertical-align: top;
+  vertical-align: bottom;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block input {
   margin-right: 0;

@@ -215,4 +215,144 @@ export class BladesHelpers {
 
   /* -------------------------------------------- */
 
+  /**
+   * Deletes all "ability" OwnedItems, with an exception for owned "Ghost" abilities, if specified
+   *
+   * @param {object} actor 
+   * @param {bool} keep_owned_ghost_abilities 
+   * @returns {object} // the OwnedItems deleted
+   */
+  static async clearAbilities(actor, keep_owned_ghost_abilities){
+        let current_abilities = actor.items.filter(item => item.type == "ability");
+        console.log("Deleting unnecessary abilities ...");
+        let abilities_to_delete = [];
+        current_abilities.forEach(async ability => {
+          let keep = false;
+          if(keep_owned_ghost_abilities){
+            //delete all abilities except ones with "Ghost" in the name that are owned.
+            keep = ability.name.includes("Ghost") && ability.data.data.purchased;
+          }
+          if(!keep){
+            abilities_to_delete.push(ability._id);
+          }
+        });
+
+        //isn't triggering a rerender for some reason. Maybe because it's in preUpdate?
+        let deleted = await actor.deleteEmbeddedEntity("OwnedItem", abilities_to_delete, {noHook: true});
+        console.log("Deleted playbook abilities: ", deleted);
+        return deleted;
+  }
+
+  /**
+   * Adds playbook-specific "ability" OwnedItems to an actor
+   *
+   * @param {object} actor 
+   * @param {string} playbook_name 
+   * @returns {object} // the OwnedItems added
+   */
+  static async addPlaybookAbilities(actor, playbook_name){
+      let all_abilities = await game.packs.get("blades-in-the-dark.ability").getContent();
+      let new_playbook_abilities = all_abilities.filter(ability => ability.data.data.class == playbook_name);
+      let added = await actor.createEmbeddedEntity("OwnedItem", new_playbook_abilities, {noHook: true});
+      console.log("Added playbook abilities: ", added);
+      return added;
+  }
+
+  /**
+   * Deletes playbook-specific "item" OwnedItems from an actor
+   *
+   * @param {object} actor 
+   * @param {string} keep_custom_items
+   * @returns {object} // the OwnedItems deleted
+   */
+  static async clearPlaybookItems(actor, keep_custom_items = false){
+        let current_playbook_items = actor.items.filter(item => item.type == "item" && item.data.data.class != "");
+        console.log("Deleting unnecessary playbook items ...");
+        let items_to_delete = [];
+        current_playbook_items.forEach(async item => {
+          let keep = false;
+          if(keep_custom_items){
+            console.log(item);
+            keep = false;
+          }
+          if(!keep){
+            items_to_delete.push(item._id);
+          }
+        });
+
+        let deleted = await actor.deleteEmbeddedEntity("OwnedItem", items_to_delete, {noHook: true});
+        console.log("Deleted playbook items: ", deleted);
+        return deleted;
+  }
+
+  /**
+   * Adds playbook-specific "item" OwnedItems to an actor
+   *
+   * @param {object} actor 
+   * @param {string} playbook_name 
+   * @returns {object} // the OwnedItems added
+   */
+  static async addPlaybookItems(actor, playbook_name){
+      console.log("Adding new playbook items");
+      let all_items = await game.packs.get("blades-in-the-dark.item").getContent();
+      let new_playbook_items = all_items.filter(item => item.data.data.class == playbook_name);
+      let added = await actor.createEmbeddedEntity("OwnedItem", new_playbook_items, {noHook: true});
+      console.log("Added playbook items: ", added);
+      return added;
+  }
+
+  /**
+   * Adds generic "item" OwnedItems to an actor
+   *
+   * @param {object} actor 
+   * @returns {object} // the OwnedItems added
+   */
+  static async addGenericItems(actor){
+      console.log("Adding new playbook items");
+      let all_items = await game.packs.get("blades-in-the-dark.item").getContent();
+      let new_items = all_items.filter(item => item.data.data.class == "");
+      let added = await actor.createEmbeddedEntity("OwnedItem", new_items, {noHook: true});
+      console.log("Added playbook items: ", added);
+      return added;
+  }
+
+  /**
+   * Deletes playbook-specific acquaintances from an actor
+   *
+   * @param {object} actor 
+   * @param {string} keep_friends_and_rivals
+   * @returns {object} // the deleted
+   */
+  static async clearAcquaintances(actor, keep_friends_and_rivals = false){
+        let current_acquaintances = actor.data.data.acquaintances;
+        console.log("Deleting unnecessary playbook acquaintances ...");
+        let new_acquaintances_array = current_acquaintances.filter(acq => keep_friends_and_rivals && acq.standing != "neutral");
+        let update = await actor.update({data : {acquaintances : new_acquaintances_array}});
+        console.log("Deleted: ", update);
+        return update;
+  }
+
+  /**
+   * Adds playbook-specific "item" OwnedItems to an actor
+   *
+   * @param {object} actor 
+   * @param {string} playbook_name 
+   * @returns {object} // the OwnedItems added
+   */
+  static async addPlaybookAcquaintances(actor, playbook_name){
+      console.log("Adding class acquaintances");
+      //add class aquaintances
+      let all_npcs = await game.packs.get("blades-in-the-dark.npc").getContent();
+      let class_acquaintances = all_npcs.filter(obj => obj.data.data.associated_class == playbook_name);
+      let current_acquaintances = actor.data.data.acquaintances;
+      class_acquaintances = class_acquaintances.map(acq => {
+        return {
+          _id : acq._id,
+          name : acq.name,
+          description_short : acq.data.data.description_short,
+          standing: "neutral"
+        }
+      });
+      await actor.update({data: {acquaintances : class_acquaintances.concat(current_acquaintances)}});
+  }
 }

@@ -134,34 +134,62 @@ $hover-brightness: 0.8;
         "portrait actions";
 
       .character-portrait{
+        $portrait-size: 200px;
         grid-area: portrait;
         place-self: center;
-        width: 200px;
-        height: 200px;
-        border-radius: 100px;
-        overflow: hidden;
+        width: $portrait-size;
+        height: $portrait-size;
         flex-shrink: 0;
         flex-grow: 0;
-        border: 6px solid $gray;
         position: relative;
 
-        > img{
-          width:100%;
-          height:100%;
-          object-fit: cover;
+        .portrait{
+          border-radius: 100px;
           overflow: hidden;
-          border: 0;
-          border-radius: 50%;
-          box-shadow: 0 0 20px rgba(0,0,0,0.3) inset;
+          border: 6px solid $gray;
+          width: 100%;
+          height: 100%;
+          > img{
+            width:100%;
+            height:100%;
+            object-fit: cover;
+            overflow: hidden;
+            border: 0;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3) inset;
+          }
         }
 
-        .status-icons{
+        .trauma-icons{
           position: absolute;
           top: 0;
           left: 0;
-          width: 100%;
-          height: 100%;
-          @include on-circle(5, 200px, 1em);
+          width: $portrait-size;
+          height: $portrait-size;
+          pointer-events: none;
+          
+          @for $i from 1 through 5{
+            &.count-#{$i}{
+              //@include on-circle($i, $portrait-size, 135, 225, ".trauma-icon", 30px, false);
+              @include on-circle-from-center-angle($i, $portrait-size - 15px, 180, 20, ".trauma-icon", 30px, false);
+            }
+          }
+          .trauma-icon{
+            background-color: #600;
+            text-align: center;
+            border-radius: 50%;
+            pointer-events: auto;
+            width: 30px;
+            height: 30px;
+            color: #fff;
+            padding: 3px;
+            border: 2px solid $darkgray;
+            img{
+              border: none;
+              fill: currentColor;
+
+            }
+          }
         }
       }
 
@@ -298,6 +326,13 @@ $hover-brightness: 0.8;
               "abilities gutter pb-items all-items"
               "abilities gutter friends all-items"
               "abilities gutter xp-notes xp-notes";
+            
+            select{
+              font-family: Kirsty, serif;
+              text-transform: capitalize;
+              font-size: 2.6em;
+              border: none;
+            }
 
             &::after{
               content: "";
@@ -312,7 +347,7 @@ $hover-brightness: 0.8;
               background: $lightgray;
               padding-bottom: 1em;
               .ability-list{
-                .ability{
+                .ability-block{
                   display: flex;
                   align-items: flex-start;
                   padding: 5px;
@@ -321,6 +356,9 @@ $hover-brightness: 0.8;
                   }
 
                   input{
+                    margin: 0;
+                    position: relative;
+
                     &.offset{
                       margin-top: -3px;
                     }
@@ -354,19 +392,20 @@ $hover-brightness: 0.8;
               font-size: 1.2em;
               .item-block{
                 padding-left: 5px;
+                //this is probably not very robust. Figure something else out.
                 .join-line {
                   border: 1px solid $darkgray;
                   width: 1em;
                   display: inline-block;
                   height:0px;
                   margin: 0 -.5em;
-                  top: .7em;
+                  top: -0.7em;
                   position: relative;
                   z-index: 0;
                 }
 
                 *{
-                  vertical-align: top;
+                  vertical-align: bottom;
                 }
                 input{
                   margin-right: 0;

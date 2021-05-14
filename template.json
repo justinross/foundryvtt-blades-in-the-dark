@@ -22,7 +22,7 @@
       "value": [0],
         "name": "BITD.Trauma",
         "name_default": "BITD.Trauma",
-      "list": [0]
+      "list": []
       },
     "healing-clock": [0],
     "experience": 0,
@@ -171,7 +171,8 @@
       "ability": {
         "description": "",
         "class": "",
-        "price": 1
+        "price": 1,
+        "purchased": false
       },
       "logic": {
         "logic": ""
