@@ -343,9 +343,13 @@ export class BladesHelpers {
       console.log("Adding class acquaintances");
       //add class aquaintances
       let all_npcs = await game.packs.get("blades-in-the-dark.npc").getContent();
-      let class_acquaintances = all_npcs.filter(obj => obj.data.data.associated_class == playbook_name);
       let current_acquaintances = actor.data.data.acquaintances;
-      class_acquaintances = class_acquaintances.map(acq => {
+      let new_class_acquaintances = all_npcs.filter(obj => {
+        let class_match = obj.data.data.associated_class == playbook_name
+        let unique_id =  !current_acquaintances.some(acq => acq._id == obj._id);
+        return class_match && unique_id;
+      });
+      new_class_acquaintances = new_class_acquaintances.map(acq => {
         return {
           _id : acq._id,
           name : acq.name,
@@ -353,6 +357,7 @@ export class BladesHelpers {
           standing: "neutral"
         }
       });
-      await actor.update({data: {acquaintances : class_acquaintances.concat(current_acquaintances)}});
+
+      await actor.update({data: {acquaintances : current_acquaintances.concat(new_class_acquaintances)}});
   }
 }
