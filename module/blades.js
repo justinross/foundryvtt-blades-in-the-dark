@@ -268,7 +268,7 @@ Hooks.once("init", async function() {
     if(current_value.length === 0){
       current_value = blank_value;
     }
-    html += `<input data-input="character-${uniq_id}-${parameter_name}" name="${parameter_name}" type="hidden" value="${current_value}" placeholder="${blank_value}"><span ${context.owner && context.actor.flags["blades-in-the-dark"]["allow-edit"] ? 'contenteditable="true"' : null} spellcheck="false" data-target="character-${uniq_id}-${parameter_name}" data-placeholder="${blank_value}">${current_value}</span>`;
+    html += `<input data-input="character-${uniq_id}-${parameter_name}" name="${parameter_name}" type="hidden" value="${current_value}" placeholder="${blank_value}"><span ${context.owner && context.actor.flags["blades-in-the-dark"]?.["allow-edit"] ? 'contenteditable="true"' : null} spellcheck="false" data-target="character-${uniq_id}-${parameter_name}" data-placeholder="${blank_value}">${current_value}</span>`;
     return html;
   });
 
@@ -327,11 +327,12 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
     if(actor.data.data.playbook == ""){
       //pick a default class
       let classIndex = await game.packs.get("blades-in-the-dark.class").getIndex();
-      //let defaultClass = await game.packs.get("blades-in-the-dark.class").getEntry(classIndex[0]._id);
       //add default class
+      let default_class = classIndex[0];
+      console.log(default_class);
       let data = {
         data:{
-          playbook: classIndex[0]._id,
+          playbook: default_class._id,
         },
         new_character: true
       }
