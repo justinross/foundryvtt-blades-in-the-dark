@@ -9,7 +9,7 @@ export class BladesActorSheet extends BladesSheet {
 
   /** @override */
 	static get defaultOptions() {
-	  return mergeObject(super.defaultOptions, {
+	  return foundry.utils.mergeObject(super.defaultOptions, {
   	  classes: ["blades-in-the-dark", "sheet", "actor"],
   	  template: "systems/blades-in-the-dark/templates/actor-sheet.html",
       width: 800,
@@ -75,6 +75,10 @@ export class BladesActorSheet extends BladesSheet {
   /** @override */
   async getData() {
     var data = super.getData();
+    data.editable = this.options.editable;
+    const actorData = data.data;
+    data.actor = actorData;
+    data.data = actorData.data;
 
     // Calculate Load
     let loadout = 0;
@@ -111,7 +115,7 @@ export class BladesActorSheet extends BladesSheet {
       data.data.load_level=load_level[loadout];   
     }
     
-    data.load_levels = ["BITD.Light", "BITD.Normal", "BITD.Heavy"];
+    data.load_levels = {"BITD.Light":"BITD.Light", "BITD.Normal":"BITD.Normal", "BITD.Heavy":"BITD.Heavy"};
 
     //load up playbook options/data for playbook select 
     data.playbook_options = await game.packs.get("blades-in-the-dark.class").getIndex();
@@ -167,7 +171,7 @@ export class BladesActorSheet extends BladesSheet {
     html.find('.item-block .clickable-edit').click(ev => {
       ev.preventDefault();
       let itemId = ev.currentTarget.closest(".item-block").dataset.itemId;
-      let item = this.actor.getOwnedItem(itemId);
+      let item = this.actor.items.get(itemId);
       item.sheet.render(true);
     });
 
@@ -179,9 +183,9 @@ export class BladesActorSheet extends BladesSheet {
     });
 
     // Delete Inventory Item
-    html.find('.item-delete').click(ev => {
+    html.find('.item-delete').click( async ev => {
       const element = $(ev.currentTarget).parents(".item");
-      this.actor.deleteOwnedItem(element.data("itemId"));
+      await this.actor.deleteEmbeddedDocuments("Item", [element.data("itemId")]);
       element.slideUp(200, () => this.render(false));
     });
 
