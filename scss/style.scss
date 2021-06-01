@@ -43,6 +43,10 @@ $hover-brightness: 0.8;
       }
     }
 
+    #context-menu ol li *{
+      vertical-align: initial;
+    }
+
     .clickable-edit{
       text-decoration: underline;
     }
@@ -412,13 +416,13 @@ $hover-brightness: 0.8;
                 *{
                   vertical-align: bottom;
                 }
+
                 input{
                   margin-right: 0;
                   margin-left: 0;
                   position: relative;
                   z-index: 10;
                 }
-
               }
             }
 

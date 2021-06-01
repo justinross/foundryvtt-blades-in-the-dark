@@ -18,6 +18,58 @@ export class BladesActorSheet extends BladesSheet {
     });
   }
 
+  itemContextMenu = [
+    {
+      name: game.i18n.localize("BITD.TitleDeleteItem"), 
+      icon: '<i class="fas fa-trash"></i>',
+      callback: element => {
+        this.actor.deleteOwnedItem(element.data("item-id"));
+      }
+    }
+  ];
+
+  itemListContextMenu = [
+    {
+      name: game.i18n.localize("BITD.AddItem"), 
+      icon: '<i class="fas fa-plus"></i>',
+      callback: element => {
+        this.addBlankItem();
+      }
+    }
+  ];
+
+  abilityContextMenu = [
+    {
+      name: game.i18n.localize("BITD.DeleteAbility"), 
+      icon: '<i class="fas fa-trash"></i>',
+      callback: element => {
+        this.actor.deleteOwnedItem(element.data("ability-id"));
+      }
+    }
+  ]
+
+  abilityListContextMenu = [
+    {
+      name: game.i18n.localize("BITD.AddAbility"), 
+      icon: '<i class="fas fa-plus"></i>',
+      callback: element => {
+        throw new console.error("Add new ability not implemented. How should we process this? Open a list of abilities to add?");
+      }
+    }
+  ]
+
+  async addBlankItem(){
+      let playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
+      let playbook_name = playbooks_index.find(pb => pb._id == this.actor.data.data.playbook).name;
+      let item_data_model = game.system.model.Item.item;
+      let new_item_data = { name : "New Item", type : "item", data : {...item_data_model} };
+      new_item_data.data.class = playbook_name;
+      new_item_data.data.load = 1;
+
+      let new_item = await this.actor.createEmbeddedEntity("OwnedItem", new_item_data, {renderSheet : true});
+      return new_item;
+  }
+
   /* -------------------------------------------- */
 
   /** @override */
@@ -106,6 +158,11 @@ export class BladesActorSheet extends BladesSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
+    new ContextMenu(html, ".item-block", this.itemContextMenu);
+    new ContextMenu(html, ".ability-block", this.abilityContextMenu);
+    new ContextMenu(html, ".context-items", this.itemListContextMenu);
+    new ContextMenu(html, ".context-abilities", this.abilityListContextMenu);
+
     // Update Inventory Item
     html.find('.item-block .clickable-edit').click(ev => {
       ev.preventDefault();
@@ -179,6 +236,10 @@ export class BladesActorSheet extends BladesSheet {
       clickedAcq.standing = newStanding;
       acquaintances.splice(clickedAcqIdx, 1, clickedAcq);
       this.actor.update({data: {acquaintances : acquaintances}});
+    });
+
+    html.find('.add-playbook-item').click(async ev => {
+
     });
 
   }

@@ -47,7 +47,7 @@
         <div class="tab" data-tab="playbook" data-group="primary-tabs">
           <div class="playbook">
             <section class="abilities">
-              <header class="full-bar">
+              <header class="full-bar context-abilities">
                 {{localize "BITD.SpecialAbilities"}}
                 <div class="stripe-tooth-body">
                 {{#multiboxes data.experience}}
@@ -69,7 +69,7 @@
               </section>
             </section>
             <section class="playbook-items item-list">
-              <header class="full-bar">{{localize "BITD.Items"}}</header>
+              <header class="full-bar flex-header context-items">{{localize "BITD.Items"}}</header>
               {{#each playbook_items as |item index|}}
                 {{#with ../actor as |actor|}}
                 <div class="item-block" data-item-id="{{item._id}}">

@@ -1,6 +1,6 @@
 <div class="ability-block" data-ability-id="{{ability._id}}">
     <input type="checkbox" class="ability-checkbox main-checkbox" id="character-{{actor._id}}-ability-{{ability._id}}-1" {{checked ability.data.purchased}}>
-    <label for="character-{{actor._id}}-ability-{{ability.name}}">
+    <label for="character-{{actor._id}}-ability-{{ability._id}}-1">
         <span class="ability-name {{#if actor.flags.blades-in-the-dark.allow-edit}}clickable-edit{{/if}}">{{ability.name}}:</span>
         <span class="ability-description">{{ability.data.description}}</span>
     </label>

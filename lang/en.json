@@ -194,13 +194,13 @@
 
   "BITD.AddAbility": "Add Ability",
   "BITD.AddItem": "Add Item",
+  "BITD.DeleteAbility": "Delete Ability",
+  "BITD.DeleteItem": "Delete Item",
 
   "BITD.Position": "Position",
   "BITD.Effect": "Effect",
   "BITD.Modifier": "Modifier",
   
-  "BITD.Light": "light",
-  "BITD.Normal": "normal",
   "BITD.Encumbered": "encumbered",
   "BITD.OverMax": "over max",
 
