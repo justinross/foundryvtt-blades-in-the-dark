@@ -9,7 +9,7 @@ export class BladesActorSheet extends BladesSheet {
 
   /** @override */
 	static get defaultOptions() {
-	  return mergeObject(super.defaultOptions, {
+	  return foundry.utils.mergeObject(super.defaultOptions, {
   	  classes: ["blades-in-the-dark", "sheet", "actor"],
   	  template: "systems/blades-in-the-dark/templates/actor-sheet.html",
       width: 800,
@@ -23,7 +23,7 @@ export class BladesActorSheet extends BladesSheet {
       name: game.i18n.localize("BITD.TitleDeleteItem"), 
       icon: '<i class="fas fa-trash"></i>',
       callback: element => {
-        this.actor.deleteOwnedItem(element.data("item-id"));
+        this.actor.deleteItem(element.data("item-id"));
       }
     }
   ];
@@ -75,6 +75,10 @@ export class BladesActorSheet extends BladesSheet {
   /** @override */
   async getData() {
     var data = super.getData();
+    data.editable = this.options.editable;
+    const actorData = data.data;
+    data.actor = actorData;
+    data.data = actorData.data;
 
     // Calculate Load
     let loadout = 0;
@@ -110,15 +114,15 @@ export class BladesActorSheet extends BladesSheet {
     } else {
       data.data.load_level=load_level[loadout];   
     }
-    
-    data.load_levels = ["BITD.Light", "BITD.Normal", "BITD.Heavy"];
+
+    data.load_levels = {"BITD.Light":"BITD.Light", "BITD.Normal":"BITD.Normal", "BITD.Heavy":"BITD.Heavy"};
 
     //load up playbook options/data for playbook select 
     data.playbook_options = await game.packs.get("blades-in-the-dark.class").getIndex();
     data.playbook_select = this.prepIndexForHelper(data.playbook_options);
 
     if(data.data.playbook != ""){
-      data.selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getEntry(data.data.playbook);
+      data.selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getDocument(data.data.playbook);
       data.selected_playbook_name = data.selected_playbook_full.name;
       data.selected_playbook_description = data.selected_playbook_full.data.description;
 
@@ -179,9 +183,9 @@ export class BladesActorSheet extends BladesSheet {
     });
 
     // Delete Inventory Item
-    html.find('.item-delete').click(ev => {
+    html.find('.item-delete').click( async ev => {
       const element = $(ev.currentTarget).parents(".item");
-      this.actor.deleteOwnedItem(element.data("itemId"));
+      await this.actor.deleteEmbeddedDocuments("Item", [element.data("itemId")]);
       element.slideUp(200, () => this.render(false));
     });
 
@@ -197,7 +201,7 @@ export class BladesActorSheet extends BladesSheet {
     html.find('.item-block .main-checkbox').change(ev => {
       let checkbox = ev.target;
       let itemId = checkbox.closest(".item-block").dataset.itemId;
-      let item = this.actor.getOwnedItem(itemId);
+      let item = this.actor.items.get(itemId);
       return item.update({data: {equipped : checkbox.checked}});
     });
 

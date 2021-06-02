@@ -31,8 +31,8 @@ Hooks.once("init", async function() {
     dice: bladesRoll
   }
 
-  CONFIG.Item.entityClass = BladesItem;
-  CONFIG.Actor.entityClass = BladesActor;
+  CONFIG.Item.documentClass = BladesItem;
+  CONFIG.Actor.documentClass = BladesActor;
 
   // Register System Settings
   registerSystemSettings();
@@ -46,7 +46,7 @@ Hooks.once("init", async function() {
   Actors.registerSheet("blades", BladesNPCSheet, { types: ["npc"], makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("blades", BladesItemSheet, {makeDefault: true});
-  preloadHandlebarsTemplates();
+  await preloadHandlebarsTemplates();
   
   Actors.registeredSheets.forEach(element => console.log(element.Actor.name));
 
@@ -150,7 +150,7 @@ Hooks.once("init", async function() {
 
     let text = options.hash['text'].replace(/\n/g, "<br />");
 
-    return new Handlebars.SafeString(text);;
+    return new Handlebars.SafeString(text);
   });
 
   // "N Times" loop for handlebars.
@@ -235,7 +235,7 @@ Hooks.once("init", async function() {
 
     let html = '';
 
-    if (current_value === null) {
+    if (current_value === null || current_value === 'null') {
       current_value = 0;
     }
 
@@ -314,8 +314,8 @@ Hooks.on("deleteOwnedItem", async (parent_entity, child_data, options, userId) =
 // getSceneControlButtons
 Hooks.on("renderSceneControls", async (app, html) => {
   let dice_roller = $('<li class="scene-control" title="Dice Roll"><i class="fas fa-dice"></i></li>');
-  dice_roller.click(function() {
-    simpleRollPopup();
+  dice_roller.click( async function() {
+    await simpleRollPopup();
   });
   html.append(dice_roller);
 });
@@ -327,13 +327,13 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
     if(actor.data.data.playbook == ""){
       //pick a default class
       let classIndex = await game.packs.get("blades-in-the-dark.class").getIndex();
-      let classContent = await game.packs.get("blades-in-the-dark.class").getContent();
+      let classContent = await game.packs.get("blades-in-the-dark.class").getDocuments();
       //add default class
       let default_class = classContent[0];
       let attributes = await BladesHelpers.getStartingAttributes(default_class.name); 
       let data = {
         data:{
-          playbook: default_class._id,
+          playbook: default_class.id,
           attributes: attributes
         },
         new_character: true
@@ -343,7 +343,7 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
 
     //add class abilities
     //let all_abilities = await game.packs.get("blades-in-the-dark.ability").getContent();
-    let selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getEntry(actor.data.data.playbook);
+    let selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getDocument(actor.data.data.playbook);
     let selected_playbook_name = selected_playbook_full.name;
     let all_owned_items = actor.items.filter(item => item.data.type == "item");
     let class_items = all_owned_items.filter(item => item.data.data.class == selected_playbook_name);
