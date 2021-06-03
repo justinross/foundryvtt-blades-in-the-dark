@@ -393,7 +393,6 @@ Hooks.on("updateActor", async (actor, newData, meta, actorId) => {
     //remove all skills, with an exception for new weird playbook selection
     let new_attributes = await BladesHelpers.getStartingAttributes(new_playbook_name);
     let updated = await actor.update({data:{attributes: new_attributes}});
-    console.log(updated);
     await BladesHelpers.clearAbilities(actor, new_playbook_name == "Ghost" || new_playbook_name == "Hull" || new_playbook_name == "Vampire");
     await BladesHelpers.addPlaybookAbilities(actor, new_playbook_name);
     await BladesHelpers.clearPlaybookItems(actor, true);

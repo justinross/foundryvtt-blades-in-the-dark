@@ -17,7 +17,7 @@ export class BladesHelpers {
     // Remove Duplicate items from the array.
     actor.items.forEach( i => {
       let has_double = (item_data.type === i.data.type);
-      if ( ( ( i.name === item_data.name ) || ( should_be_distinct && has_double ) ) && !( allowed_types.includes( item_data.type ) ) && ( item_data._id !== i.id ) ) {
+      if ( ( ( i.name === item_data.name ) || ( should_be_distinct && has_double ) ) && !( allowed_types.includes( item_data.type ) ) && ( item_data.id !== i.id ) ) {
         dupe_list.push (i.id);
       }
     });
@@ -228,7 +228,7 @@ export class BladesHelpers {
   static async getStartingAttributes(playbook_name) {
         let empty_attributes = game.system.model.Actor.character.attributes;
         let attributes_to_return = empty_attributes;
-        let all_playbooks = await game.packs.get("blades-in-the-dark.class").getContent();
+        let all_playbooks = await game.packs.get("blades-in-the-dark.class").getDocuments();
         let selected_playbook_base_skills = all_playbooks.find(pb => pb.name == playbook_name).data.data.base_skills;
         for(const [key, value] of Object.entries(empty_attributes)){
           for(const [childKey, childValue] of Object.entries(value.skills)){
@@ -258,11 +258,12 @@ export class BladesHelpers {
             keep = ability.name.includes("Ghost") && ability.data.data.purchased;
           }
           if(!keep){
-            abilities_to_delete.push(ability._id);
+            abilities_to_delete.push(ability.id);
           }
         });
 
-        let deleted = await actor.deleteEmbeddedEntity("OwnedItem", abilities_to_delete, {noHook: true});
+    console.log(actor);
+        let deleted = await actor.deleteEmbeddedDocuments("Item", abilities_to_delete, {noHook: true});
         // console.log("Deleted playbook abilities: ", deleted);
         return deleted;
   }
@@ -275,9 +276,9 @@ export class BladesHelpers {
    * @returns {object} // the OwnedItems added
    */
   static async addPlaybookAbilities(actor, playbook_name){
-      let all_abilities = await game.packs.get("blades-in-the-dark.ability").getContent();
+      let all_abilities = await game.packs.get("blades-in-the-dark.ability").getDocuments();
       let new_playbook_abilities = all_abilities.filter(ability => ability.data.data.class == playbook_name);
-      let added = await actor.createEmbeddedEntity("OwnedItem", new_playbook_abilities, {noHook: true});
+      let added = await actor.createEmbeddedDocuments("Item", new_playbook_abilities.map(item => item.data), {noHook: true});
       // console.log("Added playbook abilities: ", added);
       return added;
   }
@@ -290,22 +291,22 @@ export class BladesHelpers {
    * @returns {object} // the OwnedItems deleted
    */
   static async clearPlaybookItems(actor, keep_custom_items = false){
-        let current_playbook_items = actor.items.filter(item => item.type == "item" && item.data.data.class != "");
-        console.log("Deleting unnecessary playbook items ...");
-        let items_to_delete = [];
-        current_playbook_items.forEach(async item => {
-          let keep = false;
-          if(keep_custom_items){
-            keep = false;
-          }
-          if(!keep){
-            items_to_delete.push(item._id);
-          }
-        });
+      let current_playbook_items = actor.items.filter(item => item.type == "item" && item.data.data.class != "");
+      console.log("Deleting unnecessary playbook items ...");
+      let items_to_delete = [];
+      for(const item of current_playbook_items){
+        let keep = false;
+        if(keep_custom_items){
+          keep = false;
+        }
+        if(!keep){
+          items_to_delete.push(item.id);
+        }
+      }
 
-        let deleted = await actor.deleteEmbeddedEntity("OwnedItem", items_to_delete, {noHook: true});
-        // console.log("Deleted playbook items: ", deleted);
-        return deleted;
+      let deleted = await actor.deleteEmbeddedDocuments("Item", items_to_delete, {noHook: true});
+      // console.log("Deleted playbook items: ", deleted);
+      return deleted;
   }
 
   /**
@@ -317,9 +318,9 @@ export class BladesHelpers {
    */
   static async addPlaybookItems(actor, playbook_name){
       console.log("Adding new playbook items");
-      let all_items = await game.packs.get("blades-in-the-dark.item").getContent();
+      let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
       let new_playbook_items = all_items.filter(item => item.data.data.class == playbook_name);
-      let added = await actor.createEmbeddedEntity("OwnedItem", new_playbook_items, {noHook: true});
+      let added = await actor.createEmbeddedDocuments("Item", new_playbook_items.map(item => item.data), {noHook: true});
       // console.log("Added playbook items: ", added);
       return added;
   }
@@ -332,9 +333,9 @@ export class BladesHelpers {
    */
   static async addGenericItems(actor){
       console.log("Adding new playbook items");
-      let all_items = await game.packs.get("blades-in-the-dark.item").getContent();
+      let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
       let new_items = all_items.filter(item => item.data.data.class == "");
-      let added = await actor.createEmbeddedEntity("OwnedItem", new_items, {noHook: true});
+      let added = await actor.createEmbeddedDocuments("Item", new_items, {noHook: true});
       // console.log("Added playbook items: ", added);
       return added;
   }
@@ -365,16 +366,16 @@ export class BladesHelpers {
   static async addPlaybookAcquaintances(actor, playbook_name){
       console.log("Adding new class acquaintances");
       //add class aquaintances
-      let all_npcs = await game.packs.get("blades-in-the-dark.npc").getContent();
+      let all_npcs = await game.packs.get("blades-in-the-dark.npc").getDocuments();
       let current_acquaintances = actor.data.data.acquaintances;
       let new_class_acquaintances = all_npcs.filter(obj => {
         let class_match = obj.data.data.associated_class == playbook_name
-        let unique_id =  !current_acquaintances.some(acq => acq._id == obj._id);
+        let unique_id =  !current_acquaintances.some(acq => acq.id == obj.id);
         return class_match && unique_id;
       });
       new_class_acquaintances = new_class_acquaintances.map(acq => {
         return {
-          _id : acq._id,
+          _id : acq.id,
           name : acq.name,
           description_short : acq.data.data.description_short,
           standing: "neutral"

@@ -66,7 +66,7 @@ export class BladesActorSheet extends BladesSheet {
       new_item_data.data.class = playbook_name;
       new_item_data.data.load = 1;
 
-      let new_item = await this.actor.createEmbeddedEntity("OwnedItem", new_item_data, {renderSheet : true});
+      let new_item = await this.actor.createEmbeddedDocument("OwnedItem", new_item_data, {renderSheet : true});
       return new_item;
   }
 
@@ -84,14 +84,14 @@ export class BladesActorSheet extends BladesSheet {
     let loadout = 0;
     data.items.forEach(i => {loadout += (i.type === "item") ? parseInt(i.data.load) : 0});
     data.data.loadout = loadout;
-    
+
     // Encumbrance Levels
     let load_level=["BITD.Light","BITD.Light","BITD.Light","BITD.Light","BITD.Normal","BITD.Normal","BITD.Heavy","BITD.Encumbered",
 			"BITD.Encumbered","BITD.Encumbered","BITD.OverMax"];
     let mule_level=["BITD.Light","BITD.Light","BITD.Light","BITD.Light","BITD.Light","BITD.Light","BITD.Normal","BITD.Normal",
 			"BITD.Heavy","BITD.Encumbered","BITD.OverMax"];
     let mule_present=0;
- 
+
     //Sanity Check
     if (loadout < 0) {
       loadout = 0;
@@ -112,9 +112,9 @@ export class BladesActorSheet extends BladesSheet {
     if (mule_present) {
       data.data.load_level=mule_level[loadout];
     } else {
-      data.data.load_level=load_level[loadout];   
+      data.data.load_level=load_level[loadout];
     }
-    
+
     data.load_levels = {"BITD.Light":"BITD.Light", "BITD.Normal":"BITD.Normal", "BITD.Heavy":"BITD.Heavy"};
 
     //load up playbook options/data for playbook select 
@@ -122,7 +122,7 @@ export class BladesActorSheet extends BladesSheet {
     data.playbook_select = this.prepIndexForHelper(data.playbook_options);
 
     if(data.data.playbook != ""){
-      data.selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getEntry(data.data.playbook);
+      data.selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getDocument(data.data.playbook);
       data.selected_playbook_name = data.selected_playbook_full.name;
       data.selected_playbook_description = data.selected_playbook_full.data.description;
 
