@@ -1,5 +1,14 @@
 export class BladesHelpers {
 
+
+  static get icons(){
+    let _icons = {
+      trauma_cold : {icon : 'fas fa-icicles', type : 'fa', alt_txt : "Trauma - Cold"},
+      trauma_haunted : {icon : 'fas fa-ghost', type : 'fa', alt_txt : "Trauma - Haunted"},
+    }
+    return _icons;
+  }
+
   /**
    * Identifies duplicate items by type and returns a array of item ids to remove
    *
@@ -384,4 +393,5 @@ export class BladesHelpers {
 
       await actor.update({data: {acquaintances : current_acquaintances.concat(new_class_acquaintances)}});
   }
+
 }

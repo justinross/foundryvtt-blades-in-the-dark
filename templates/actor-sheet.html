@@ -6,23 +6,41 @@
         <div class="portrait">
           <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" >
         </div>
-        <div class="stress-box">
-        </div>
-        <div class="trauma-icons count-{{data.trauma.list.length}}">
-          {{#each data.trauma.list as |trauma index|}}
-            <div class="trauma-icon" title="{{trauma}}">
-              <img src="/systems/blades-in-the-dark/styles/assets/icons/status_icons/trauma-{{trauma}}.svg" alt="">
+        <div class="stress-trauma-box">
+          <header class="stress-bar full-bar">
+            {{localize "BITD.Stress"}} <i class="fas fa-plus add_trauma"></i>
+            <div class="stripe-tooth-body stress">
+            {{#multiboxes data.stress.value}}
+              <input type="radio" id="{{../actor.id}}-stress-0"
+                     name="data.stress.value" value="0" checked="checked" class="zero">
+              {{#times_from_1 data.stress.max}}
+                <input type="radio" id="character-{{../../actor.id}}-stress-{{this}}" name="data.stress.value" value="{{this}}" dtype="Radio" class="radio-toggle" >
+                <label for="character-{{../../actor.id}}-stress-{{this}}" class="{{#if (gte ../data.stress.value @this)}}on{{/if}} radio-toggle"  ></label>
+              {{/times_from_1}}
+            {{/multiboxes}}
             </div>
-          {{/each}}
+          </header>
+          {{#if (gte data.trauma.list.length 0)}}
+            <div class="trauma-box">
+              <div class="trauma-list count-{{data.trauma.list.length}}">
+                {{#each data.trauma.list as |trauma index|}}
+                  <div class="trauma">{{localize (concat "BITD.Trauma" trauma)}}</div>
+                {{/each}}
+              </div>
+            </div>
+          {{/if}}
+        </div>
+        <div class="harm-status-box">
+
         </div>
       </section>
       <div class="name-alias bio">
-        <span class="name">{{{inline-editable-text "name" (localize "BITD.Name") actor.name actor._id this}}}</span> <span class="alias">&bull; "{{{inline-editable-text "data.alias" (localize "BITD.Alias") data.alias actor._id this}}}"</span>
+        <span class="name">{{{inline-editable-text "name" (localize "BITD.Name") actor.name actor.id this}}}</span> <span class="alias">&bull; "{{{inline-editable-text "data.alias" (localize "BITD.Alias") data.alias actor.id this}}}"</span>
       </div>
       <div class="heritage-background bio">
-        {{{inline-editable-text "data.heritage" "Heritage" data.heritage actor._id this}}} &bull; {{{inline-editable-text "data.background" "Background" data.background actor._id this}}} &bull; {{{inline-editable-text "data.background-details" "Background Details" data.background-details actor._id this}}}
+        {{{inline-editable-text "data.heritage" "Heritage" data.heritage actor.id this}}} &bull; {{{inline-editable-text "data.background" "Background" data.background actor.id this}}} &bull; {{{inline-editable-text "data.background-details" "Background Details" data.background-details actor.id this}}}
       </div>
-      <div class="look bio">{{{inline-editable-text "data.look" "Look" data.look actor._id this}}}</div>
+      <div class="look bio">{{{inline-editable-text "data.look" "Look" data.look actor.id this}}}</div>
       <section class="attributes-actions">
         {{> "systems/blades-in-the-dark/templates/parts/attributes.html" actor=actor}}
       </section>
@@ -49,13 +67,13 @@
             <section class="abilities">
               <header class="full-bar context-abilities">
                 {{localize "BITD.SpecialAbilities"}}
-                <div class="stripe-tooth-body">
+                <div class="stripe-tooth-body right">
                 {{#multiboxes data.experience}}
-                  <input type="radio" id="{{../actor._id}}-experience-0"
+                  <input type="radio" id="{{../actor.id}}-experience-0"
                         name="data.experience" value="0" checked="checked" class="zero">
                   {{#times_from_1 8}}
-                    <input type="radio" id="character-{{../../actor._id}}-experience-{{this}}" name="data.experience" value="{{this}}" dtype="Radio" class="radio-toggle" >
-                    <label for="character-{{../../actor._id}}-experience-{{this}}" class="{{#if (gte ../data.experience @this)}}on{{/if}} radio-toggle"  ></label>
+                    <input type="radio" id="character-{{../../actor.id}}-experience-{{this}}" name="data.experience" value="{{this}}" dtype="Radio" class="radio-toggle" >
+                    <label for="character-{{../../actor.id}}-experience-{{this}}" class="{{#if (gte ../data.experience @this)}}on{{/if}} radio-toggle"  ></label>
                   {{/times_from_1}}
                 {{/multiboxes}}
                 </div>
@@ -73,10 +91,10 @@
               {{#each playbook_items as |item index|}}
                 {{#with ../actor as |actor|}}
                 <div class="item-block" data-item-id="{{item._id}}">
-                  <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor._id}}-item-{{item._id}}-1" {{checked item.data.equipped}}><!--
-                  -->{{#if (gte item.data.load 2)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor._id}}-item-{{item._id}}-2" {{checked item.data.equipped}}>{{/if}}<!--
-                  -->{{#if (eq item.data.load 3)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3"{{checked item.data.equipped}}>{{/if}}
-                  <label class="item-name {{#if (eq item.data.load "0")}}free-item{{/if}} {{#if actor.flags.blades-in-the-dark.allow-edit}}clickable-edit{{/if}}" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>
+                  <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor.id}}-item-{{item._id}}-1" {{checked item.data.equipped}}><!--
+                  -->{{#if (gte item.data.load 2)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor.id}}-item-{{item._id}}-2" {{checked item.data.equipped}}>{{/if}}<!--
+                  -->{{#if (eq item.data.load 3)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor.id}}-item-{{item._id}}-3"{{checked item.data.equipped}}>{{/if}}
+                  <label class="item-name {{#if (eq item.data.load "0")}}free-item{{/if}} {{#if actor.flags.blades-in-the-dark.allow-edit}}clickable-edit{{/if}}" for="character-{{actor.id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>
                 </div>
                 {{/with}}
               {{/each}}
@@ -98,10 +116,10 @@
               {{#each generic_items as |item index|}}
                 {{#with ../actor as |actor|}}
                 <div class="item-block" data-item-id="{{item._id}}">
-                  <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor._id}}-item-{{item._id}}-1" {{checked item.data.equipped}}><!--
-                  -->{{#if (gte item.data.load 2)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox"  id="character-{{actor._id}}-item-{{item._id}}-2" {{checked item.data.equipped}} >{{/if}}<!--
-                  -->{{#if (gte item.data.load 3)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3" {{checked item.data.equipped}} >{{/if}}
-                  <label class="item-name  {{#if (eq item.data.load "0")}}free-item{{/if}} {{#if actor.flags.blades-in-the-dark.allow-edit}}clickable-edit{{/if}}" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>
+                  <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor.id}}-item-{{item._id}}-1" {{checked item.data.equipped}}><!--
+                  -->{{#if (gte item.data.load 2)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox"  id="character-{{actor.id}}-item-{{item._id}}-2" {{checked item.data.equipped}} >{{/if}}<!--
+                  -->{{#if (gte item.data.load 3)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor.id}}-item-{{item._id}}-3" {{checked item.data.equipped}} >{{/if}}
+                  <label class="item-name  {{#if (eq item.data.load "0")}}free-item{{/if}} {{#if actor.flags.blades-in-the-dark.allow-edit}}clickable-edit{{/if}}" for="character-{{actor.id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>
                 </div>
                 {{/with}}
               {{/each}}
@@ -111,7 +129,7 @@
               <ul>
                 <li>Every time you roll a desperate action, mark xp in that action's attribute.</li>
                 <p>At the end of each session, for each item below, mark 1 xp (in your playbook or an attribute) or 2 xp if that item occurred multiple times.</p>
-                <li>{{selected_playbook_full.data.experience_clues}}</li>
+                <li>{{selected_playbook_full.data.data.experience_clues}}</li>
                 <li>You expressed your beliefs, drives, heritage, or background.</li>
                 <li>You struggled with issues from your vice or traumas during the session.</li>
               </ul>
@@ -130,8 +148,8 @@
 
     <div class="grow-two">
       <div id="name">
-        <label for="character-{{actor._id}}-name">{{localize "BITD.Name"}}</label>
-        <input type="text" id="character-{{actor._id}}-name" name="name" value="{{actor.name}}">
+        <label for="character-{{actor.id}}-name">{{localize "BITD.Name"}}</label>
+        <input type="text" id="character-{{actor.id}}-name" name="name" value="{{actor.name}}">
       </div>
 
       <div id="character-traits" class="flex-column">
@@ -201,8 +219,8 @@
 
     <div class="grow-two">
       <div id="alias">
-        <label for="character-{{actor._id}}-alias">{{localize "BITD.Alias"}}</label>
-        <input type="text" id="character-{{actor._id}}-alias" name="data.alias" value="{{data.alias}}">
+        <label for="character-{{actor.id}}-alias">{{localize "BITD.Alias"}}</label>
+        <input type="text" id="character-{{actor.id}}-alias" name="data.alias" value="{{data.alias}}">
       </div>
 
       {{> "systems/blades-in-the-dark/templates/parts/coins.html" actor=actor}}
@@ -215,31 +233,31 @@
   </section>
   {{!-- Stress and Trauma --}}
   <div id="stress-trauma" class="section big-teeth-section">
-    <div id="character-{{actor._id}}-stress" class="big-teeth">
+    <div id="character-{{actor.id}}-stress" class="big-teeth">
       {{#multiboxes data.stress.value}}
 
-      <input type="radio" id="character-{{actor._id}}-stress-0" name="data.stress.value" value="0" dtype="Radio">
-      <label class="black-label" for="character-{{actor._id}}-stress-0">{{localize data.stress.name}}</label>
+      <input type="radio" id="character-{{actor.id}}-stress-0" name="data.stress.value" value="0" dtype="Radio">
+      <label class="black-label" for="character-{{actor.id}}-stress-0">{{localize data.stress.name}}</label>
 
       {{#times_from_1 data.stress.max}}
-        <input type="radio" id="character-{{../actor._id}}-stress-{{this}}" name="data.stress.value" value="{{this}}"
+        <input type="radio" id="character-{{../actor.id}}-stress-{{this}}" name="data.stress.value" value="{{this}}"
                dtype="Radio">
-        <label for="character-{{../actor._id}}-stress-{{this}}"></label>
+        <label for="character-{{../actor.id}}-stress-{{this}}"></label>
       {{/times_from_1}}
 
       {{/multiboxes}}
 
     </div>
-    <div id="character-{{actor._id}}-trauma-container" class="small-teeth-container">
+    <div id="character-{{actor.id}}-trauma-container" class="small-teeth-container">
       {{#traumacounter data.trauma.list}}
-      <div id="character-{{actor._id}}-trauma" class="small-teeth-wrap">
-        <label class="black-label" for="character-{{actor._id}}-trauma-counter-0">{{localize data.trauma.name}}</label>
+      <div id="character-{{actor.id}}-trauma" class="small-teeth-wrap">
+        <label class="black-label" for="character-{{actor.id}}-trauma-counter-0">{{localize data.trauma.name}}</label>
         <div id="trauma-teeth" class="small-teeth">
-          <input type="radio" id="character-{{actor._id}}-trauma-counter-0" name="data.trauma.value" value="0">
+          <input type="radio" id="character-{{actor.id}}-trauma-counter-0" name="data.trauma.value" value="0">
 
           {{#times_from_1 data.trauma.max}}
-            <input type="radio" id="character-{{actor._id}}-trauma-counter-{{this}}" name="data.trauma.value" value="{{this}}" disabled>
-            <label for="character-{{actor._id}}-trauma-counter-{{this}}"></label>
+            <input type="radio" id="character-{{actor.id}}-trauma-counter-{{this}}" name="data.trauma.value" value="{{this}}" disabled>
+            <label for="character-{{actor.id}}-trauma-counter-{{this}}"></label>
           {{/times_from_1}}
         </div>
       </div>
@@ -296,12 +314,12 @@
           <tr>
             <td>3</td>
             <td colspan="2">
-              <input type="text" id="character-{{actor._id}}-harm-3-1" name="data.harm.heavy.one" value="{{data.harm.heavy.one}}">
+              <input type="text" id="character-{{actor.id}}-harm-3-1" name="data.harm.heavy.one" value="{{data.harm.heavy.one}}">
             </td>
             <td>{{localize "BITD.NeedHelp"}}</td>
             <td rowspan="3">
               <div id="character-health-clock">
-                {{{blades-clock "data.healing-clock" 4 data.healing-clock actor._id}}}
+                {{{blades-clock "data.healing-clock" 4 data.healing-clock actor.id}}}
               </div>
             </td>
             <td rowspan="3" id="character-armor-uses">
@@ -322,20 +340,20 @@
           <tr>
             <td>2</td>
             <td>
-              <input type="text" id="character-{{actor._id}}-harm-2-1" name="data.harm.medium.one" value="{{data.harm.medium.one}}">
+              <input type="text" id="character-{{actor.id}}-harm-2-1" name="data.harm.medium.one" value="{{data.harm.medium.one}}">
             </td>
             <td>
-              <input type="text" id="character-{{actor._id}}-harm-2-2" name="data.harm.medium.two" value="{{data.harm.medium.two}}">
+              <input type="text" id="character-{{actor.id}}-harm-2-2" name="data.harm.medium.two" value="{{data.harm.medium.two}}">
             </td>
             <td>-1D</td>
           </tr>
           <tr>
             <td>1</td>
             <td>
-              <input type="text" id="character-{{actor._id}}-harm-1-1" name="data.harm.light.one" value="{{data.harm.light.one}}">
+              <input type="text" id="character-{{actor.id}}-harm-1-1" name="data.harm.light.one" value="{{data.harm.light.one}}">
             </td>
             <td>
-              <input type="text" id="character-{{actor._id}}-harm-1-2" name="data.harm.light.two" value="{{data.harm.light.two}}">
+              <input type="text" id="character-{{actor.id}}-harm-1-2" name="data.harm.light.two" value="{{data.harm.light.two}}">
             </td>
             <td>{{localize "BITD.LessEffect"}}</td>
           </tr>
@@ -362,30 +380,30 @@
 
       <div id="abilities" class="tab flex-vertical" data-tab="abilities">
         <div class="label-stripe">
-          <p><label for="character-{{actor._id}}-experience-0">{{localize "BITD.Abilities"}}</label></p>
+          <p><label for="character-{{actor.id}}-experience-0">{{localize "BITD.Abilities"}}</label></p>
           <p><a class="item-add-popup" data-item-type="ability"><i class="fas fa-plus-square"></i></a></p>
           <div id="character-experience" class="teeth-experience">
-            <label for="character-{{actor._id}}-experience-0"><i class="fab fa-creative-commons-zero nullifier"></i></label>
+            <label for="character-{{actor.id}}-experience-0"><i class="fab fa-creative-commons-zero nullifier"></i></label>
             {{#multiboxes data.experience}}
-            <input type="radio" id="character-{{actor._id}}-experience-0" name="data.experience" value="0" dtype="Radio">
-            <input type="radio" id="character-{{actor._id}}-experience-1" name="data.experience" value="1" dtype="Radio">
-            <label for="character-{{actor._id}}-experience-1"></label>
-            <input type="radio" id="character-{{actor._id}}-experience-2" name="data.experience" value="2" dtype="Radio">
-            <label for="character-{{actor._id}}-experience-2"></label>
-            <input type="radio" id="character-{{actor._id}}-experience-3" name="data.experience" value="3" dtype="Radio">
-            <label for="character-{{actor._id}}-experience-3"></label>
-            <input type="radio" id="character-{{actor._id}}-experience-4" name="data.experience" value="4" dtype="Radio">
-            <label for="character-{{actor._id}}-experience-4"></label>
-            <input type="radio" id="character-{{actor._id}}-experience-5" name="data.experience" value="5" dtype="Radio">
-            <label for="character-{{actor._id}}-experience-5"></label>
-            <input type="radio" id="character-{{actor._id}}-experience-6" name="data.experience" value="6" dtype="Radio">
-            <label for="character-{{actor._id}}-experience-6"></label>
-            <input type="radio" id="character-{{actor._id}}-experience-7" name="data.experience" value="7" dtype="Radio">
-            <label for="character-{{actor._id}}-experience-7"></label>
-            <input type="radio" id="character-{{actor._id}}-experience-8" name="data.experience" value="8" dtype="Radio">
-            <label for="character-{{actor._id}}-experience-8"></label>
-            <input type="radio" id="character-{{actor._id}}-experience-9" name="data.experience" value="9" dtype="Radio">
-            <label for="character-{{actor._id}}-experience-9"></label>
+            <input type="radio" id="character-{{actor.id}}-experience-0" name="data.experience" value="0" dtype="Radio">
+            <input type="radio" id="character-{{actor.id}}-experience-1" name="data.experience" value="1" dtype="Radio">
+            <label for="character-{{actor.id}}-experience-1"></label>
+            <input type="radio" id="character-{{actor.id}}-experience-2" name="data.experience" value="2" dtype="Radio">
+            <label for="character-{{actor.id}}-experience-2"></label>
+            <input type="radio" id="character-{{actor.id}}-experience-3" name="data.experience" value="3" dtype="Radio">
+            <label for="character-{{actor.id}}-experience-3"></label>
+            <input type="radio" id="character-{{actor.id}}-experience-4" name="data.experience" value="4" dtype="Radio">
+            <label for="character-{{actor.id}}-experience-4"></label>
+            <input type="radio" id="character-{{actor.id}}-experience-5" name="data.experience" value="5" dtype="Radio">
+            <label for="character-{{actor.id}}-experience-5"></label>
+            <input type="radio" id="character-{{actor.id}}-experience-6" name="data.experience" value="6" dtype="Radio">
+            <label for="character-{{actor.id}}-experience-6"></label>
+            <input type="radio" id="character-{{actor.id}}-experience-7" name="data.experience" value="7" dtype="Radio">
+            <label for="character-{{actor.id}}-experience-7"></label>
+            <input type="radio" id="character-{{actor.id}}-experience-8" name="data.experience" value="8" dtype="Radio">
+            <label for="character-{{actor.id}}-experience-8"></label>
+            <input type="radio" id="character-{{actor.id}}-experience-9" name="data.experience" value="9" dtype="Radio">
+            <label for="character-{{actor.id}}-experience-9"></label>
             {{/multiboxes}}
           </div>
         </div>

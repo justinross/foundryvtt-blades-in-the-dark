@@ -124,7 +124,7 @@ export class BladesActorSheet extends BladesSheet {
     if(data.data.playbook != ""){
       data.selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getDocument(data.data.playbook);
       data.selected_playbook_name = data.selected_playbook_full.name;
-      data.selected_playbook_description = data.selected_playbook_full.data.description;
+      data.selected_playbook_description = data.selected_playbook_full.data.data.description;
 
       let playbook_abilities = data.items.filter(item => item.type == "ability" );
 
@@ -143,6 +143,9 @@ export class BladesActorSheet extends BladesSheet {
       });
       data.generic_items = data.items.filter(item => item.type == "item" && item.data.class == "");
     }
+
+    //testing harm
+    data.data.trauma.list = ["Cold", "Haunted"];
 
     return data;
   }

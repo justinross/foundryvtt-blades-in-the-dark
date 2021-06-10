@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* 
 *  Elements that can be changed will hint this by dimming and fading a little on hover
 */
@@ -108,6 +109,10 @@
   margin: 5px;
   font-family: "Crimson Text", serif;
 }
+#tidy-redesign input[type=checkbox] {
+  width: 1em;
+  height: 1em;
+}
 #tidy-redesign [contenteditable] {
   user-select: auto !important;
   text-decoration: underline;
@@ -145,14 +150,14 @@
   position: relative;
   margin-bottom: 5px;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body {
+#tidy-redesign header.full-bar .stripe-tooth-body.right {
   position: absolute;
   top: 1px;
-  right: 0;
+  right: 1px;
   display: flex;
   /* Hide the browser's default checkbox */
 }
-#tidy-redesign header.full-bar .stripe-tooth-body label {
+#tidy-redesign header.full-bar .stripe-tooth-body.right label {
   height: 25px;
   width: 10px;
   background-image: url("assets/teeth/xptooth-red.png");
@@ -162,30 +167,73 @@
   transition: filter 0.1s;
   cursor: pointer;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body label:last-of-type {
+#tidy-redesign header.full-bar .stripe-tooth-body.right label:last-of-type {
   margin-right: 0px;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body label[for$="-0"] {
+#tidy-redesign header.full-bar .stripe-tooth-body.right label[for$="-0"] {
   width: auto;
   height: auto;
   background-image: none !important;
   color: #EEEFFF;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body label[for$="-0"] i {
+#tidy-redesign header.full-bar .stripe-tooth-body.right label[for$="-0"] i {
   margin-top: 4px;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body label:hover {
+#tidy-redesign header.full-bar .stripe-tooth-body.right label:hover {
   filter: brightness(0.8);
   opacity: 0.9;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body input {
+#tidy-redesign header.full-bar .stripe-tooth-body.right input {
   display: none;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body label {
+#tidy-redesign header.full-bar .stripe-tooth-body.right label {
   background-image: url("assets/teeth/xptooth-white.png");
   background-size: 100% 100%;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body label.on {
+#tidy-redesign header.full-bar .stripe-tooth-body.right label.on {
+  background-image: url("assets/teeth/xptooth-red.png");
+}
+#tidy-redesign header.full-bar .stripe-tooth-body.stress {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  display: flex;
+  /* Hide the browser's default checkbox */
+}
+#tidy-redesign header.full-bar .stripe-tooth-body.stress label {
+  height: 25px;
+  width: 10px;
+  background-image: url("assets/teeth/xptooth-red.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 3px;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+#tidy-redesign header.full-bar .stripe-tooth-body.stress label:last-of-type {
+  margin-right: 0px;
+}
+#tidy-redesign header.full-bar .stripe-tooth-body.stress label[for$="-0"] {
+  width: auto;
+  height: auto;
+  background-image: none !important;
+  color: #EEEFFF;
+}
+#tidy-redesign header.full-bar .stripe-tooth-body.stress label[for$="-0"] i {
+  margin-top: 4px;
+}
+#tidy-redesign header.full-bar .stripe-tooth-body.stress label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+#tidy-redesign header.full-bar .stripe-tooth-body.stress input {
+  display: none;
+}
+#tidy-redesign header.full-bar .stripe-tooth-body.stress label {
+  background-image: url("assets/teeth/xptooth-white.png");
+  background-size: 100% 100%;
+}
+#tidy-redesign header.full-bar .stripe-tooth-body.stress label.on {
   background-image: url("assets/teeth/xptooth-red.png");
 }
 #tidy-redesign .toggle-allow-edit {
@@ -258,118 +306,34 @@
   border-radius: 50%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3) inset;
 }
-#tidy-redesign .minimized-view .character-portrait .trauma-icons {
+#tidy-redesign .minimized-view .character-portrait .stress-trauma-box {
+  width: 100%;
+  height: 2em;
   position: absolute;
-  top: 0;
+  bottom: 10px;
   left: 0;
-  width: 200px;
-  height: 200px;
-  pointer-events: none;
+  z-index: 10;
 }
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-1 > .trauma-icon {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 30px;
-  height: 30px;
-  margin: -15px;
+#tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box {
+  padding: 0 6px;
 }
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-1 > .trauma-icon:nth-of-type(1) {
-  transform: rotate(90deg) translate(92.5px) rotate(-90deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-2 > .trauma-icon {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 30px;
-  height: 30px;
-  margin: -15px;
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-2 > .trauma-icon:nth-of-type(1) {
-  transform: rotate(80deg) translate(92.5px) rotate(-80deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-2 > .trauma-icon:nth-of-type(2) {
-  transform: rotate(100deg) translate(92.5px) rotate(-100deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-3 > .trauma-icon {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 30px;
-  height: 30px;
-  margin: -15px;
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-3 > .trauma-icon:nth-of-type(1) {
-  transform: rotate(70deg) translate(92.5px) rotate(-70deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-3 > .trauma-icon:nth-of-type(2) {
-  transform: rotate(90deg) translate(92.5px) rotate(-90deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-3 > .trauma-icon:nth-of-type(3) {
-  transform: rotate(110deg) translate(92.5px) rotate(-110deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-4 > .trauma-icon {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 30px;
-  height: 30px;
-  margin: -15px;
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-4 > .trauma-icon:nth-of-type(1) {
-  transform: rotate(60deg) translate(92.5px) rotate(-60deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-4 > .trauma-icon:nth-of-type(2) {
-  transform: rotate(80deg) translate(92.5px) rotate(-80deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-4 > .trauma-icon:nth-of-type(3) {
-  transform: rotate(100deg) translate(92.5px) rotate(-100deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-4 > .trauma-icon:nth-of-type(4) {
-  transform: rotate(120deg) translate(92.5px) rotate(-120deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-5 > .trauma-icon {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 30px;
-  height: 30px;
-  margin: -15px;
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-5 > .trauma-icon:nth-of-type(1) {
-  transform: rotate(50deg) translate(92.5px) rotate(-50deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-5 > .trauma-icon:nth-of-type(2) {
-  transform: rotate(70deg) translate(92.5px) rotate(-70deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-5 > .trauma-icon:nth-of-type(3) {
-  transform: rotate(90deg) translate(92.5px) rotate(-90deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-5 > .trauma-icon:nth-of-type(4) {
-  transform: rotate(110deg) translate(92.5px) rotate(-110deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons.count-5 > .trauma-icon:nth-of-type(5) {
-  transform: rotate(130deg) translate(92.5px) rotate(-130deg);
-}
-#tidy-redesign .minimized-view .character-portrait .trauma-icons .trauma-icon {
-  background-color: #600;
+#tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list {
+  width: 100%;
+  height: 100%;
+  background-color: #bbb;
+  color: #191813;
   text-align: center;
-  border-radius: 50%;
-  pointer-events: auto;
-  width: 30px;
-  height: 30px;
-  color: #fff;
-  padding: 3px;
-  border: 2px solid #666;
+  position: relative;
+  top: -5px;
+  padding-top: 5px;
+  border-radius: 0 0 1em 1em;
+  z-index: -10;
 }
-#tidy-redesign .minimized-view .character-portrait .trauma-icons .trauma-icon img {
-  border: none;
-  fill: currentColor;
+#tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .trauma {
+  display: inline-block;
+}
+#tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .trauma:not(:last-of-type)::after {
+  content: " •";
 }
 #tidy-redesign .minimized-view .name-alias {
   font-family: Kirsty, serif;
@@ -540,6 +504,7 @@
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block input {
   margin: 0;
+  margin-right: 3px;
   position: relative;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block input.offset {
@@ -575,7 +540,7 @@
   display: inline-block;
   height: 0px;
   margin: 0 -0.5em;
-  top: -0.7em;
+  top: -0.5em;
   position: relative;
   z-index: 0;
 }
@@ -583,7 +548,6 @@
   vertical-align: bottom;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block input {
-  margin-right: 0;
   margin-left: 0;
   position: relative;
   z-index: 10;
@@ -615,6 +579,7 @@
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes ul {
   list-style-type: square;
+  padding-right: 5px;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes ul li {
   font-style: italic;
