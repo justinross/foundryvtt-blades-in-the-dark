@@ -14,7 +14,8 @@ export const preloadHandlebarsTemplates = async function() {
     "systems/blades-in-the-dark/templates/parts/ability.html",
     "systems/blades-in-the-dark/templates/parts/turf-list.html",
     "systems/blades-in-the-dark/templates/parts/cohort-block.html",
-    "systems/blades-in-the-dark/templates/parts/factions.html"
+    "systems/blades-in-the-dark/templates/parts/factions.html",
+    "systems/blades-in-the-dark/templates/parts/active-effects.html",
   ];
 
   // Load the template parts
