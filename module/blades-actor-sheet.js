@@ -1,5 +1,6 @@
 
 import { BladesSheet } from "./blades-sheet.js";
+import {onManageActiveEffect, prepareActiveEffectCategories} from "./effects.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -20,7 +21,7 @@ export class BladesActorSheet extends BladesSheet {
 
   itemContextMenu = [
     {
-      name: game.i18n.localize("BITD.TitleDeleteItem"), 
+      name: game.i18n.localize("BITD.TitleDeleteItem"),
       icon: '<i class="fas fa-trash"></i>',
       callback: element => {
         this.actor.deleteOwnedItem(element.data("item-id"));
@@ -30,7 +31,7 @@ export class BladesActorSheet extends BladesSheet {
 
   itemListContextMenu = [
     {
-      name: game.i18n.localize("BITD.AddItem"), 
+      name: game.i18n.localize("BITD.AddItem"),
       icon: '<i class="fas fa-plus"></i>',
       callback: element => {
         this.addBlankItem();
@@ -40,7 +41,7 @@ export class BladesActorSheet extends BladesSheet {
 
   abilityContextMenu = [
     {
-      name: game.i18n.localize("BITD.DeleteAbility"), 
+      name: game.i18n.localize("BITD.DeleteAbility"),
       icon: '<i class="fas fa-trash"></i>',
       callback: element => {
         this.actor.deleteOwnedItem(element.data("ability-id"));
@@ -50,7 +51,7 @@ export class BladesActorSheet extends BladesSheet {
 
   abilityListContextMenu = [
     {
-      name: game.i18n.localize("BITD.AddAbility"), 
+      name: game.i18n.localize("BITD.AddAbility"),
       icon: '<i class="fas fa-plus"></i>',
       callback: element => {
         throw new console.error("Add new ability not implemented. How should we process this? Open a list of abilities to add?");
@@ -76,9 +77,13 @@ export class BladesActorSheet extends BladesSheet {
   async getData() {
     var data = super.getData();
     data.editable = this.options.editable;
+    data.isGM = game.user.isGM;
     const actorData = data.data;
     data.actor = actorData;
     data.data = actorData.data;
+
+    // Prepare active effects
+    data.effects = prepareActiveEffectCategories(this.actor.effects);
 
     // Calculate Load
     let loadout = 0;
@@ -117,7 +122,7 @@ export class BladesActorSheet extends BladesSheet {
 
     data.load_levels = {"BITD.Light":"BITD.Light", "BITD.Normal":"BITD.Normal", "BITD.Heavy":"BITD.Heavy"};
 
-    //load up playbook options/data for playbook select 
+    //load up playbook options/data for playbook select
     data.playbook_options = await game.packs.get("blades-in-the-dark.class").getIndex();
     data.playbook_select = this.prepIndexForHelper(data.playbook_options);
 
@@ -221,9 +226,9 @@ export class BladesActorSheet extends BladesSheet {
       return ability.update({data: {purchased : checkbox.checked}});
     });
 
-    //this could probably be cleaner. Numbers instead of text would be fine, but not much easier, really. 
+    //this could probably be cleaner. Numbers instead of text would be fine, but not much easier, really.
     html.find('.standing-toggle').click(ev => {
-      let acquaintances = this.actor.data.data.acquaintances; 
+      let acquaintances = this.actor.data.data.acquaintances;
       let acqId = ev.target.closest('.acquaintance').dataset.acquaintance;
       let clickedAcqIdx = acquaintances.findIndex(item => item._id == acqId);
       let clickedAcq = acquaintances[clickedAcqIdx];
@@ -249,6 +254,9 @@ export class BladesActorSheet extends BladesSheet {
 
     });
 
+
+    // manage active effects
+    html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
   }
 
   /* -------------------------------------------- */
