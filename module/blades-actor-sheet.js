@@ -24,7 +24,7 @@ export class BladesActorSheet extends BladesSheet {
       name: game.i18n.localize("BITD.TitleDeleteItem"),
       icon: '<i class="fas fa-trash"></i>',
       callback: element => {
-        this.actor.deleteOwnedItem(element.data("item-id"));
+        this.actor.deleteEmbeddedDocuments("Item", [element.data("item-id")]);
       }
     }
   ];
@@ -33,8 +33,35 @@ export class BladesActorSheet extends BladesSheet {
     {
       name: game.i18n.localize("BITD.AddItem"),
       icon: '<i class="fas fa-plus"></i>',
-      callback: element => {
-        this.addBlankItem();
+      callback: async (element) => {
+        let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
+        let items_html = '<ul>';
+        all_items.sort((a, b) => a.name > b.name ? 1 : -1);
+        for (const item of all_items) {
+          items_html += `<li><input type="checkbox" id="character-${this.actor.id}-itemadd-${item.id}"><label for="character-${this.actor.id}-itemadd-${item.id}">${item.name}</label></li>`;
+        }
+        items_html += '</ul';
+        let d = new Dialog({
+          title: "Add Item(s)",
+          content:  `<h3>Select items to add:</h3>
+                    ${items_html}
+                    `,
+          buttons: {
+            one: {
+              icon: "<i class='fas fa-check'></i>",
+              label: "One",
+              callback: ()=> console.log("One")
+            }
+          },
+          render: (html) => {
+
+          },
+          close: (html) => {
+
+          }
+        });
+        d.render(true);
+        // this.addBlankItem();
       }
     }
   ];
@@ -44,7 +71,8 @@ export class BladesActorSheet extends BladesSheet {
       name: game.i18n.localize("BITD.DeleteAbility"),
       icon: '<i class="fas fa-trash"></i>',
       callback: element => {
-        this.actor.deleteOwnedItem(element.data("ability-id"));
+        console.log(this.actor.items);
+        this.actor.deleteEmbeddedDocuments("Item", [element.data("ability-id")]);
       }
     }
   ]
@@ -54,12 +82,30 @@ export class BladesActorSheet extends BladesSheet {
       name: game.i18n.localize("BITD.AddAbility"),
       icon: '<i class="fas fa-plus"></i>',
       callback: element => {
-        throw new console.error("Add new ability not implemented. How should we process this? Open a list of abilities to add?");
+        let d = new Dialog({
+          title: "Add Item",
+          content: "Pick an ability to add",
+          buttons: {
+            one: {
+              icon: "<i class='fas fa-check'></i>",
+              label: "One",
+              callback: ()=> console.log("One")
+            }
+          },
+          render: (html) => {
+
+          },
+          close: (html) => {
+
+          }
+        });
+        d.render(true);
+
       }
     }
   ]
 
-  async addBlankItem(){
+  async addNewItem(){
       let playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
       let playbook_name = playbooks_index.find(pb => pb._id == this.actor.data.data.playbook).name;
       let item_data_model = game.system.model.Item.item;
@@ -67,7 +113,7 @@ export class BladesActorSheet extends BladesSheet {
       new_item_data.data.class = playbook_name;
       new_item_data.data.load = 1;
 
-      let new_item = await this.actor.createEmbeddedDocument("OwnedItem", new_item_data, {renderSheet : true});
+      let new_item = await this.actor.createEmbeddedDocuments("Item", [new_item_data], {renderSheet : true});
       return new_item;
   }
 
@@ -161,11 +207,26 @@ export class BladesActorSheet extends BladesSheet {
     return prepped;
   }
 
+  addTermTooltips(html){
+    html.find('.hover-term').hover(function(e){ // Hover event
+      var titleText = BladesLookup.getTerm($(this).text());
+      $(this).data('tiptext', titleText).removeAttr('title');
+      $('<p class="tooltip"></p>').text(titleText).appendTo('body').css('top', (e.pageY - 10) + 'px').css('left', (e.pageX + 20) + 'px').fadeIn('fast');
+    }, function(){ // Hover off event
+      $(this).attr('title', $(this).data('tiptext'));
+      $('.tooltip').remove();
+    }).mousemove(function(e){ // Mouse move event
+      $('.tooltip').css('top', (e.pageY - 10) + 'px').css('left', (e.pageX + 20) + 'px');
+    });
+  }
+
   /* -------------------------------------------- */
 
   /** @override */
 	activateListeners(html) {
     super.activateListeners(html);
+
+    this.addTermTooltips(html);
 
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
@@ -186,16 +247,16 @@ export class BladesActorSheet extends BladesSheet {
     html.find('.ability-block .clickable-edit').click(ev => {
       ev.preventDefault();
       let abilityId = ev.currentTarget.closest(".ability-block").dataset.abilityId;
-      let ability = this.actor.getOwnedItem(abilityId);
+      let ability = this.actor.items.get(abilityId);
       ability.sheet.render(true);
     });
 
-    // Delete Inventory Item
-    html.find('.item-delete').click( async ev => {
-      const element = $(ev.currentTarget).parents(".item");
-      await this.actor.deleteEmbeddedDocuments("Item", [element.data("itemId")]);
-      element.slideUp(200, () => this.render(false));
-    });
+    // Delete Inventory Item -- not used in new design
+    // html.find('.item-delete').click( async ev => {
+    //   const element = $(ev.currentTarget).parents(".item");
+    //   await this.actor.deleteEmbeddedDocuments("Item", [element.data("itemId")]);
+    //   element.slideUp(200, () => this.render(false));
+    // });
 
     html.find('.toggle-allow-edit span').click(async (event) => {
       event.preventDefault();
@@ -209,7 +270,7 @@ export class BladesActorSheet extends BladesSheet {
     html.find('.item-block .main-checkbox').change(ev => {
       let checkbox = ev.target;
       let itemId = checkbox.closest(".item-block").dataset.itemId;
-      let item = this.actor.getOwnedItem(itemId);
+      let item = this.actor.items.get(itemId);
       return item.update({data: {equipped : checkbox.checked}});
     });
 
@@ -222,7 +283,7 @@ export class BladesActorSheet extends BladesSheet {
     html.find('.ability-block .main-checkbox').change(ev => {
       let checkbox = ev.target;
       let abilityId = checkbox.closest(".ability-block").dataset.abilityId;
-      let ability = this.actor.getOwnedItem(abilityId);
+      let ability = this.actor.items.get(abilityId);
       return ability.update({data: {purchased : checkbox.checked}});
     });
 

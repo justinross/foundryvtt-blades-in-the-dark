@@ -52,7 +52,7 @@ export class BladesItemSheet extends ItemSheet {
   /** @override */
   getData() {
     const data = super.getData();
-    data.isGM = game.user.isGM;
+    data.isGm = game.user.isGM;
     data.editable = this.options.editable;
     const itemData = data.data;
     data.actor = itemData;

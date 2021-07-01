@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*
+/* 
 *  Elements that can be changed will hint this by dimming and fading a little on hover
 */
 /*
@@ -101,6 +101,18 @@
   min-height: 275px;
 }
 
+.tooltip {
+  display: none;
+  position: absolute;
+  padding: 10px;
+  color: #EEEFFF;
+  background-color: #191813;
+  border: 1px solid #777;
+  border-radius: 3px;
+  z-index: 9999999;
+  max-width: 300px;
+}
+
 /*
  * General Styles - Redesign
  */
@@ -121,6 +133,29 @@
   background-color: rgba(255, 255, 255, 0.5);
   border: none;
   border-radius: 3px;
+}
+#tidy-redesign .hover-details, #tidy-redesign .hover-term {
+  cursor: help;
+  color: #660000;
+  font-weight: bold;
+  text-decoration: underline;
+}
+#tidy-redesign ul.diamond {
+  list-style: none;
+}
+#tidy-redesign ul.diamond li {
+  position: relative;
+}
+#tidy-redesign ul.diamond li:after {
+  content: "";
+  height: 0.4em;
+  width: 0.4em;
+  background: #191813;
+  display: block;
+  position: absolute;
+  transform: rotate(45deg);
+  top: 0.45em;
+  left: -1em;
 }
 #tidy-redesign #context-menu ol li * {
   vertical-align: initial;
@@ -442,6 +477,11 @@
   padding: 5px 15px;
   font-size: 2.6em;
 }
+#tidy-redesign .tab-space .tab-item select {
+  font-family: Kirsty;
+  font-size: 0.8em;
+  height: 80%;
+}
 #tidy-redesign .tab-space .tab-item > div {
   margin: 5px 10px;
 }
@@ -481,6 +521,7 @@
   text-transform: capitalize;
   font-size: 2.6em;
   border: none;
+  background-color: #f00;
 }
 #tidy-redesign .tab-space .tab-content .tab .playbook::after {
   content: "";
@@ -588,9 +629,90 @@
   background-color: #666;
   color: #EEEFFF;
 }
+#tidy-redesign .tab-space .tab-content .tab.downtime {
+  line-height: 1em;
+}
+#tidy-redesign .tab-space .tab-content .tab.downtime h3 {
+  text-align: center;
+  font-family: Kirsty, serif;
+  font-size: 2em;
+  margin: 0.5em;
+}
+#tidy-redesign .tab-space .tab-content .tab.downtime header {
+  width: 100%;
+  font-family: Kirsty, serif;
+  background-color: #191813;
+  color: #EEEFFF;
+  padding: 3px;
+  text-align: center;
+}
+#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper {
+  display: flex;
+}
+#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr {
+  text-align: center;
+}
+#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr td, #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr th {
+  padding: 3px;
+}
+#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr th {
+  background-color: #191813;
+  color: #EEEFFF;
+}
+#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section {
+  background-color: #bbb;
+}
+#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section p {
+  text-align: center;
+}
+#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section ul {
+  padding-right: 1em;
+}
+#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section ul li {
+  margin-bottom: 3px;
+}
 
 /*
  * General Styles
  */
+textarea {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#items-to-add {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+#items-to-add input[type=radio],
+#items-to-add input[type=checkbox] {
+  display: none;
+}
+#items-to-add input[type=radio]:checked + label,
+#items-to-add input[type=checkbox]:checked + label {
+  font-weight: bold;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #191813;
+  color: #EEEFFF;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 9999;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 
 /*# sourceMappingURL=blades.css.map */

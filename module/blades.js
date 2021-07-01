@@ -9,6 +9,7 @@ import { registerSystemSettings } from "./settings.js";
 import { preloadHandlebarsTemplates } from "./blades-templates.js";
 import { bladesRoll, simpleRollPopup } from "./blades-roll.js";
 import { BladesHelpers } from "./blades-helpers.js";
+import { BladesLookup } from "./blades-lookup.js";
 import { BladesActor } from "./blades-actor.js";
 import { BladesItem } from "./blades-item.js";
 import { BladesItemSheet } from "./blades-item-sheet.js";
@@ -20,6 +21,7 @@ import { BladesFactionSheet } from "./blades-faction-sheet.js";
 import * as migrations from "./migration.js";
 
 window.BladesHelpers = BladesHelpers;
+window.BladesLookup = BladesLookup;
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -316,6 +318,7 @@ Hooks.on("preCreateOwnedItem", (parent_entity, child_data, options, userId) => {
 });
 
 Hooks.on("createOwnedItem", async (parent_entity, child_data, options, userId) => {
+  console.log("Created Item");
 
   await BladesHelpers.callItemLogic(child_data, parent_entity);
   return true;
@@ -402,9 +405,11 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
 });
 
 Hooks.on("updateActor", async (actor, newData, meta, actorId) => {
+  //if the actor's playbook has changed, clean up and add playbook-specific abilities, items, attributes, and contacts
   if(actor.data.type == "character" && meta.diff && newData.data && newData.data.playbook && !newData.new_character /* && newData.data.playbook != actor.data.data.playbook */){
     let playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
     let new_playbook_name = playbooks_index.find(item => item._id == newData.data.playbook).name;
+    console.log(`Switching playbook to ${new_playbook_name}`);
     //remove all skills, with an exception for new weird playbook selection
     let new_attributes = await BladesHelpers.getStartingAttributes(new_playbook_name);
     let updated = await actor.update({data:{attributes: new_attributes}});

@@ -24,6 +24,19 @@ $hover-brightness: 0.8;
   min-height: 275px;
 }
 
+.tooltip {
+  display: none;
+  position: absolute;
+  padding: 10px;
+  color: $almost_white;
+  background-color: $almost_black;
+  border: 1px solid #777;
+  //box-shadow: 0 1px 3px 1px rgba(0,0,0,0.5);
+  border-radius: 3px;
+  z-index: 9999999;
+  max-width: 300px;
+}
+
 /*
  * General Styles - Redesign
  */
@@ -45,6 +58,31 @@ $hover-brightness: 0.8;
         background-color: rgba(255,255,255,0.5);
         border: none;
         border-radius: 3px;
+      }
+    }
+
+    .hover-details, .hover-term{
+      cursor: help;
+      color: darken($red, 30%);
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    ul.diamond{
+      list-style: none;
+      li{
+        position: relative;
+        &:after {
+          content: '';
+          height: .4em;
+          width: .4em;
+          background: $almost_black;
+          display: block;
+          position: absolute;
+          transform: rotate(45deg);
+          top: .45em;
+          left: -1em;
+        }
       }
     }
 
@@ -302,6 +340,12 @@ $hover-brightness: 0.8;
         padding: 5px 15px ;
         font-size: 2.6em;
 
+        select{
+          font-family: Kirsty;
+          font-size: .8em;
+          height: 80%;
+        }
+
         > div{
           margin: 5px 10px;
         }
@@ -354,6 +398,7 @@ $hover-brightness: 0.8;
               text-transform: capitalize;
               font-size: 2.6em;
               border: none;
+              background-color: #f00;
             }
 
             &::after{
@@ -483,6 +528,56 @@ $hover-brightness: 0.8;
               color: $almost_white;
             }
           }
+
+          &.downtime{
+            line-height: 1em;
+            h3{
+              text-align: center;
+              font-family: Kirsty, serif;
+              font-size: 2em;
+              margin: .5em;
+            }
+            header{
+              width: 100%;
+              font-family: Kirsty, serif;
+              background-color: $almost_black;
+              color: $almost_white;
+              padding: 3px;
+              text-align: center;
+            }
+            .downtimeWrapper{
+              display: flex;
+              table{
+                tr{
+                  text-align: center;
+                  td, th{
+                    padding: 3px;
+                  }
+                  th{
+                    background-color: $almost-black;
+                    color: $almost-white;
+                  }
+                }
+              }
+              .column{
+                display: flex;
+                flex-direction: column;
+                width: 50%;
+                section{
+                  background-color: $lightgray;
+                  p{
+                    text-align: center;
+                  }
+                  ul{
+                    padding-right: 1em;
+                    li{
+                      margin-bottom: 3px;
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -509,10 +604,10 @@ $hover-brightness: 0.8;
 //     }
 //   }
 
-//   textarea {
-//     margin-top: 10px;
-//     margin-bottom: 20px;
-//   }
+   textarea {
+     margin-top: 10px;
+     margin-bottom: 20px;
+   }
 
 //   td {
 //     padding: 5px;
@@ -1093,44 +1188,44 @@ $hover-brightness: 0.8;
 //   }
 
 //   // Add Items modal styling.
-//   #items-to-add {
+   #items-to-add {
 
-//     display: flex;
-//     flex-direction: column;
-//     flex-wrap: wrap;
-//     justify-content: space-around;
+     display: flex;
+     flex-direction: column;
+     flex-wrap: wrap;
+     justify-content: space-around;
 
-//     input[type="radio"],
-//     input[type="checkbox"] {
-//       display: none;
+     input[type="radio"],
+     input[type="checkbox"] {
+       display: none;
 
-//       &:checked + label {
-//         font-weight: bold;
-//       }
-//     }
-//   }
+       &:checked + label {
+         font-weight: bold;
+       }
+     }
+   }
 
 //   // Tooltip.
-//   .tooltip {
+   .tooltip {
 
-//     .tooltiptext {
-//       visibility: hidden;
-//       width: 200px;
-//       background-color: $almost_black;
-//       color: $almost_white;
-//       text-align: center;
-//       padding: 5px;
-//       border-radius: 6px;
+     .tooltiptext {
+       visibility: hidden;
+       width: 200px;
+       background-color: $almost_black;
+       color: $almost_white;
+       text-align: center;
+       padding: 5px;
+       border-radius: 6px;
      
-//       // Position
-//       position: absolute;
-//       z-index: 9999;
-//     }
+       // Position
+       position: absolute;
+       z-index: 9999;
+     }
 
-//     &:hover .tooltiptext {
-//       visibility: visible;
-//     }
-//   }
+     &:hover .tooltiptext {
+       visibility: visible;
+     }
+   }
 
 //   .blades-die-tooltip {
 

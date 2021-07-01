@@ -8,7 +8,9 @@
     
     {{!-- Sheet Body --}}
     <section class="sheet-body">
-      {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+     {{!-- {{editor content=data.description target="data.description" button=true owner=owner editable=editable}} --}}
+      <label for="{{actor.id}}-item-{{item.id}}-description">{{localize 'BITD.Description'}}</label>
+      <textarea id="{{actor.id}}-item-{{item.id}}-description" name="data.description">{{data.description}}</textarea>
     </section>
     <div class="flex-vertical">
       <label class="label-stripe">{{localize "BITD.AbilityPrice"}}</label>

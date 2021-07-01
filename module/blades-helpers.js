@@ -1,14 +1,5 @@
 export class BladesHelpers {
 
-
-  static get icons(){
-    let _icons = {
-      trauma_cold : {icon : 'fas fa-icicles', type : 'fa', alt_txt : "Trauma - Cold"},
-      trauma_haunted : {icon : 'fas fa-ghost', type : 'fa', alt_txt : "Trauma - Haunted"},
-    }
-    return _icons;
-  }
-
   /**
    * Identifies duplicate items by type and returns a array of item ids to remove
    *
@@ -260,7 +251,7 @@ export class BladesHelpers {
         let current_abilities = actor.items.filter(item => item.type == "ability");
         console.log("Deleting unnecessary abilities ...");
         let abilities_to_delete = [];
-        current_abilities.forEach(async ability => {
+        for(const ability of current_abilities){
           let keep = false;
           if(keep_owned_ghost_abilities){
             //delete all abilities except ones with "Ghost" in the name that are owned.
@@ -269,10 +260,14 @@ export class BladesHelpers {
           if(!keep){
             abilities_to_delete.push(ability.id);
           }
-        });
-
-    console.log(actor);
-        let deleted = await actor.deleteEmbeddedDocuments("Item", abilities_to_delete, {noHook: true});
+        };
+        let deleted;
+        try{
+          deleted = await actor.deleteEmbeddedDocuments("Item", abilities_to_delete, {noHook: true});
+        }
+        catch(error){
+          console.log("Error deleting abilities: ", error);
+        }
         // console.log("Deleted playbook abilities: ", deleted);
         return deleted;
   }
@@ -301,7 +296,6 @@ export class BladesHelpers {
    */
   static async clearPlaybookItems(actor, keep_custom_items = false){
       let current_playbook_items = actor.items.filter(item => item.type == "item" && item.data.data.class != "");
-      console.log("Deleting unnecessary playbook items ...");
       let items_to_delete = [];
       for(const item of current_playbook_items){
         let keep = false;
@@ -312,8 +306,9 @@ export class BladesHelpers {
           items_to_delete.push(item.id);
         }
       }
+      console.log("Deleting unnecessary playbook items ...", items_to_delete);
 
-      let deleted = await actor.deleteEmbeddedDocuments("Item", items_to_delete, {noHook: true});
+    let deleted = await actor.deleteEmbeddedDocuments("Item", items_to_delete, {noHook: true});
       // console.log("Deleted playbook items: ", deleted);
       return deleted;
   }
@@ -373,7 +368,7 @@ export class BladesHelpers {
    * @returns {object} // the OwnedItems added
    */
   static async addPlaybookAcquaintances(actor, playbook_name){
-      console.log("Adding new class acquaintances");
+      console.log("Adding new playbook acquaintances");
       //add class aquaintances
       let all_npcs = await game.packs.get("blades-in-the-dark.npc").getDocuments();
       let current_acquaintances = actor.data.data.acquaintances;
