@@ -345,13 +345,13 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
     if(actor.data.data.playbook == ""){
       //pick a default class
       let classIndex = await game.packs.get("blades-in-the-dark.class").getIndex();
-      let classContent = await game.packs.get("blades-in-the-dark.class").getContent();
+      let classContent = await game.packs.get("blades-in-the-dark.class").getDocuments();
       //add default class
       let default_class = classContent[0];
       let attributes = await BladesHelpers.getStartingAttributes(default_class.name); 
       let data = {
         data:{
-          playbook: default_class._id,
+          playbook: default_class.id,
           attributes: attributes
         },
         new_character: true
@@ -361,7 +361,7 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
 
     //add class abilities
     //let all_abilities = await game.packs.get("blades-in-the-dark.ability").getContent();
-    let selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getEntry(actor.data.data.playbook);
+    let selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getDocument(actor.data.data.playbook);
     let selected_playbook_name = selected_playbook_full.name;
     let all_owned_items = actor.items.filter(item => item.data.type == "item");
     let class_items = all_owned_items.filter(item => item.data.data.class == selected_playbook_name);
