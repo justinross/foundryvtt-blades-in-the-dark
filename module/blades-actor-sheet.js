@@ -195,8 +195,8 @@ export class BladesActorSheet extends BladesSheet {
       data.generic_items = data.items.filter(item => item.type == "item" && item.data.class == "");
     }
 
-    //testing harm
-    data.data.trauma.list = ["Cold", "Haunted"];
+    //testing trauma
+    // data.data.trauma.list = ["Cold", "Haunted"];
 
     return data;
   }
