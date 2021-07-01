@@ -88,7 +88,7 @@
             </section>
             <section class="playbook-items item-list">
               <header class="full-bar flex-header context-items"><span>{{localize "BITD.Items"}}</span><!--<a class="item-add-popup" data-item-type="item" data-group-by="data.class"><i class="fas fa-plus"></i></a>--></header>
-              {{#each playbook_items as |item index|}}
+              {{#each my_items as |item index|}}
                 {{#with ../actor as |actor|}}
                 <div class="item-block" data-item-id="{{item._id}}">
                   <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor.id}}-item-{{item._id}}-1" {{checked item.data.equipped}}><!--

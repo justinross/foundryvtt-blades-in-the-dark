@@ -147,7 +147,6 @@ export class BladesSheet extends ActorSheet {
           label: game.i18n.localize('Add'),
           callback: async () => {
             // await this.addItemsToSheet(item_type, $(document).find('#items-to-add'));
-            let items = $select.select2('data');
             await this.addItemsToSheet(item_type,items);
           }
         },
@@ -159,11 +158,7 @@ export class BladesSheet extends ActorSheet {
       },
       default: "two",
       render: (html)=>{
-        $select = $(html).find(".item-add-select").select2({
-          closeOnSelect: false,
-          dropdownAutoWidth: true,
-          allowClear: true
-        });
+
       }
     }, options);
 
@@ -172,13 +167,9 @@ export class BladesSheet extends ActorSheet {
   
   /* -------------------------------------------- */
 
-  async addItemsToSheet(item_type, select2data) {
+  async addItemsToSheet(item_type, selectedData) {
     let items = await BladesHelpers.getAllItemsByType(item_type, game);
     let items_to_add = [];
-
-    select2data.find("input:checked").each(function() {
-      items_to_add.push(items.find(e => e.id === $(this).val()));
-    });
 
     await Item.create(items_to_add, {parent: this.document});
   }

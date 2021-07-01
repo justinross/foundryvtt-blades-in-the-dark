@@ -34,34 +34,34 @@ export class BladesActorSheet extends BladesSheet {
       name: game.i18n.localize("BITD.AddItem"),
       icon: '<i class="fas fa-plus"></i>',
       callback: async (element) => {
-        let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
-        let items_html = '<ul>';
-        all_items.sort((a, b) => a.name > b.name ? 1 : -1);
-        for (const item of all_items) {
-          items_html += `<li><input type="checkbox" id="character-${this.actor.id}-itemadd-${item.id}"><label for="character-${this.actor.id}-itemadd-${item.id}">${item.name}</label></li>`;
-        }
-        items_html += '</ul';
-        let d = new Dialog({
-          title: "Add Item(s)",
-          content:  `<h3>Select items to add:</h3>
-                    ${items_html}
-                    `,
-          buttons: {
-            one: {
-              icon: "<i class='fas fa-check'></i>",
-              label: "One",
-              callback: ()=> console.log("One")
-            }
-          },
-          render: (html) => {
-
-          },
-          close: (html) => {
-
-          }
-        });
-        d.render(true);
-        // this.addBlankItem();
+        await this.addNewItem();
+        // let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
+        // let items_html = '<ul>';
+        // all_items.sort((a, b) => a.name > b.name ? 1 : -1);
+        // for (const item of all_items) {
+        //   items_html += `<li><input type="checkbox" id="character-${this.actor.id}-itemadd-${item.id}"><label for="character-${this.actor.id}-itemadd-${item.id}">${item.name}</label></li>`;
+        // }
+        // items_html += '</ul';
+        // let d = new Dialog({
+        //   title: "Add New Item",
+        //   content:  `<h3>Select items to add:</h3>
+        //             ${items_html}
+        //             `,
+        //   buttons: {
+        //     one: {
+        //       icon: "<i class='fas fa-check'></i>",
+        //       label: "One",
+        //       callback: ()=> console.log("One")
+        //     }
+        //   },
+        //   render: (html) => {
+        //
+        //   },
+        //   close: (html) => {
+        //
+        //   }
+        // });
+        // d.render(true);
       }
     }
   ];
@@ -185,10 +185,11 @@ export class BladesActorSheet extends BladesSheet {
         return item;
       });
 
-      let playbook_items = data.items.filter(item => item.type == "item" && item.data.class == data.selected_playbook_name);
+      // let playbook_items = data.items.filter(item => item.type == "item" && item.data.class == data.selected_playbook_name);
+      let my_items = data.items.filter(item => item.type == "item" && item.data.class != "");
 
       //hide the playbook abbreviations for display
-      data.playbook_items = playbook_items.map(item => {
+      data.my_items = my_items.map(item => {
         item.name = item.name.replace(/\([^)]*\)\s/, "")
         return item;
       });
