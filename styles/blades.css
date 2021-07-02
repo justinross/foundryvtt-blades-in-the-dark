@@ -775,13 +775,14 @@
 .blades-in-the-dark #loadout select:hover {
   color: red;
 }
-.blades-in-the-dark #abilities .item-name, .blades-in-the-dark #loadout .item-name {
+.blades-in-the-dark #abilities .item-name, .blades-in-the-dark #loadout .item-name, .blades-in-the-dark #faction-items .item-name {
   width: 100px;
+  margin-left: 10px;
 }
-.blades-in-the-dark #abilities .item-body, .blades-in-the-dark #loadout .item-body {
+.blades-in-the-dark #abilities .item-body, .blades-in-the-dark #loadout .item-body, .blades-in-the-dark #faction-items .item-body {
   width: auto;
 }
-.blades-in-the-dark #abilities .item-description, .blades-in-the-dark #loadout .item-description {
+.blades-in-the-dark #abilities .item-description, .blades-in-the-dark #loadout .item-description, .blades-in-the-dark #faction-items .item-description {
   width: 260px;
 }
 .blades-in-the-dark td {

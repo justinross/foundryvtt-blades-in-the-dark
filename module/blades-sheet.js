@@ -76,11 +76,9 @@ export class BladesSheet extends ActorSheet {
 
   async _onItemAddClick(event) {
     event.preventDefault();
-    const item_type = $(event.currentTarget).data("itemType");
-    const distinct = $(event.currentTarget).data("distinct");
-    const groupBy = $(event.currentTarget).data("groupBy");
-
-
+    console.log("testing");
+    const item_type = $(event.currentTarget).data("itemType")
+    const distinct = $(event.currentTarget).data("distinct")
     let input_type = "checkbox";
 
     if (typeof distinct !== "undefined") {
@@ -88,88 +86,61 @@ export class BladesSheet extends ActorSheet {
     }
 
     let items = await BladesHelpers.getAllItemsByType(item_type, game);
-    // items.sort((a, b) => a.name > b.name ? 1 : -1);
-    if(groupBy != null){
-      items = this.groupItems(items, groupBy);
-    }
-    else{
-      items = {...items};
-    }
 
     let html = `<div id="items-to-add">`;
-    html += `<label for="${this.actor.id}-add-item">Select items to add</label>`;
-    html += `<select class="item-add-select" id="${this.actor.id}-add-item" name="select_items" multiple="multiple">`;
 
-    for (const [key, item] of Object.entries(items)) {
+    items.forEach(e => {
+      let addition_price_load = ``;
 
-      if(groupBy != null){
-        html += `<optgroup label="${key}">`;
-        item.forEach((i)=>{
-          let addition_price_load = ``;
-
-          if (typeof i.data.load !== "undefined") {
-            addition_price_load += `${i.data.load}`
-          } else if (typeof i.data.price !== "undefined") {
-            addition_price_load += `${i.data.price}`
-          }
-
-          html += `<option value="${i._id}">${i.name} (${addition_price_load})</option>`;
-        });
-        html += `</optgroup>`;
+      if (typeof e.data.load !== "undefined") {
+        addition_price_load += `(${e.data.load})`
+      } else if (typeof e.data.price !== "undefined") {
+        addition_price_load += `(${e.data.price})`
       }
-      else{
-        let addition_price_load = ``;
 
-        if (typeof item.data.load !== "undefined") {
-          addition_price_load += `${item.data.load}`
-        } else if (typeof item.data.price !== "undefined") {
-          addition_price_load += `${item.data.price}`
-        }
-        html += `<option value=${item.id}>${item.name} (${addition_price_load})</option>`;
-      }
-    }
+      html += `<input id="select-item-${e._id}" type="${input_type}" name="select_items" value="${e._id}">`;
+      html += `<label class="flex-horizontal" for="select-item-${e._id}">`;
+      html += `${game.i18n.localize(e.name)} ${addition_price_load} <i class="tooltip fas fa-question-circle"><span class="tooltiptext">${game.i18n.localize(e.data.description)}</span></i>`;
+      html += `</label>`;
+    });
 
-    html += `</select>`;
     html += `</div>`;
 
     let options = {
       // width: "500"
     }
 
-    let $select;
-    
     let dialog = new Dialog({
       title: `${game.i18n.localize('Add')} ${item_type}`,
       content: html,
       buttons: {
-        add: {
+        one: {
           icon: '<i class="fas fa-check"></i>',
           label: game.i18n.localize('Add'),
-          callback: async () => {
-            // await this.addItemsToSheet(item_type, $(document).find('#items-to-add'));
-            await this.addItemsToSheet(item_type,items);
-          }
+          callback: async () => await this.addItemsToSheet(item_type, $(document).find('#items-to-add'))
         },
-        cancel: {
+        two: {
           icon: '<i class="fas fa-times"></i>',
           label: game.i18n.localize('Cancel'),
           callback: () => false
         }
       },
-      default: "two",
-      render: (html)=>{
-
-      }
+      default: "two"
     }, options);
 
     dialog.render(true);
   }
-  
+
   /* -------------------------------------------- */
 
-  async addItemsToSheet(item_type, selectedData) {
+  async addItemsToSheet(item_type, el) {
+
     let items = await BladesHelpers.getAllItemsByType(item_type, game);
     let items_to_add = [];
+
+    el.find("input:checked").each(function() {
+      items_to_add.push(items.find(e => e._id === $(this).val()));
+    });
 
     await Item.create(items_to_add, {parent: this.document});
   }

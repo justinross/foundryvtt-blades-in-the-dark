@@ -115,9 +115,10 @@ i {
   }
 }
 
-#abilities, #loadout {
+#abilities, #loadout, #faction-items {
   .item-name {
     width: 100px;
+    margin-left: 10px;
   }
   .item-body {
     width: auto;
