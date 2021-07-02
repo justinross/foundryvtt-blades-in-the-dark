@@ -1,0 +1,132 @@
+textarea {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+
+.tooltip {
+  display: none;
+  position: absolute;
+  padding: 10px;
+  color: $almost_white;
+  background-color: $almost_black;
+  border: 1px solid #777;
+  //box-shadow: 0 1px 3px 1px rgba(0,0,0,0.5);
+  border-radius: 3px;
+  z-index: 9999999;
+  max-width: 300px;
+}
+
+.flex-horizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
+}
+.black-label {
+  background-color: $almost_black;
+  color: $almost_white;
+  font-size: 21px;
+  text-align: center;
+  padding: 0px 5px;
+  height: 30px !important;
+  text-transform: capitalize;
+}
+
+.gray-label {
+  background-color: $gray;
+  color: $almost_black;
+  font-size: 21px;
+  text-align: center;
+  padding: 0px 5px;
+  height: 30px !important;
+  text-transform: capitalize;
+}
+
+
+.label-stripe {
+  text-transform: uppercase;
+  background-color: $almost_black;
+  color: $almost_white;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  font-weight: bold;
+}
+
+.label-stripe-gray {
+  text-transform: uppercase;
+  background-color: $gray;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  font-weight: bold;
+}
+
+.editor,
+.editor-content {
+  min-height: 150px;
+}
+
+.description {
+  font-style: italic;
+}
+
+i {
+  &.nullifier {
+    @include changeable($transition-period, $hover-brightness, $hover-opacity, $red);
+  }
+}
+
+#loadout {
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
+    background: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") no-repeat right;
+    padding: 0 20px 0 0;
+    margin: 0.1em -6px 0 0;
+    background-color: $almost_black;
+    font-family: Georgia, "Bitstream Charter", "Times New Roman", serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    text-align: right;
+
+    option {
+      color: white;
+    }
+  }
+
+  select:hover {
+    color: red;
+  }
+}
+
+#abilities, #loadout {
+  .item-name {
+    width: 100px;
+  }
+  .item-body {
+    width: auto;
+  }
+  .item-description {
+    width: 260px;
+  }
+}
+
+td {
+  padding: 5px;
+}

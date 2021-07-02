@@ -96,57 +96,53 @@
   font-weight: 600;
   font-style: italic;
 }
-.blades-in-the-dark.sheet.actor {
+.blades-in-the-dark {
+  /*
+   * General Styles - Redesign
+   */
+}
+.blades-in-the-dark {
   min-width: 800px;
   min-height: 275px;
 }
-
-.tooltip {
-  display: none;
-  position: absolute;
-  padding: 10px;
-  color: #EEEFFF;
-  background-color: #191813;
-  border: 1px solid #777;
-  border-radius: 3px;
-  z-index: 9999999;
-  max-width: 300px;
-}
-
-/*
- * General Styles - Redesign
- */
-#tidy-redesign {
+.blades-in-the-dark #tidy-redesign {
   position: relative;
   margin: 5px;
   font-family: "Crimson Text", serif;
 }
-#tidy-redesign input[type=checkbox] {
+.blades-in-the-dark #tidy-redesign input[type=checkbox] {
   width: 1em;
   height: 1em;
 }
-#tidy-redesign [contenteditable] {
+.blades-in-the-dark #tidy-redesign .rollable-text {
+  transition: color 0.2s;
+}
+.blades-in-the-dark #tidy-redesign .rollable-text:hover {
+  cursor: pointer;
+  color: red;
+}
+.blades-in-the-dark #tidy-redesign [contenteditable] {
   user-select: auto !important;
   text-decoration: underline;
 }
-#tidy-redesign [contenteditable]:active, #tidy-redesign [contenteditable]:focus {
+.blades-in-the-dark #tidy-redesign [contenteditable]:active, .blades-in-the-dark #tidy-redesign [contenteditable]:focus {
   background-color: rgba(255, 255, 255, 0.5);
   border: none;
   border-radius: 3px;
 }
-#tidy-redesign .hover-details, #tidy-redesign .hover-term {
+.blades-in-the-dark #tidy-redesign .hover-details, .blades-in-the-dark #tidy-redesign .hover-term {
   cursor: help;
   color: #660000;
   font-weight: bold;
   text-decoration: underline;
 }
-#tidy-redesign ul.diamond {
+.blades-in-the-dark #tidy-redesign ul.diamond {
   list-style: none;
 }
-#tidy-redesign ul.diamond li {
+.blades-in-the-dark #tidy-redesign ul.diamond li {
   position: relative;
 }
-#tidy-redesign ul.diamond li:after {
+.blades-in-the-dark #tidy-redesign ul.diamond li:after {
   content: "";
   height: 0.4em;
   width: 0.4em;
@@ -157,26 +153,26 @@
   top: 0.45em;
   left: -1em;
 }
-#tidy-redesign #context-menu ol li * {
+.blades-in-the-dark #tidy-redesign #context-menu ol li * {
   vertical-align: initial;
 }
-#tidy-redesign .clickable-edit {
+.blades-in-the-dark #tidy-redesign .clickable-edit {
   text-decoration: underline;
 }
-#tidy-redesign .rollable-text {
+.blades-in-the-dark #tidy-redesign .rollable-text {
   cursor: pointer;
 }
-#tidy-redesign input[type=text] {
+.blades-in-the-dark #tidy-redesign input[type=text] {
   width: auto;
   border: 0;
 }
-#tidy-redesign .edit-only {
+.blades-in-the-dark #tidy-redesign .edit-only {
   display: none;
 }
-#tidy-redesign .non-edit {
+.blades-in-the-dark #tidy-redesign .non-edit {
   display: initial;
 }
-#tidy-redesign header.full-bar {
+.blades-in-the-dark #tidy-redesign header.full-bar {
   background-color: #191813;
   color: #EEEFFF;
   padding: 3px;
@@ -185,14 +181,14 @@
   position: relative;
   margin-bottom: 5px;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.right {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right {
   position: absolute;
   top: 1px;
   right: 1px;
   display: flex;
   /* Hide the browser's default checkbox */
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.right label {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label {
   height: 25px;
   width: 10px;
   background-image: url("assets/teeth/xptooth-red.png");
@@ -202,40 +198,40 @@
   transition: filter 0.1s;
   cursor: pointer;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.right label:last-of-type {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label:last-of-type {
   margin-right: 0px;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.right label[for$="-0"] {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label[for$="-0"] {
   width: auto;
   height: auto;
   background-image: none !important;
   color: #EEEFFF;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.right label[for$="-0"] i {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label[for$="-0"] i {
   margin-top: 4px;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.right label:hover {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label:hover {
   filter: brightness(0.8);
   opacity: 0.9;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.right input {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right input {
   display: none;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.right label {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label {
   background-image: url("assets/teeth/xptooth-white.png");
   background-size: 100% 100%;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.right label.on {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label.on {
   background-image: url("assets/teeth/xptooth-red.png");
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.stress {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress {
   position: absolute;
   top: 1px;
   right: 1px;
   display: flex;
   /* Hide the browser's default checkbox */
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.stress label {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label {
   height: 25px;
   width: 10px;
   background-image: url("assets/teeth/xptooth-red.png");
@@ -245,70 +241,70 @@
   transition: filter 0.1s;
   cursor: pointer;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.stress label:last-of-type {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label:last-of-type {
   margin-right: 0px;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.stress label[for$="-0"] {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label[for$="-0"] {
   width: auto;
   height: auto;
   background-image: none !important;
   color: #EEEFFF;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.stress label[for$="-0"] i {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label[for$="-0"] i {
   margin-top: 4px;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.stress label:hover {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label:hover {
   filter: brightness(0.8);
   opacity: 0.9;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.stress input {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress input {
   display: none;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.stress label {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label {
   background-image: url("assets/teeth/xptooth-white.png");
   background-size: 100% 100%;
 }
-#tidy-redesign header.full-bar .stripe-tooth-body.stress label.on {
+.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label.on {
   background-image: url("assets/teeth/xptooth-red.png");
 }
-#tidy-redesign .toggle-allow-edit {
+.blades-in-the-dark #tidy-redesign .toggle-allow-edit {
   position: absolute;
   top: -10px;
   right: -10px;
 }
-#tidy-redesign .toggle-allow-edit span {
+.blades-in-the-dark #tidy-redesign .toggle-allow-edit span {
   cursor: pointer;
   background: #008000;
   color: rgba(255, 255, 255, 0.6);
   border-radius: 3px;
 }
-#tidy-redesign .toggle-allow-edit span:hover {
+.blades-in-the-dark #tidy-redesign .toggle-allow-edit span:hover {
   color: #fff;
 }
-#tidy-redesign .toggle-allow-edit span i {
+.blades-in-the-dark #tidy-redesign .toggle-allow-edit span i {
   width: 100%;
   text-align: center;
   padding: 4px 6px;
 }
-#tidy-redesign .toggle-allow-edit span .fa-lock-open {
+.blades-in-the-dark #tidy-redesign .toggle-allow-edit span .fa-lock-open {
   display: none;
 }
-#tidy-redesign.allow-edit .edit-only {
+.blades-in-the-dark #tidy-redesign.allow-edit .edit-only {
   display: initial;
 }
-#tidy-redesign.allow-edit .non-edit {
+.blades-in-the-dark #tidy-redesign.allow-edit .non-edit {
   display: none;
 }
-#tidy-redesign.allow-edit .toggle-allow-edit span {
+.blades-in-the-dark #tidy-redesign.allow-edit .toggle-allow-edit span {
   background-color: #800000;
 }
-#tidy-redesign.allow-edit .toggle-allow-edit span .fa-lock-open {
+.blades-in-the-dark #tidy-redesign.allow-edit .toggle-allow-edit span .fa-lock-open {
   display: inline-block;
 }
-#tidy-redesign.allow-edit .toggle-allow-edit span .fa-lock {
+.blades-in-the-dark #tidy-redesign.allow-edit .toggle-allow-edit span .fa-lock {
   display: none;
 }
-#tidy-redesign .minimized-view {
+.blades-in-the-dark #tidy-redesign .minimized-view {
   display: grid;
   height: 230px;
   grid-template-columns: auto 1fr;
@@ -316,7 +312,7 @@
   grid-template-rows: 2fr 1fr 1fr 4fr;
   grid-template-areas: "portrait main-row" "portrait sub-row-1" "portrait sub-row-2" "portrait actions";
 }
-#tidy-redesign .minimized-view .character-portrait {
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait {
   grid-area: portrait;
   place-self: center;
   width: 200px;
@@ -325,14 +321,14 @@
   flex-grow: 0;
   position: relative;
 }
-#tidy-redesign .minimized-view .character-portrait .portrait {
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .portrait {
   border-radius: 100px;
   overflow: hidden;
   border: 6px solid #999;
   width: 100%;
   height: 100%;
 }
-#tidy-redesign .minimized-view .character-portrait .portrait > img {
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .portrait > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -341,7 +337,7 @@
   border-radius: 50%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3) inset;
 }
-#tidy-redesign .minimized-view .character-portrait .stress-trauma-box {
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box {
   width: 100%;
   height: 2em;
   position: absolute;
@@ -349,10 +345,10 @@
   left: 0;
   z-index: 10;
 }
-#tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box {
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box {
   padding: 0 6px;
 }
-#tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list {
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list {
   width: 100%;
   height: 100%;
   background-color: #bbb;
@@ -364,51 +360,51 @@
   border-radius: 0 0 1em 1em;
   z-index: -10;
 }
-#tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .trauma {
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .trauma {
   display: inline-block;
 }
-#tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .trauma:not(:last-of-type)::after {
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .trauma:not(:last-of-type)::after {
   content: " •";
 }
-#tidy-redesign .minimized-view .name-alias {
+.blades-in-the-dark #tidy-redesign .minimized-view .name-alias {
   font-family: Kirsty, serif;
   font-weight: bold;
   font-size: 3em;
   color: #191813;
   grid-area: main-row;
 }
-#tidy-redesign .minimized-view .name-alias .alias {
+.blades-in-the-dark #tidy-redesign .minimized-view .name-alias .alias {
   font-size: 0.6em;
   font-weight: normal;
 }
-#tidy-redesign .minimized-view .heritage-background {
+.blades-in-the-dark #tidy-redesign .minimized-view .heritage-background {
   grid-area: sub-row-1;
 }
-#tidy-redesign .minimized-view .look {
+.blades-in-the-dark #tidy-redesign .minimized-view .look {
   grid-area: sub-row-2;
 }
-#tidy-redesign .minimized-view .bio {
+.blades-in-the-dark #tidy-redesign .minimized-view .bio {
   border-bottom: 2px solid #191813;
 }
-#tidy-redesign .minimized-view .attributes-actions {
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions {
   grid-area: actions;
   display: flex;
   justify-content: space-between;
   justify-items: stretch;
   max-width: 600px;
 }
-#tidy-redesign .minimized-view .attributes-actions .attribute {
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute {
   flex-grow: 1;
   margin: 10px 5px;
 }
-#tidy-redesign .minimized-view .attributes-actions .attribute .action {
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action {
   padding: 0 5px;
   display: flex;
   /* Hide the browser's default checkbox */
   justify-content: flex-start;
   align-items: stretch;
 }
-#tidy-redesign .minimized-view .attributes-actions .attribute .action label {
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action label {
   height: 1em;
   width: 1em;
   background-color: #cc0000;
@@ -418,7 +414,7 @@
   transition: filter 0.1s;
   cursor: pointer;
 }
-#tidy-redesign .minimized-view .attributes-actions .attribute .action label[for$="-0"] {
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action label[for$="-0"] {
   height: 5px;
   width: 5px;
   border-radius: 24px;
@@ -426,46 +422,46 @@
   background-color: red !important;
   margin-right: 0px;
 }
-#tidy-redesign .minimized-view .attributes-actions .attribute .action label:hover {
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action label:hover {
   filter: brightness(0.7);
   opacity: 0.7;
 }
-#tidy-redesign .minimized-view .attributes-actions .attribute .action input {
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action input {
   display: none;
 }
-#tidy-redesign .minimized-view .attributes-actions .attribute .action input:checked ~ label {
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action input:checked ~ label {
   background-color: transparent;
 }
-#tidy-redesign .minimized-view .attributes-actions .attribute .action input:checked + label {
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action input:checked + label {
   transition: filter 0.1s;
   cursor: pointer;
   background-color: #cc0000;
 }
-#tidy-redesign .minimized-view .attributes-actions .attribute .action input:checked + label:hover {
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action input:checked + label:hover {
   filter: brightness(0.7);
   opacity: 0.7;
 }
-#tidy-redesign .minimized-view .attributes-actions .attribute .action .attribute-skill-label {
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action .attribute-skill-label {
   font-weight: bold;
   font-variant: small-caps;
   padding: 3px 0;
   margin-left: 0.4em;
 }
-#tidy-redesign .minimized-view .attributes-actions .attribute .action label {
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action label {
   margin: 2px;
   border: 1px solid #666666;
   box-sizing: border-box;
 }
-#tidy-redesign .minimized-view .attributes-actions .attribute input.zero {
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute input.zero {
   display: none;
 }
-#tidy-redesign .tab-space nav.tabs {
+.blades-in-the-dark #tidy-redesign .tab-space nav.tabs {
   display: grid;
   grid-template-columns: 1fr 1em 1fr;
   grid-template-rows: auto;
   grid-template-areas: "tab1 . tab2";
 }
-#tidy-redesign .tab-space .tab-item {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-item {
   flex-grow: 0;
   display: inline-flex;
   justify-content: space-between;
@@ -477,21 +473,21 @@
   padding: 5px 15px;
   font-size: 2.6em;
 }
-#tidy-redesign .tab-space .tab-item select {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-item select {
   font-family: Kirsty;
   font-size: 0.8em;
   height: 80%;
 }
-#tidy-redesign .tab-space .tab-item > div {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-item > div {
   margin: 5px 10px;
 }
-#tidy-redesign .tab-space .tab-item.playbook {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-item.playbook {
   grid-area: tab1;
 }
-#tidy-redesign .tab-space .tab-item.downtime {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-item.downtime {
   grid-area: tab2;
 }
-#tidy-redesign .tab-space .tab-item .playbook-description {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-item .playbook-description {
   font-family: "Crimson Text", serif;
   font-size: 0.4em;
   font-variant: small-caps;
@@ -499,16 +495,16 @@
   color: #666;
   text-align: center;
 }
-#tidy-redesign .tab-space .tab-item.active {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-item.active {
   margin-bottom: 0;
 }
-#tidy-redesign .tab-space .tab-item:not(.active) {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-item:not(.active) {
   background-color: rgba(187, 187, 187, 0.5);
 }
-#tidy-redesign .tab-space .tab-content {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content {
   flex-basis: 100%;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook {
   display: grid;
   align-items: stretch;
   justify-items: stretch;
@@ -516,66 +512,66 @@
   grid-template-rows: repeat(3, 1fr);
   grid-template-areas: "abilities gutter pb-items all-items" "abilities gutter friends all-items" "abilities gutter xp-notes xp-notes";
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook select {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook select {
   font-family: Kirsty, serif;
   text-transform: capitalize;
   font-size: 2.6em;
   border: none;
   background-color: #f00;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook::after {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook::after {
   content: "";
   background: #bbb;
   grid-area: gutter;
   height: 100%;
   width: 100%;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .abilities {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities {
   grid-area: abilities;
   background: #bbb;
   padding-bottom: 1em;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block {
   display: flex;
   align-items: flex-start;
   padding: 5px;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block:nth-child(even) {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block:nth-child(even) {
   background-color: rgba(255, 255, 255, 0.3);
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block input {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block input {
   margin: 0;
   margin-right: 3px;
   position: relative;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block input.offset {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block input.offset {
   margin-top: -3px;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list label {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list label {
   margin: 0;
   line-height: 0.8em;
   font-size: 1.2em;
   margin-bottom: 6px;
   padding-right: 1em;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list label .ability-name {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list label .ability-name {
   font-weight: bold;
   font-variant: small-caps;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .playbook-items {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .playbook-items {
   grid-area: pb-items;
   background: #bbb;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .playbook-items .free-item {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .playbook-items .free-item {
   font-style: italic;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .item-list {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .item-list {
   font-size: 1.2em;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block {
   padding-left: 5px;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block .join-line {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block .join-line {
   border: 1px solid #666;
   width: 1em;
   display: inline-block;
@@ -585,60 +581,60 @@
   position: relative;
   z-index: 0;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block * {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block * {
   vertical-align: bottom;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block input {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block input {
   margin-left: 0;
   position: relative;
   z-index: 10;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals {
   grid-area: friends;
   background: #bbb;
   font-size: 1.2em;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i {
   padding: 1px;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i.red-icon {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i.red-icon {
   color: #880000;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i.green-icon {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i.green-icon {
   color: #006600;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .all-items {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .all-items {
   grid-area: all-items;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes {
   grid-area: xp-notes;
   background: #bbb;
   font-size: 1.2em;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes p {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes p {
   line-height: 1em;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes ul {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes ul {
   list-style-type: square;
   padding-right: 5px;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes ul li {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes ul li {
   font-style: italic;
 }
-#tidy-redesign .tab-space .tab-content .tab .playbook header.full-bar {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook header.full-bar {
   background-color: #666;
   color: #EEEFFF;
 }
-#tidy-redesign .tab-space .tab-content .tab.downtime {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime {
   line-height: 1em;
 }
-#tidy-redesign .tab-space .tab-content .tab.downtime h3 {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime h3 {
   text-align: center;
   font-family: Kirsty, serif;
   font-size: 2em;
   margin: 0.5em;
 }
-#tidy-redesign .tab-space .tab-content .tab.downtime header {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime header {
   width: 100%;
   font-family: Kirsty, serif;
   background-color: #191813;
@@ -646,43 +642,972 @@
   padding: 3px;
   text-align: center;
 }
-#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper {
   display: flex;
 }
-#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr {
   text-align: center;
 }
-#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr td, #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr th {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr td, .blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr th {
   padding: 3px;
 }
-#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr th {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr th {
   background-color: #191813;
   color: #EEEFFF;
 }
-#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column {
   display: flex;
   flex-direction: column;
   width: 50%;
 }
-#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section {
   background-color: #bbb;
 }
-#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section p {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section p {
   text-align: center;
 }
-#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section ul {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section ul {
   padding-right: 1em;
 }
-#tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section ul li {
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section ul li {
   margin-bottom: 3px;
 }
-
-/*
- * General Styles
- */
-textarea {
+.blades-in-the-dark textarea {
   margin-top: 10px;
   margin-bottom: 20px;
+}
+.blades-in-the-dark .tooltip {
+  display: none;
+  position: absolute;
+  padding: 10px;
+  color: #EEEFFF;
+  background-color: #191813;
+  border: 1px solid #777;
+  border-radius: 3px;
+  z-index: 9999999;
+  max-width: 300px;
+}
+.blades-in-the-dark .flex-horizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.blades-in-the-dark .flex-vertical {
+  display: flex;
+  flex-direction: column;
+}
+.blades-in-the-dark .black-label {
+  background-color: #191813;
+  color: #EEEFFF;
+  font-size: 21px;
+  text-align: center;
+  padding: 0px 5px;
+  height: 30px !important;
+  text-transform: capitalize;
+}
+.blades-in-the-dark .gray-label {
+  background-color: #999;
+  color: #191813;
+  font-size: 21px;
+  text-align: center;
+  padding: 0px 5px;
+  height: 30px !important;
+  text-transform: capitalize;
+}
+.blades-in-the-dark .label-stripe {
+  text-transform: uppercase;
+  background-color: #191813;
+  color: #EEEFFF;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  font-weight: bold;
+}
+.blades-in-the-dark .label-stripe-gray {
+  text-transform: uppercase;
+  background-color: #999;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  font-weight: bold;
+}
+.blades-in-the-dark .editor,
+.blades-in-the-dark .editor-content {
+  min-height: 150px;
+}
+.blades-in-the-dark .description {
+  font-style: italic;
+}
+.blades-in-the-dark i.nullifier {
+  transition: filter 0.2s;
+  cursor: pointer;
+}
+.blades-in-the-dark i.nullifier:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+  color: red;
+}
+.blades-in-the-dark #loadout select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+  background: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") no-repeat right;
+  padding: 0 20px 0 0;
+  margin: 0.1em -6px 0 0;
+  background-color: #191813;
+  font-family: Georgia, "Bitstream Charter", "Times New Roman", serif;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  text-align: right;
+}
+.blades-in-the-dark #loadout select option {
+  color: white;
+}
+.blades-in-the-dark #loadout select:hover {
+  color: red;
+}
+.blades-in-the-dark #abilities .item-name, .blades-in-the-dark #loadout .item-name {
+  width: 100px;
+}
+.blades-in-the-dark #abilities .item-body, .blades-in-the-dark #loadout .item-body {
+  width: auto;
+}
+.blades-in-the-dark #abilities .item-description, .blades-in-the-dark #loadout .item-description {
+  width: 260px;
+}
+.blades-in-the-dark td {
+  padding: 5px;
+}
+.blades-in-the-dark.crew.sheet .coins {
+  display: flex;
+  /* Hide the browser's default checkbox */
+  flex-wrap: wrap;
+}
+.blades-in-the-dark.crew.sheet .coins label {
+  height: 15px;
+  width: 15px;
+  background-color: #DAA520;
+  vertical-align: middle;
+  border: 1px solid #191813;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.crew.sheet .coins label[for$="-0"] {
+  margin-right: 0px;
+}
+.blades-in-the-dark.crew.sheet .coins label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.crew.sheet .coins input {
+  display: none;
+}
+.blades-in-the-dark.crew.sheet .coins input:checked ~ label {
+  background-color: #EEEFFF;
+}
+.blades-in-the-dark.crew.sheet .coins input:checked + label {
+  background-color: #DAA520;
+}
+.blades-in-the-dark.crew.sheet .coins input ~ label {
+  margin-right: 3px;
+  margin-bottom: 3px;
+  transition: filter 0.2s;
+  cursor: pointer;
+}
+.blades-in-the-dark.crew.sheet .coins input ~ label[for$="0"] {
+  border-width: 2px;
+}
+.blades-in-the-dark.crew.sheet .coins input ~ label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.crew.sheet .coins.coins-hands {
+  width: 36px;
+}
+.blades-in-the-dark.crew.sheet .coins.coins-stashed {
+  width: 190px;
+}
+.blades-in-the-dark.crew.sheet #name,
+.blades-in-the-dark.crew.sheet #lair {
+  margin-bottom: 10px;
+}
+.blades-in-the-dark.crew.sheet form.actor-sheet {
+  padding: 20px;
+}
+.blades-in-the-dark.crew.sheet nav {
+  padding-bottom: 10px;
+}
+.blades-in-the-dark.crew.sheet .crew-coins {
+  display: flex;
+  /* Hide the browser's default checkbox */
+  flex-wrap: wrap;
+  max-width: 72px;
+}
+.blades-in-the-dark.crew.sheet .crew-coins label {
+  height: 15px;
+  width: 15px;
+  background-color: #DAA520;
+  vertical-align: middle;
+  border: 1px solid #191813;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.crew.sheet .crew-coins label[for$="-0"] {
+  margin-right: 0px;
+}
+.blades-in-the-dark.crew.sheet .crew-coins label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.crew.sheet .crew-coins input {
+  display: none;
+}
+.blades-in-the-dark.crew.sheet .crew-coins input:checked ~ label {
+  background-color: #EEEFFF;
+}
+.blades-in-the-dark.crew.sheet .crew-coins input:checked + label {
+  background-color: #DAA520;
+}
+.blades-in-the-dark.crew.sheet .crew-coins label {
+  margin-right: 3px;
+  margin-bottom: 3px;
+}
+.blades-in-the-dark.crew.sheet #crew-reputation {
+  border-top: 3px solid #191813;
+  display: flex;
+  /* Hide the browser's default checkbox */
+}
+.blades-in-the-dark.crew.sheet #crew-reputation label {
+  height: 50px;
+  width: 17px;
+  background-image: url("assets/teeth/stresstooth-red.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 3px;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.crew.sheet #crew-reputation label:last-of-type {
+  margin-right: 0px;
+}
+.blades-in-the-dark.crew.sheet #crew-reputation label[for$="-0"] {
+  width: auto;
+  height: auto;
+  background-image: none !important;
+  color: #EEEFFF;
+}
+.blades-in-the-dark.crew.sheet #crew-reputation label[for$="-0"] i {
+  margin-top: 4px;
+}
+.blades-in-the-dark.crew.sheet #crew-reputation label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.crew.sheet #crew-reputation input {
+  display: none;
+}
+.blades-in-the-dark.crew.sheet #crew-reputation label {
+  background-image: url("assets/teeth/stresstooth-halfgrey.png");
+  background-size: 100% 100%;
+}
+.blades-in-the-dark.crew.sheet #crew-reputation label.on {
+  background-image: url("assets/teeth/stresstooth-red.png");
+}
+.blades-in-the-dark.crew.sheet #crew-reputation input[disabled=disabled] + label {
+  background-image: url(assets/teeth/stresstooth-black.png);
+}
+.blades-in-the-dark.crew.sheet #turf-container {
+  overflow-x: scroll;
+  overflow-y: clip;
+}
+.blades-in-the-dark.crew.sheet #turf-list {
+  display: flex;
+  flex-direction: column;
+  width: 855px;
+}
+.blades-in-the-dark.crew.sheet #turf-list .turf-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.blades-in-the-dark.crew.sheet #turf-list .turf-row *:first-child {
+  margin-left: 0px;
+}
+.blades-in-the-dark.crew.sheet #turf-list .turf-row *:last-child {
+  margin-right: 0px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block {
+  transition: filter 0.1s;
+  cursor: pointer;
+  width: 130px;
+  height: 100px;
+  background-color: #bbb;
+  position: relative;
+  margin: 20px;
+  flex-grow: initial;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block.turf-selected .connector {
+  background-color: #999;
+  z-index: 1;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block .connector {
+  position: absolute;
+  display: block;
+  background-color: #bbb;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block .connector.right, .blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block .connector.left {
+  width: 40px;
+  height: 20px;
+  top: 40px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block .connector.left {
+  left: -40px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block .connector.right {
+  left: 130px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block .connector.top, .blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block .connector.bottom {
+  height: 40px;
+  width: 20px;
+  left: 55px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block .connector.top {
+  top: -40px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block .connector.bottom {
+  top: 100px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block.turf-selected {
+  background-color: #999;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block .turf-description {
+  border: none;
+  background: none;
+  resize: none;
+  width: 130px;
+  text-align: center;
+  min-height: auto;
+  font-size: 12px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block .turf-name {
+  border: none;
+  border-radius: 0px;
+  text-align: center;
+  font-weight: bold;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block input[type=checkbox] {
+  transform: scale(1);
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-non-editable .turf-block .turf-control.turf-select {
+  position: absolute;
+  top: -7px;
+  left: -7px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block {
+  transition: filter 0.1s;
+  cursor: pointer;
+  width: 130px;
+  height: 125px;
+  background-color: #bbb;
+  position: relative;
+  margin: 20px;
+  flex-grow: initial;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block.turf-selected .connector {
+  background-color: #999;
+  z-index: 1;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block .connector {
+  position: absolute;
+  display: block;
+  background-color: #bbb;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block .connector.right, .blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block .connector.left {
+  width: 40px;
+  height: 25px;
+  top: 50px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block .connector.left {
+  left: -40px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block .connector.right {
+  left: 130px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block .connector.top, .blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block .connector.bottom {
+  height: 40px;
+  width: 25px;
+  left: 52.5px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block .connector.top {
+  top: -40px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block .connector.bottom {
+  top: 125px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block.turf-selected {
+  background-color: #999;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block .turf-description {
+  border: none;
+  background: none;
+  resize: none;
+  width: 130px;
+  text-align: center;
+  min-height: auto;
+  font-size: 12px;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block .turf-name {
+  border: none;
+  border-radius: 0px;
+  text-align: center;
+  font-weight: bold;
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block input[type=checkbox] {
+  transform: scale(1);
+}
+.blades-in-the-dark.crew.sheet #turf-list.section-editable .turf-block .turf-control.turf-select {
+  position: absolute;
+  top: -7px;
+  left: -7px;
+}
+.blades-in-the-dark.crew.sheet #crew-hold {
+  border-top: 3px solid #191813;
+  display: flex;
+  /* Hide the browser's default checkbox */
+  width: 221px;
+}
+.blades-in-the-dark.crew.sheet #crew-hold label {
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.crew.sheet #crew-hold label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.crew.sheet #crew-hold label {
+  height: 50px;
+  width: 17px;
+  background-image: url("assets/teeth/stresstooth-halfgrey.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 5px;
+}
+.blades-in-the-dark.crew.sheet #crew-hold label:last-of-type {
+  margin-right: 0px;
+}
+.blades-in-the-dark.crew.sheet #crew-hold input {
+  display: none;
+}
+.blades-in-the-dark.crew.sheet #crew-hold input:checked + label {
+  background-image: url("assets/teeth/stresstooth-red.png");
+}
+.blades-in-the-dark.crew.sheet #crew-tier {
+  background-color: #999;
+  height: 33px;
+  width: 145px;
+  display: flex;
+  align-items: center;
+  border-top: 3px solid #191813;
+  display: flex;
+  /* Hide the browser's default checkbox */
+}
+.blades-in-the-dark.crew.sheet #crew-tier label {
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.crew.sheet #crew-tier label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.crew.sheet #crew-tier label:not([for$="-0"]) {
+  height: 18px;
+  width: 18px;
+  background-color: #191813;
+  vertical-align: middle;
+  border: 2px solid #191813;
+  border-radius: 9px;
+}
+.blades-in-the-dark.crew.sheet #crew-tier input {
+  display: none;
+}
+.blades-in-the-dark.crew.sheet #crew-tier input:checked ~ label:not([for$="-0"]) {
+  border-color: gray;
+  background-color: #EEEFFF;
+}
+.blades-in-the-dark.crew.sheet #crew-tier input:checked + label:not([for$="-0"]) {
+  background-color: #191813;
+  border-color: #191813;
+}
+.blades-in-the-dark.crew.sheet #crew-tier > * {
+  margin-right: 5px;
+}
+.blades-in-the-dark.crew.sheet #heat-wanted {
+  justify-content: none;
+}
+.blades-in-the-dark.crew.sheet .experience-clues-container {
+  width: 340px;
+  font-size: 12px;
+}
+.blades-in-the-dark.crew.sheet .experience-clues-container .experience-clues-description {
+  font-weight: bold;
+}
+.blades-in-the-dark.crew.sheet .experience-clues-container .experience-clues {
+  font-style: italic;
+}
+.blades-in-the-dark.crew.sheet .edgeflaw input {
+  display: none;
+}
+.blades-in-the-dark.crew.sheet .edgeflaw input:checked + label {
+  color: red;
+}
+.blades-in-the-dark.crew.sheet #gang-expert-type-selector #gang-type-boxes {
+  flex-wrap: wrap;
+}
+.blades-in-the-dark.crew.sheet .cohorts {
+  flex-wrap: wrap;
+}
+.blades-in-the-dark.crew.sheet .cohorts .cohort-block-wrapper {
+  width: 400px;
+}
+.blades-in-the-dark.crew.sheet .cohorts .label-stripe {
+  margin-bottom: 0px;
+}
+.blades-in-the-dark.crew.sheet .cohorts .cohort-body > div {
+  margin-bottom: 10px;
+}
+.blades-in-the-dark.crew.sheet .cohorts .cohort-block-harm {
+  justify-content: space-around;
+}
+.blades-in-the-dark.crew.sheet .cohorts .cohort-block-harm input[type=radio] {
+  display: none;
+}
+.blades-in-the-dark.crew.sheet .cohorts .cohort-block-harm input[type=radio]:checked + label {
+  color: #EEEFFF;
+  font-weight: bold;
+  background-color: #191813;
+}
+.blades-in-the-dark.crew.sheet .cohorts .cohort-block-harm label {
+  border: 2px solid #191813;
+  border-top: none;
+  padding: 5px;
+}
+.blades-in-the-dark.crew.sheet .class-name {
+  width: 512px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 48px;
+  text-transform: uppercase;
+  border: 3px solid #191813;
+}
+.blades-in-the-dark.crew.sheet .class-name .big-name {
+  font-weight: bold;
+}
+.blades-in-the-dark.crew.sheet .class-name .big-description {
+  font-size: 20px;
+  color: #191813;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section {
+  border-top: 3px solid #191813;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0px;
+  /* Trauma */
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section > * {
+  margin-right: 10px;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section > *:last-child {
+  margin-right: 0px;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section:last-child {
+  margin-right: 0px;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .big-teeth {
+  display: flex;
+  /* Hide the browser's default checkbox */
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .big-teeth label {
+  height: 50px;
+  width: 17px;
+  background-image: url("assets/teeth/stresstooth-red.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 3px;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .big-teeth label:last-of-type {
+  margin-right: 0px;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .big-teeth label[for$="-0"] {
+  width: auto;
+  height: auto;
+  background-image: none !important;
+  color: #EEEFFF;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .big-teeth label[for$="-0"] i {
+  margin-top: 4px;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .big-teeth label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .big-teeth input {
+  display: none;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .big-teeth label {
+  background-image: url("assets/teeth/stresstooth-halfgrey.png");
+  background-size: 100% 100%;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .big-teeth label.on {
+  background-image: url("assets/teeth/stresstooth-red.png");
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .small-teeth-container .small-teeth-wrap {
+  display: flex;
+  /* Hide the browser's default checkbox */
+  flex-direction: column;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .small-teeth-container .small-teeth-wrap label {
+  height: 50px;
+  width: 17px;
+  background-image: url("assets/teeth/shorttooth-red.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 3px;
+  cursor: not-allowed;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .small-teeth-container .small-teeth-wrap label:last-of-type {
+  margin-right: 0px;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .small-teeth-container .small-teeth-wrap label[for$="-0"] {
+  width: auto;
+  height: auto;
+  background-image: none !important;
+  color: #EEEFFF;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .small-teeth-container .small-teeth-wrap label[for$="-0"] i {
+  margin-top: 4px;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .small-teeth-container .small-teeth-wrap input {
+  display: none;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .small-teeth-container .small-teeth-wrap label {
+  background-image: url("assets/teeth/shorttooth-grey.png");
+  background-size: 100% 100%;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .small-teeth-container .small-teeth-wrap label.on {
+  background-image: url("assets/teeth/shorttooth-red.png");
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section .small-teeth-container .small-teeth-wrap .small-teeth {
+  display: flex;
+  flex-direction: row;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section #trauma-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section #trauma-list label {
+  cursor: pointer;
+  font-size: 19px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-right: 10px;
+  transition: filter 0.1s;
+  cursor: pointer;
+  /* Hide the browser's default checkbox */
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section #trauma-list label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section #trauma-list label input {
+  display: none;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section #trauma-list label input:checked ~ .checkmark {
+  color: red;
+}
+.blades-in-the-dark.crew.sheet .big-teeth-section #trauma-list label .checkmark {
+  text-decoration: none;
+  font-weight: bold;
+}
+.blades-in-the-dark.crew.sheet header {
+  margin-bottom: 10px;
+}
+.blades-in-the-dark.clock.sheet .clock-zero-label {
+  color: #191813;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-4 {
+  position: relative;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-4 .blades-clock {
+  position: relative;
+  padding: 0;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  list-style: none;
+  overflow: hidden;
+  background-size: cover;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-4 .blades-clock label {
+  overflow: hidden;
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  transform-origin: 0% 100%;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-4 .blades-clock label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-4 .blades-clock input {
+  position: absolute;
+  display: none;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-4 .blades-clock input[value="0"] {
+  display: none;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-4 .blades-clock *:nth-child(3) {
+  transform: rotate(0deg) skewY(180deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-4 .blades-clock *:nth-child(5) {
+  transform: rotate(90deg) skewY(180deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-4 .blades-clock *:nth-child(7) {
+  transform: rotate(180deg) skewY(180deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-4 .blades-clock *:nth-child(9) {
+  transform: rotate(270deg) skewY(180deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-6 {
+  position: relative;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-6 .blades-clock {
+  position: relative;
+  padding: 0;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  list-style: none;
+  overflow: hidden;
+  background-size: cover;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-6 .blades-clock label {
+  overflow: hidden;
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  transform-origin: 0% 100%;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-6 .blades-clock label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-6 .blades-clock input {
+  position: absolute;
+  display: none;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-6 .blades-clock input[value="0"] {
+  display: none;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-6 .blades-clock *:nth-child(3) {
+  transform: rotate(0deg) skewY(150deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-6 .blades-clock *:nth-child(5) {
+  transform: rotate(60deg) skewY(150deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-6 .blades-clock *:nth-child(7) {
+  transform: rotate(120deg) skewY(150deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-6 .blades-clock *:nth-child(9) {
+  transform: rotate(180deg) skewY(150deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-6 .blades-clock *:nth-child(11) {
+  transform: rotate(240deg) skewY(150deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-6 .blades-clock *:nth-child(13) {
+  transform: rotate(300deg) skewY(150deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 {
+  position: relative;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 .blades-clock {
+  position: relative;
+  padding: 0;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  list-style: none;
+  overflow: hidden;
+  background-size: cover;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 .blades-clock label {
+  overflow: hidden;
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  transform-origin: 0% 100%;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 .blades-clock label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 .blades-clock input {
+  position: absolute;
+  display: none;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 .blades-clock input[value="0"] {
+  display: none;
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 .blades-clock *:nth-child(3) {
+  transform: rotate(0deg) skewY(135deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 .blades-clock *:nth-child(5) {
+  transform: rotate(45deg) skewY(135deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 .blades-clock *:nth-child(7) {
+  transform: rotate(90deg) skewY(135deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 .blades-clock *:nth-child(9) {
+  transform: rotate(135deg) skewY(135deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 .blades-clock *:nth-child(11) {
+  transform: rotate(180deg) skewY(135deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 .blades-clock *:nth-child(13) {
+  transform: rotate(225deg) skewY(135deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 .blades-clock *:nth-child(15) {
+  transform: rotate(270deg) skewY(135deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .clocks.clocks-8 .blades-clock *:nth-child(17) {
+  transform: rotate(315deg) skewY(135deg);
+}
+.blades-in-the-dark.clock.sheet .clock-block .blades-clock-name-type > * {
+  margin-bottom: 10px;
+  max-width: 220px;
+}
+.blades-in-the-dark.item.sheet .item {
+  justify-content: space-between;
+}
+.blades-in-the-dark.item.sheet .item .item-body {
+  margin-bottom: 10px;
+}
+.blades-in-the-dark.item.sheet .item .item-body * {
+  margin-right: 10px;
+}
+.blades-in-the-dark.item.sheet .item .item-body .item-description {
+  font-style: italic;
+  text-align: justify;
+}
+.blades-in-the-dark.item.sheet .item div {
+  flex-grow: 2;
+}
+.blades-in-the-dark.item.sheet .item .item-control {
+  flex-grow: 1;
+}
+.blades-in-the-dark.item.sheet .item .item-body,
+.blades-in-the-dark.item.sheet .item .item-class-label {
+  width: 100px;
+}
+.blades-in-the-dark.item.sheet .item-class-label {
+  margin-bottom: 10px;
+}
+
+.chat-label {
+  background-color: #191813;
+  font-family: Kirsty, serif;
+  color: #EEEFFF;
+  font-size: 21px;
+  text-align: center;
+  padding: 0px 5px;
+  height: 30px !important;
+  text-transform: capitalize;
+}
+
+.chat-label-small {
+  background-color: #999;
+  color: #191813;
+  font-size: small;
+  text-align: center;
+  padding: 3px 5px;
+  height: 20px !important;
+}
+
+.label-stripe-chat {
+  text-transform: uppercase;
+  background-color: #191813;
+  color: #EEEFFF;
+  margin-bottom: 10px;
+  position: relative;
+  padding-top: 3px;
+  display: flex;
+  font-weight: bold;
+  margin: 0;
+}
+
+.label-stripe-chat-small {
+  text-transform: capitalize;
+  background-color: #999;
+  color: #191813;
+  margin-bottom: 10px;
+  position: relative;
+  padding-top: 3px;
+  display: flex;
+  font-weight: bold;
+}
+
+.blades-die-tooltip .die {
+  font-weight: bold;
+  text-transform: capitalize;
+  font-size: large;
+}
+.blades-die-tooltip .die.critical-success {
+  color: #12a012;
+}
+.blades-die-tooltip .die.success {
+  color: #008000;
+}
+.blades-die-tooltip .die.partial-success {
+  color: #04578f;
+}
+.blades-die-tooltip .die.failure {
+  color: red;
 }
 
 #items-to-add {
@@ -698,21 +1623,6 @@ textarea {
 #items-to-add input[type=radio]:checked + label,
 #items-to-add input[type=checkbox]:checked + label {
   font-weight: bold;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 200px;
-  background-color: #191813;
-  color: #EEEFFF;
-  text-align: center;
-  padding: 5px;
-  border-radius: 6px;
-  position: absolute;
-  z-index: 9999;
-}
-.tooltip:hover .tooltiptext {
-  visibility: visible;
 }
 
 /*# sourceMappingURL=blades.css.map */
