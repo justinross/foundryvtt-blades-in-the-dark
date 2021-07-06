@@ -71,7 +71,6 @@ export class BladesActorSheet extends BladesSheet {
       name: game.i18n.localize("BITD.DeleteAbility"),
       icon: '<i class="fas fa-trash"></i>',
       callback: element => {
-        console.log(this.actor.items);
         this.actor.deleteEmbeddedDocuments("Item", [element.data("ability-id")]);
       }
     }

@@ -306,7 +306,7 @@ export class BladesHelpers {
           items_to_delete.push(item.id);
         }
       }
-      console.log("Deleting unnecessary playbook items ...", items_to_delete);
+      console.log("Deleting unnecessary playbook items");
 
     let deleted = await actor.deleteEmbeddedDocuments("Item", items_to_delete, {noHook: true});
       // console.log("Deleted playbook items: ", deleted);
@@ -336,7 +336,7 @@ export class BladesHelpers {
    * @returns {object} // the OwnedItems added
    */
   static async addGenericItems(actor){
-      console.log("Adding new playbook items");
+      console.log("Adding generic items");
       let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
       let new_items = all_items.filter(item => item.data.data.class == "");
       let added = await actor.createEmbeddedDocuments("Item", new_items, {noHook: true});
@@ -353,7 +353,7 @@ export class BladesHelpers {
    */
   static async clearAcquaintances(actor, keep_friends_and_rivals = false){
         let current_acquaintances = actor.data.data.acquaintances;
-        console.log("Deleting unnecessary playbook acquaintances ...");
+        console.log("Deleting unnecessary playbook acquaintances");
         let new_acquaintances_array = current_acquaintances.filter(acq => keep_friends_and_rivals && acq.standing != "neutral");
         let update = await actor.update({data : {acquaintances : new_acquaintances_array}});
         // console.log("Deleted: ", update);
