@@ -6,6 +6,10 @@
         <div class="portrait">
           <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" >
         </div>
+        <div class="coins-box {{#if actor.flags.blades-in-the-dark.coins_open}}open{{/if}}">
+          <div class="mini-view"><span class="coin-values">{{data.coins}}/{{data.coins_stashed}}</span></div>
+          <div class="full-view">{{> "systems/blades-in-the-dark/templates/parts/coins.html" actor=actor}}</div>
+        </div>
         <div class="stress-trauma-box">
           <header class="stress-bar full-bar">
             {{localize "BITD.Stress"}} <i class="fas fa-plus add_trauma"></i>

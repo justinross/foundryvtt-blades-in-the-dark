@@ -289,6 +289,13 @@ Hooks.once("init", async function() {
     return new Handlebars.SafeString(html);
   });
 
+
+  // Handlebars.registerHelper('tern', function(value, ifTrue, ifFalse){
+  //   if(value == "true"){
+  //
+  //   }
+  // });
+
 });
 
 /**

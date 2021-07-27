@@ -311,9 +311,19 @@ export class BladesActorSheet extends BladesSheet {
       this.actor.update({data: {acquaintances : acquaintances}});
     });
 
-    html.find('.add-playbook-item').click(async ev => {
+    // TODO: Remove this because I'm not sure why I left it here
+    // html.find('.add-playbook-item').click(async ev => {
+    //
+    // });
 
+    html.find('.coins-box').click(ev => {
+      this.actor.getFlag('blades-in-the-dark', 'coins_open') ? this.actor.setFlag('blades-in-the-dark', 'coins_open', false) : this.actor.setFlag('blades-in-the-dark', 'coins_open', true);
     });
+
+    html.find('.coins-box .full-view').click(ev => {
+      ev.stopPropagation();
+    });
+
 
 
     // manage active effects

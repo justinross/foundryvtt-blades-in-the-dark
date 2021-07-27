@@ -33,6 +33,7 @@ export class BladesSheet extends ActorSheet {
   //allow for radio button toggling. Clicking an already-clicked radio button will deselect it, and select the next-lowest value. Only works with numeric values, of course.
   //this alleviates the need for the nullifying button
   _onRadioToggle(event){
+    console.log("radiotoggle");
     let type = event.target.tagName.toLowerCase();
     let target = event.target;
     if(type == "label"){

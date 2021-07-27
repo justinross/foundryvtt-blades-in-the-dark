@@ -1,4 +1,5 @@
-/* 
+@use "sass:math";
+/*
 *  Elements that can be changed will hint this by dimming and fading a little on hover
 */
 @mixin changeable($transition-period, $hover-brightness, $hover-opacity, $hover-color: null) {
@@ -520,4 +521,30 @@
       $rot: $rot + $angle;
     }
   }
+}
+
+@function makeLongShadow($length, $spacing, $angle, $backgroundColor, $shadowColor, $fade, $blur, $blurRate){
+  $shadow : 0px 0px $shadowColor;
+  @for $i from 1 through $length{
+    $radians : $angle * math.$pi/180;
+    $shadow : #{$shadow}, #{(math.cos($radians) * $i) * $spacing}px #{(math.sin($radians) * $i) * $spacing}px;
+    @if $blur{
+      $shadow : #{$shadow} #{($blurRate * $i)}px;
+    }
+    @if $fade{
+      $shadow : #{$shadow} #{mix($backgroundColor, $shadowColor, ((100/$length) * $i))};
+    }
+    @else{
+      $shadow : #{$shadow} #{$shadowColor};
+    }
+  }
+  @return $shadow;
+}
+
+@mixin text-long-shadow($length: 100, $spacing: 1, $angle: 45, $backgroundColor: #ffffff, $shadowColor: #000000, $fade: true, $blur: false, $blurRate: 0){
+  text-shadow : makeLongShadow($length, $spacing, $angle, $backgroundColor, $shadowColor, $fade, $blur, $blurRate);
+}
+
+@mixin box-long-shadow($length: 100, $spacing: 1, $angle: 45, $backgroundColor: #ffffff, $shadowColor: #000000, $fade: true, $blur: false, $blurRate: 0){
+  box-shadow : makeLongShadow($length, $spacing, $angle, $backgroundColor, $shadowColor, $fade, $blur, $blurRate);
 }

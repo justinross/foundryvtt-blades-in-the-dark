@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* 
+/*
 *  Elements that can be changed will hint this by dimming and fading a little on hover
 */
 /*
@@ -336,6 +336,120 @@
   border: 0;
   border-radius: 50%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3) inset;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box {
+  transition-property: max-width, max-height, color, background-color;
+  transition-duration: 2.25s;
+  max-width: 50px;
+  max-height: 50px;
+  position: absolute;
+  top: -10px;
+  left: calc(100% - 50px);
+  box-sizing: border-box;
+  font-size: 1.4em;
+  border-radius: 12.5px;
+  color: #191813;
+  font-family: Kirsty, serif;
+  text-align: left;
+  padding: 7px;
+  z-index: 100;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box > div {
+  display: inline-block;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .mini-view {
+  text-align: center;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-image: url(assets/icons/money_sack.png);
+  background-size: contain;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .mini-view .coin-values {
+  position: absolute;
+  bottom: 4px;
+  font-weight: bold;
+  font-size: 0.9em;
+  font-family: "Crimson Text", serif;
+  left: 0px;
+  width: 100%;
+  color: #EEEFFF;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view {
+  display: none;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins {
+  display: flex;
+  /* Hide the browser's default checkbox */
+  flex-wrap: wrap;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins label {
+  height: 15px;
+  width: 15px;
+  background-color: #DAA520;
+  vertical-align: middle;
+  border: 1px solid #191813;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins label[for$="-0"] {
+  margin-right: 0px;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input {
+  display: none;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input:checked ~ label {
+  background-color: #EEEFFF;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input:checked + label {
+  background-color: #DAA520;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input ~ label {
+  margin-right: 3px;
+  margin-bottom: 3px;
+  transition: filter 0.2s;
+  cursor: pointer;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input ~ label[for$="0"] {
+  border-width: 2px;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input ~ label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins.coins-hands {
+  width: 36px;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins.coins-stashed {
+  width: 190px;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box.open {
+  max-width: 1000px;
+  max-height: 1000px;
+  color: #191813;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box.open .full-view {
+  background-color: #bbb;
+  border: 3px solid #666;
+  display: block;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+  width: 250px;
+  box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.25);
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box.open .full-view .coins {
+  display: flex;
+  justify-content: space-between;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box.open .full-view .coins .hand, .blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box.open .full-view .coins .stash {
+  display: inline-block;
+  text-align: left;
 }
 .blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box {
   width: 100%;
