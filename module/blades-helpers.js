@@ -339,7 +339,7 @@ export class BladesHelpers {
       console.log("Adding generic items");
       let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
       let new_items = all_items.filter(item => item.data.data.class == "");
-      let added = await actor.createEmbeddedDocuments("Item", new_items, {noHook: true});
+      let added = await actor.createEmbeddedDocuments("Item", new_items.map(item => item.data), {noHook: true});
       // console.log("Added playbook items: ", added);
       return added;
   }
