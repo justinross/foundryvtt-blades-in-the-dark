@@ -560,6 +560,7 @@
   font-variant: small-caps;
   padding: 3px 0;
   margin-left: 0.4em;
+  line-height: 0.8em;
 }
 .blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action label {
   margin: 2px;
