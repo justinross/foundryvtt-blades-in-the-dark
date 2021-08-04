@@ -76,6 +76,20 @@ export class BladesActorSheet extends BladesSheet {
     }
   ]
 
+
+  traumaListContextMenu = [
+    {
+      name: game.i18n.localize("BITD.DeleteTrauma"),
+      icon: '<i class="fas fa-trash"></i>',
+      callback: element => {
+        let traumaToDisable = element.data("trauma");
+        let traumaUpdateObject = this.actor.data.data.trauma.list;
+        traumaUpdateObject[traumaToDisable.toLowerCase()] = false;
+        this.actor.update({data:{trauma:{list: traumaUpdateObject}}});
+      }
+    }
+  ]
+
   abilityListContextMenu = [
     {
       name: game.i18n.localize("BITD.AddAbility"),
@@ -194,9 +208,13 @@ export class BladesActorSheet extends BladesSheet {
       });
       data.generic_items = data.items.filter(item => item.type == "item" && item.data.class == "");
     }
-
+    data.ownedTraumas = [];
     //testing trauma
-    // data.data.trauma.list = ["Cold", "Haunted"];
+    for (const trauma in data.data.trauma.list){
+      if(data.data.trauma.list[trauma]){
+        data.ownedTraumas.push(trauma.charAt(0).toUpperCase() + trauma.slice(1));
+      }
+    }
 
     return data;
   }
@@ -235,6 +253,7 @@ export class BladesActorSheet extends BladesSheet {
     new ContextMenu(html, ".ability-block", this.abilityContextMenu);
     new ContextMenu(html, ".context-items", this.itemListContextMenu);
     new ContextMenu(html, ".context-abilities", this.abilityListContextMenu);
+    new ContextMenu(html, ".trauma-item", this.traumaListContextMenu);
 
     // Update Inventory Item
     html.find('.item-block .clickable-edit').click(ev => {
@@ -324,7 +343,54 @@ export class BladesActorSheet extends BladesSheet {
       ev.stopPropagation();
     });
 
+    html.find('.add_trauma').click(ev => {
+      let traumaList = this.actor.data.data.trauma.list;
+      let unownedTraumas = [];
+      for (const traumaListKey in traumaList) {
+        if(!traumaList[traumaListKey]){
+          unownedTraumas.push(traumaListKey.charAt(0).toUpperCase() + traumaListKey.slice(1));
+        }
+      }
 
+      let unownedTraumasOptions;
+      unownedTraumas.forEach((trauma)=>{
+        unownedTraumasOptions += `<option value=${trauma}>${game.i18n.localize("BITD.Trauma"+trauma)}</option>`;
+      });
+      let unownedTraumasSelect = `
+        <select id="${this.actor.id}-trauma-select">
+        ${unownedTraumasOptions}
+        </select>
+      `;
+      let d = new Dialog({
+        title: "Add Trauma",
+        content: `Select a trauma to add:<br/>${unownedTraumasSelect}`,
+        buttons: {
+          add: {
+            icon: "<i class='fas fa-plus'></i>",
+            label: "Add",
+            callback: (html)=> {
+              let newTrauma = html.find(`#${this.actor.id}-trauma-select`).val().toLowerCase();
+              console.log(this.actor.data.data.trauma.list[newTrauma]);
+              let newTraumaListValue = {data :
+                  {
+                    trauma : this.actor.data.data.trauma
+                  }
+              };
+              newTraumaListValue.data.trauma.list[newTrauma] = true;
+              this.actor.update(newTraumaListValue);
+            }
+          },
+          cancel: {
+            icon: "<i class='fas fa-times'></i>",
+            label: "Cancel"
+          },
+        },
+        render: (html) => {},
+        close: (html) => {}
+      });
+      d.render(true);
+
+    });
 
     // manage active effects
     html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));

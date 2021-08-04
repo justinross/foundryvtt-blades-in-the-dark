@@ -379,26 +379,22 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
     });
 
     if(abilities.length <= 0){
-      console.log("Adding class abilities");
       //add class abilities
       await BladesHelpers.addPlaybookAbilities(actor, selected_playbook_name);
     }
 
 
     if(class_items.length <= 0){
-      console.log("Adding class items");
       //let allAvailableItems = await BladesHelpers.getAllItemsByType('item', game);
       await BladesHelpers.addPlaybookItems(actor, selected_playbook_name);
     }
 
     if(generic_items.length <= 0){
-      console.log("Adding generic items")
       //let allAvailableItems = await BladesHelpers.getAllItemsByType('item', game);
       await BladesHelpers.addGenericItems(actor);
     }
 
     if(Object.keys(actor.data.data.acquaintances).length <= 0){
-      console.log("Adding class acquaintances");
       //add class aquaintances
       await BladesHelpers.addPlaybookAcquaintances(actor, selected_playbook_name);
     }
@@ -419,7 +415,7 @@ Hooks.on("updateActor", async (actor, newData, meta, actorId) => {
     console.log(`Switching playbook to ${new_playbook_name}`);
     //remove all skills, with an exception for new weird playbook selection
     let new_attributes = await BladesHelpers.getStartingAttributes(new_playbook_name);
-    let updated = await actor.update({data:{attributes: new_attributes}});
+    let updated = await actor.update({data:{attributes: new_attributes}}, {no_hook: true});
     await BladesHelpers.clearAbilities(actor, new_playbook_name == "Ghost" || new_playbook_name == "Hull" || new_playbook_name == "Vampire");
     await BladesHelpers.addPlaybookAbilities(actor, new_playbook_name);
     await BladesHelpers.clearPlaybookItems(actor, true);

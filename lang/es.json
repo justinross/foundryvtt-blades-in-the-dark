@@ -160,6 +160,9 @@
 
   "BITD.AddAbility": "Añadir Capacidad",
   "BITD.AddItem": "Añadir Elemento",
+  "BITD.DeleteAbility": "Eliminar capacidad",
+  "BITD.DeleteItem": "Eliminar elemento",
+  "BITD.DeleteTrauma": "Eliminar trauma",
 
   "BITD.Position": "Posición",
   "BITD.Effect": "Efecto",

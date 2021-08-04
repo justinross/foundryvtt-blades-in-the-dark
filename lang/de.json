@@ -1,4 +1,3 @@
-
 {
   "BITD.HelloThere": "General Kenobi",
   "BITD.Heritage": "Herkunft",
@@ -193,7 +192,10 @@
   "BITD.SkillsSway": "Wischen",
 
   "BITD.AddAbility": "Fähigkeit hinzufügen",
-  "BITD.AddItem": "Item hinzufügen",
+  "BITD.AddItem": "Artikel hinzufügen",
+  "BITD.DeleteAbility": "Fähigkeit löschen",
+  "BITD.DeleteItem": "Element löschen",
+  "BITD.DeleteTrauma": "Trauma löschen",
 
   "BITD.Position": "Position",
   "BITD.Effect": "Effekt",

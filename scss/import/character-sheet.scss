@@ -295,10 +295,16 @@
         position: absolute;
         bottom: 10px;
         left: 0;
-        z-index: 10;
+
+        .stress-bar{
+          position: relative;
+          z-index: 100;
+        }
 
         .trauma-box{
-          padding: 0 6px;
+          padding: 0 0 2px;
+          position: relative;
+          z-index: 1;
           .trauma-list{
             width: 100%;
             height: 100%;
@@ -309,9 +315,11 @@
             top: -5px;
             padding-top: 5px;
             border-radius: 0 0 1em 1em;
-            z-index: -10;
-            .trauma{
+            .trauma-item{
+              pointer-events: all;
               display: inline-block;
+              font-weight: bold;
+              color: #660000;
               &:not(:last-of-type)::after {
                 content: " \2022";
               }

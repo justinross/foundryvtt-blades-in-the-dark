@@ -24,11 +24,11 @@
             {{/multiboxes}}
             </div>
           </header>
-          {{#if (gte data.trauma.list.length 0)}}
+          {{#if (gte ownedTraumas.length 0)}}
             <div class="trauma-box">
-              <div class="trauma-list count-{{data.trauma.list.length}}">
-                {{#each data.trauma.list as |trauma index|}}
-                  <div class="trauma">{{localize (concat "BITD.Trauma" trauma)}}</div>
+              <div class="trauma-list count-{{ownedTraumas.length}}">
+                {{#each ownedTraumas as |trauma index|}}
+                  <div class="trauma-item" data-trauma="{{trauma}}">{{localize (concat "BITD.Trauma" trauma)}}</div>
                 {{/each}}
               </div>
             </div>
@@ -42,7 +42,7 @@
         <span class="name">{{{inline-editable-text "name" (localize "BITD.Name") actor.name actor.id this}}}</span> <span class="alias">&bull; "{{{inline-editable-text "data.alias" (localize "BITD.Alias") data.alias actor.id this}}}"</span>
       </div>
       <div class="heritage-background bio">
-        {{{inline-editable-text "data.heritage" "Heritage" data.heritage actor.id this}}} &bull; {{{inline-editable-text "data.background" "Background" data.background actor.id this}}} &bull; {{{inline-editable-text "data.background-details" "Background Details" data.background-details actor.id this}}}
+        {{{inline-editable-text "data.heritage" "Heritage" data.heritage actor.id this}}} &bull; {{{inline-editable-text "data.background" "Background" data.background actor.id this}}} &bull; {{{inline-editable-text "data.background-details" "Background Details" data.background-details actor.id this}}} &bull; {{{inline-editable-text "data.vice" "Vice" data.vice actor.id this}}} &bull; {{{inline-editable-text "data.vice-purveyor" "Vice Purveyor" data.vice-purveyor actor.id this}}}
       </div>
       <div class="look bio">{{{inline-editable-text "data.look" "Look" data.look actor.id this}}}</div>
       <section class="attributes-actions">
