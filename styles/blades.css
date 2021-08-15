@@ -487,6 +487,9 @@
 .blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .trauma-item:not(:last-of-type)::after {
   content: " •";
 }
+.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .add_trauma {
+  font-size: 0.8em;
+}
 .blades-in-the-dark #tidy-redesign .minimized-view .name-alias {
   font-family: Kirsty, serif;
   font-weight: bold;
