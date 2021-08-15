@@ -382,12 +382,24 @@
             padding: 3px 0;
             margin-left: .4em;
             line-height: 0.8em;
+
           }
 
           label{
             margin: 2px;
             border: 1px solid #666666;
             box-sizing: border-box;
+            position: relative;
+            &:first-of-type::after{
+              content: "";
+              display: inline-block;
+              height: 150%;
+              width: 1%;
+              border-right: 1px solid rgba(0,0,0,0.5);
+              position: absolute;
+              right: -3px;
+              top: -3px;
+            }
           }
         }
         input.zero{

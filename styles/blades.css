@@ -573,6 +573,17 @@
   margin: 2px;
   border: 1px solid #666666;
   box-sizing: border-box;
+  position: relative;
+}
+.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action label:first-of-type::after {
+  content: "";
+  display: inline-block;
+  height: 150%;
+  width: 1%;
+  border-right: 1px solid rgba(0, 0, 0, 0.5);
+  position: absolute;
+  right: -3px;
+  top: -3px;
 }
 .blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute input.zero {
   display: none;
