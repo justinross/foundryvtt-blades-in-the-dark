@@ -370,7 +370,6 @@ export class BladesActorSheet extends BladesSheet {
             label: "Add",
             callback: (html)=> {
               let newTrauma = html.find(`#${this.actor.id}-trauma-select`).val().toLowerCase();
-              console.log(this.actor.data.data.trauma.list[newTrauma]);
               let newTraumaListValue = {data :
                   {
                     trauma : this.actor.data.data.trauma
