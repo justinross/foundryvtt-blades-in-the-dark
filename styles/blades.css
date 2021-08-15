@@ -778,6 +778,11 @@
   padding: 3px;
   text-align: center;
 }
+.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime header .header-row {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 2px 0;
+}
 .blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper {
   display: flex;
 }
@@ -811,17 +816,6 @@
 .blades-in-the-dark textarea {
   margin-top: 10px;
   margin-bottom: 20px;
-}
-.blades-in-the-dark .tooltip {
-  display: none;
-  position: absolute;
-  padding: 10px;
-  color: #EEEFFF;
-  background-color: #191813;
-  border: 1px solid #777;
-  border-radius: 3px;
-  z-index: 9999999;
-  max-width: 300px;
 }
 .blades-in-the-dark .flex-horizontal {
   display: flex;
@@ -1760,6 +1754,18 @@
 #items-to-add input[type=radio]:checked + label,
 #items-to-add input[type=checkbox]:checked + label {
   font-weight: bold;
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  padding: 10px;
+  color: #EEEFFF;
+  background-color: #191813;
+  border: 1px solid #777;
+  border-radius: 3px;
+  z-index: 9999999;
+  max-width: 300px;
 }
 
 /*# sourceMappingURL=blades.css.map */
