@@ -227,6 +227,7 @@ export class BladesActorSheet extends BladesSheet {
 
   addTermTooltips(html){
     html.find('.hover-term').hover(function(e){ // Hover event
+      //todo: the title doesn't need to get added in the hover event
       var titleText = BladesLookup.getTerm($(this).text());
       $(this).data('tiptext', titleText).removeAttr('title');
       $('<p class="tooltip"></p>').text(titleText).appendTo('body').css('top', (e.pageY - 10) + 'px').css('left', (e.pageX + 20) + 'px').fadeIn('fast');
@@ -329,11 +330,6 @@ export class BladesActorSheet extends BladesSheet {
       acquaintances.splice(clickedAcqIdx, 1, clickedAcq);
       this.actor.update({data: {acquaintances : acquaintances}});
     });
-
-    // TODO: Remove this because I'm not sure why I left it here
-    // html.find('.add-playbook-item').click(async ev => {
-    //
-    // });
 
     html.find('.coins-box').click(ev => {
       this.actor.getFlag('blades-in-the-dark', 'coins_open') ? this.actor.setFlag('blades-in-the-dark', 'coins_open', false) : this.actor.setFlag('blades-in-the-dark', 'coins_open', true);

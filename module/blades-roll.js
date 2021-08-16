@@ -29,6 +29,13 @@ export async function bladesRoll(dice_amount, attribute_name = "", position = "r
  * @param {string} position
  * @param {string} effect
  */
+
+// TODO: add rolls for downtime activities:
+// Acquire asset (tier roll)
+// Recover (clock roll)
+// Reduce heat (action roll)
+// Indulge Vice (clear stress = result)
+
 async function showChatRollMessage(r, zeromode, attribute_name = "", position = "", effect = "") {
   
   let speaker = ChatMessage.getSpeaker();

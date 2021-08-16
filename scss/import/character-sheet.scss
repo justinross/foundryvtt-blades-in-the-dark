@@ -637,6 +637,11 @@
             color: $almost_white;
             padding: 3px;
             text-align: center;
+            .header-row{
+              display: flex;
+              justify-content: space-evenly;
+              margin: 2px 0;
+            }
           }
           .downtimeWrapper{
             display: flex;
