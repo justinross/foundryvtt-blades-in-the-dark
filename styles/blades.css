@@ -306,7 +306,7 @@
 }
 .blades-in-the-dark #tidy-redesign .minimized-view {
   display: grid;
-  height: 230px;
+  height: 235px;
   grid-template-columns: auto 1fr;
   column-gap: 1em;
   grid-template-rows: 2fr 1fr 1fr 4fr;
