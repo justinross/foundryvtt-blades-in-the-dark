@@ -10,6 +10,10 @@
           <div class="mini-view"><span class="coin-values">{{data.coins}}/{{data.coins_stashed}}</span></div>
           <div class="full-view">{{> "systems/blades-in-the-dark/templates/parts/coins.html" actor=actor}}</div>
         </div>
+        <div class="harm-box {{#if actor.flags.blades-in-the-dark.harm_open}}open{{/if}}">
+          <div class="mini-view harm{{#if (or data.harm.light.one data.harm.light.two)}}-1{{/if}}{{#if (or data.harm.medium.one data.harm.medium.two)}}-2{{/if}}{{#if data.harm.heavy.one}}-3{{/if}}"></div>
+          <div class="full-view">{{> "systems/blades-in-the-dark/templates/parts/harm.html" actor=actor}}</div>
+        </div>
         <div class="stress-trauma-box">
           <header class="stress-bar full-bar">
             {{localize "BITD.Stress"}}

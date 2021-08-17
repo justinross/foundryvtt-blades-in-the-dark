@@ -289,6 +289,135 @@
         }
       }
 
+      .harm-box{
+        $mini-view-width: 50px;
+        $mini-view-height: 50px;
+        $full-view-width: 550px;
+        $full-view-height: 250px;
+        $transition-duration: 2.25s;
+        transition-property: max-width, max-height, color, background-color;
+        transition-duration: $transition-duration;
+        max-width: $mini-view-width;
+        max-height: $mini-view-height;
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        box-sizing: border-box;
+        font-size: 1.4em;
+        border-radius: $mini-view-width / 4;
+        color: $almost_black;
+        font-family: Kirsty, serif;
+        text-align: left;
+        padding: 7px;
+
+
+        //overflow: hidden;
+        z-index: 600;
+
+        .mini-view{
+          text-align: center;
+          position: relative;
+          width: $mini-view-width;
+          height: $mini-view-height;
+          background-repeat: no-repeat;
+          background-image: url(assets/icons/harm.png);
+          background-size: contain;
+          z-index: 700;
+          &.harm-1{background-image: url(assets/icons/harm-1.png);}
+          &.harm-1-2{background-image: url(assets/icons/harm-1-2.png);}
+          &.harm-1-3{background-image: url(assets/icons/harm-1-3.png);}
+          &.harm-1-2-3{background-image: url(assets/icons/harm-1-2-3.png);}
+          &.harm-2{background-image: url(assets/icons/harm-2.png);}
+          &.harm-2-3{background-image: url(assets/icons/harm-2-3.png);}
+          &.harm-3{background-image: url(assets/icons/harm-3.png);}
+
+          .harm-effects{
+            position: absolute;
+            bottom: 4px;
+            font-weight: bold;
+            font-size: .9em;
+            font-family: "Crimson Text", serif;
+            left: 0px;
+            width: 100%;
+            color: $almost-white;
+          }
+
+        }
+
+        .full-view{
+          display: none;
+          position: relative;
+          top: 0;
+          left: 0;
+        }
+
+        &.open{
+          max-width: 1000px;
+          max-height: 1000px;
+          color: $almost-black;
+          .full-view{
+            background-color: $lightgray;
+            border: 3px solid $darkgray;
+            display: block;
+            padding: 5px;
+            border-radius: 5px;
+            text-align: center;
+            top: -10px;
+            width: $full-view-width;
+            //height: $full-view-height;
+            box-shadow: 0px 7px 6px 0px rgba(0,0,0,0.25);
+            .character-harm{
+              display: grid;
+              grid-template-columns: 1em repeat(6, 1fr);
+              grid-template-rows: repeat(4, 1fr);
+              grid-column-gap: 1px;
+              grid-row-gap: 1px;
+              place-items: center;
+              grid-template-areas:
+                "empty header-harm header-harm header-harm header-harm header-effect header-healing"
+                "rownum3 heavy heavy heavy heavy heavy-effect healing"
+                "rownum2 medium1 medium1 medium2 medium2 medium-effect healing"
+                "rownum1 light1 light1 light2 light2 light-effect healing";
+              input{
+                height: 100%;
+                width: 100%;
+                border-radius: 0;
+                background-color: darken($lightgray, 10%);
+                z-index: 10;
+              }
+              header{
+                width: calc(100% + 5px);
+                background-color: $almost_black;
+                color: $almost_white;
+              }
+              header.harm{grid-area: header-harm;}
+              header.effect{grid-area: header-effect;}
+              header.healing{grid-area: header-healing;}
+              .rownum3{grid-area: rownum3;}
+              .heavy{grid-area: heavy;}
+              .effect-text.heavy{grid-area: heavy-effect;}
+              .rownum2{grid-area: rownum2;}
+              .medium1{grid-area: medium1;}
+              .medium2{grid-area: medium2;}
+              .effect-text.medium{grid-area: medium-effect;}
+              .light1{grid-area: light1;}
+              .light2{grid-area: light2;}
+              .effect-text.light{grid-area: light-effect;}
+              .healing-clock{grid-area: healing; @include clock(4, 100);}
+              .rownum1{grid-area: rownum1;}
+              .effect-text{font-family: "Crimson Text", serif;font-size: .8em;}
+              .grid-lines{
+                background-color: $almost_black;
+                grid-area: 2 / 2 / 6 / 6;
+                width: 100%;
+                height: calc(100% - 1px);
+                z-index: 1;
+              }
+            }
+          }
+        }
+      }
+
       .stress-trauma-box{
         width: 100%;
         height: 2em;

@@ -30,9 +30,10 @@ $hover-brightness: 0.8;
     @import 'import/crew-sheet.scss';
   }
 
-  &.clock.sheet{
+  &.actor.clock{
     @import 'import/clocks.scss';
   }
+
 
   &.item.sheet{
     @import 'import/item-sheet.scss';

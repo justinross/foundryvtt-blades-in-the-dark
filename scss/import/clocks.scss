@@ -2,23 +2,22 @@
   color: $almost_black;
 }
 
-.clock-block {
-  .clocks {
-    &.clocks-4 {
-      @include clock(4, 200);
-    }
-    &.clocks-6 {
-      @include clock(6, 200);
-    }
-    &.clocks-8 {
-      @include clock(8, 200);
-    }
+.clocks {
+  &.clocks-4 {
+    @include clock(4, 200);
+  }
+  &.clocks-6 {
+    @include clock(6, 200);
+  }
+  &.clocks-8 {
+    @include clock(8, 200);
   }
 }
 
-.clock-block .blades-clock-name-type {
+.blades-clock-name-type {
   > * {
     margin-bottom: 10px;
     max-width: 220px;
   }
 }
+

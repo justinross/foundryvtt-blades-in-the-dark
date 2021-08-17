@@ -246,7 +246,8 @@ Hooks.once("init", async function() {
     }
 
     // Label for 0
-    html += `<label class="clock-zero-label" for="clock-0-${uniq_id}}"><i class="fab fa-creative-commons-zero nullifier"></i></label>`;
+    html += `<label style="display: none;" class="clock-zero-label" for="clock-0-${uniq_id}}"><i class="fab fa-creative-commons-zero nullifier"></i></label>`;
+
     html += `<div id="blades-clock-${uniq_id}" class="blades-clock clock-${type} clock-${type}-${current_value}" style="background-image:url('systems/blades-in-the-dark/styles/assets/progressclocks-svg/Progress Clock ${type}-${current_value}.svg');">`;
 
     let zero_checked = (parseInt(current_value) === 0) ? 'checked="checked"' : '';
@@ -255,13 +256,24 @@ Hooks.once("init", async function() {
     for (let i = 1; i <= parseInt(type); i++) {
       let checked = (parseInt(current_value) === i) ? 'checked="checked"' : '';
       html += `
-        <input type="radio" value="${i}" id="clock-${i}-${uniq_id}" name="${parameter_name}" ${checked}>
-        <label for="clock-${i}-${uniq_id}"></label>
+        <input type="radio" class="radio-toggle" value="${i}" id="clock-${i}-${uniq_id}" name="${parameter_name}" ${checked}>
+        <label class="radio-toggle" for="clock-${i}-${uniq_id}"></label>
       `;
     }
 
     html += `</div>`;
     return html;
+  });
+
+  Handlebars.registerHelper('or', function(arg1, arg2){
+    if(typeof(arg1) == "string"){
+      arg1 = arg1.length > 0;
+    }
+    if(typeof(arg2) == "string"){
+      arg2 = arg2.length > 0;
+    }
+    console.log(arg1 || arg2);
+    return(arg1 || arg2);
   });
 
 

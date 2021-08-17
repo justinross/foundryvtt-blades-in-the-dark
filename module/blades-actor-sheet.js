@@ -332,10 +332,19 @@ export class BladesActorSheet extends BladesSheet {
     });
 
     html.find('.coins-box').click(ev => {
+      //note: apparently have to do this via flag, as just adding a class doesn't help when the box get rerendered on data change. Fun. Only downside is that it will probably show the coins opening and closing for anyone else viewing the sheet, too.
       this.actor.getFlag('blades-in-the-dark', 'coins_open') ? this.actor.setFlag('blades-in-the-dark', 'coins_open', false) : this.actor.setFlag('blades-in-the-dark', 'coins_open', true);
     });
 
     html.find('.coins-box .full-view').click(ev => {
+      ev.stopPropagation();
+    });
+
+    html.find('.harm-box').click(ev => {
+      this.actor.getFlag('blades-in-the-dark', 'harm_open') ? this.actor.setFlag('blades-in-the-dark', 'harm_open', false) : this.actor.setFlag('blades-in-the-dark', 'harm_open', true);
+    });
+
+    html.find('.harm-box .full-view').click(ev => {
       ev.stopPropagation();
     });
 
