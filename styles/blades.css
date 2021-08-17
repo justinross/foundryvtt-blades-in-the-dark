@@ -1469,9 +1469,10 @@
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space nav.tabs {
   display: grid;
-  grid-template-columns: 1fr 1em 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1em;
   grid-template-rows: auto;
-  grid-template-areas: "tab1 . tab2";
+  grid-template-areas: "tab1 tab2 ";
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item {
   flex-grow: 0;
@@ -1496,7 +1497,7 @@
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item.playbook {
   grid-area: tab1;
 }
-.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item.downtime {
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item.notes {
   grid-area: tab2;
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item .playbook-description {
@@ -1688,6 +1689,16 @@
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section ul li {
   margin-bottom: 3px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .character-notes-area {
+  background-color: #bbb;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 1.2em;
+  height: 650px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .character-notes-area textarea {
+  height: 600px;
 }
 .blades-in-the-dark.actor.clock {
   min-width: 420px;

@@ -73,6 +73,9 @@
 <!--        <div class="tab-item downtime" data-tab="downtime">-->
 <!--          <div class="">Downtime</div>-->
 <!--        </div>-->
+        <div class="tab-item notes-tab" data-tab="notes">
+          <div class="notes-header">Notes</div>
+        </div>
       </nav>
       <section class="tab-content">
         <div class="tab" data-tab="playbook" data-group="primary-tabs">
@@ -147,6 +150,11 @@
                 <li>You struggled with issues from your vice or traumas during the session.</li>
               </ul>
             </section>
+          </div>
+        </div>
+        <div class="tab" data-tab="notes" data-group="primary-tabs">
+          <div class="character-notes-area">
+            {{{editable-textarea "flags.blades-in-the-dark.notes" "Add character notes here" true actor.flags.blades-in-the-dark.notes actor._id this}}}
           </div>
         </div>
         <!-- todo: put the downtime tab back once it's actually useful and maybe translated -->

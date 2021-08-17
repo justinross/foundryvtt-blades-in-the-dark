@@ -18,6 +18,7 @@ import { BladesCrewSheet } from "./blades-crew-sheet.js";
 import { BladesClockSheet } from "./blades-clock-sheet.js";
 import { BladesNPCSheet } from "./blades-npc-sheet.js";
 import { BladesFactionSheet } from "./blades-faction-sheet.js";
+import * as MarkdownIt from "./markdown-it.min.js";
 import * as migrations from "./migration.js";
 
 window.BladesHelpers = BladesHelpers;
@@ -272,7 +273,6 @@ Hooks.once("init", async function() {
     if(typeof(arg2) == "string"){
       arg2 = arg2.length > 0;
     }
-    console.log(arg1 || arg2);
     return(arg1 || arg2);
   });
 
@@ -283,6 +283,27 @@ Hooks.once("init", async function() {
       current_value = blank_value;
     }
     html += `<input data-input="character-${uniq_id}-${parameter_name}" name="${parameter_name}" type="hidden" value="${current_value}" placeholder="${blank_value}"><span ${context.owner && context.actor.flags["blades-in-the-dark"]?.["allow-edit"] ? 'contenteditable="true"' : null} spellcheck="false" data-target="character-${uniq_id}-${parameter_name}" data-placeholder="${blank_value}">${current_value}</span>`;
+    return html;
+  });
+
+  Handlebars.registerHelper('editable-textarea', function(parameter_name, blank_value, use_markdown = false, current_value, uniq_id, context){
+    let html = '';
+    if(!current_value || current_value.length === 0){
+      current_value = "Click the edit lock above to add character notes.";
+    }
+    let output_value = current_value;
+    if(use_markdown){
+      var md = window.markdownit();
+      console.log(current_value);
+      output_value = md.render(current_value);
+      // output_value = current_value;
+    }
+    if(context.owner && context.actor.flags["blades-in-the-dark"]?.["allow-edit"]){
+     html += `<textarea data-input="character-${uniq_id}-${parameter_name}" name="${parameter_name}" value="${current_value}" placeholder="${blank_value}">${current_value}</textarea>`;
+    }
+    else{
+      html += `<div class="output">${output_value}</div>`;
+    }
     return html;
   });
 

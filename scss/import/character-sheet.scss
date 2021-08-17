@@ -545,10 +545,11 @@
   .tab-space{
     nav.tabs{
       display: grid;
-      grid-template-columns: 1fr 1em 1fr;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 1em;
       grid-template-rows: auto;
       grid-template-areas:
-          "tab1 . tab2";
+          "tab1 tab2 ";
     }
 
     .tab-item{
@@ -577,7 +578,11 @@
         grid-area: tab1;
       }
 
-      &.downtime{
+      //&.downtime{
+      //  grid-area: tab2;
+      //}
+
+      &.notes{
         grid-area: tab2;
       }
 
@@ -803,6 +808,17 @@
                 }
               }
             }
+          }
+        }
+
+        .character-notes-area{
+          background-color: $lightgray;
+          box-sizing: border-box;
+          padding: 10px;
+          font-size: 1.2em;
+          height: 650px;
+          textarea{
+            height: 600px;
           }
         }
       }

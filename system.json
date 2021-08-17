@@ -10,6 +10,9 @@
   "esmodules": [
     "module/blades.js"
   ],
+  "scripts": [
+    "module/markdown-it.min.js"
+  ],
   "styles": [
     "styles/blades.css"
   ],
