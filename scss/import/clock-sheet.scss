@@ -1,3 +1,8 @@
+&{
+  min-width: 420px;
+  min-height: 320px;
+}
+
 .clock-zero-label {
   color: $almost_black;
 }
@@ -17,7 +22,9 @@
 .blades-clock-name-type {
   > * {
     margin-bottom: 10px;
-    max-width: 220px;
+  }
+  .blades-clock{
+    margin: 10px auto;
   }
 }
 

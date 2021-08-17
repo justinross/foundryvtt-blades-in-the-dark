@@ -96,925 +96,6 @@
   font-weight: 600;
   font-style: italic;
 }
-.blades-in-the-dark {
-  /*
-   * General Styles - Redesign
-   */
-}
-.blades-in-the-dark {
-  min-width: 800px;
-  min-height: 275px;
-}
-.blades-in-the-dark #tidy-redesign {
-  position: relative;
-  margin: 5px;
-  font-family: "Crimson Text", serif;
-}
-.blades-in-the-dark #tidy-redesign input[type=checkbox] {
-  width: 1em;
-  height: 1em;
-}
-.blades-in-the-dark #tidy-redesign .rollable-text {
-  transition: color 0.2s;
-}
-.blades-in-the-dark #tidy-redesign .rollable-text:hover {
-  cursor: pointer;
-  color: red;
-}
-.blades-in-the-dark #tidy-redesign [contenteditable] {
-  user-select: auto !important;
-  text-decoration: underline;
-}
-.blades-in-the-dark #tidy-redesign [contenteditable]:active, .blades-in-the-dark #tidy-redesign [contenteditable]:focus {
-  background-color: rgba(255, 255, 255, 0.5);
-  border: none;
-  border-radius: 3px;
-}
-.blades-in-the-dark #tidy-redesign .hover-details, .blades-in-the-dark #tidy-redesign .hover-term {
-  cursor: help;
-  color: #660000;
-  font-weight: bold;
-  text-decoration: underline;
-}
-.blades-in-the-dark #tidy-redesign ul.diamond {
-  list-style: none;
-}
-.blades-in-the-dark #tidy-redesign ul.diamond li {
-  position: relative;
-}
-.blades-in-the-dark #tidy-redesign ul.diamond li:after {
-  content: "";
-  height: 0.4em;
-  width: 0.4em;
-  background: #191813;
-  display: block;
-  position: absolute;
-  transform: rotate(45deg);
-  top: 0.45em;
-  left: -1em;
-}
-.blades-in-the-dark #tidy-redesign #context-menu ol li * {
-  vertical-align: initial;
-}
-.blades-in-the-dark #tidy-redesign .clickable-edit {
-  text-decoration: underline;
-}
-.blades-in-the-dark #tidy-redesign .rollable-text {
-  cursor: pointer;
-}
-.blades-in-the-dark #tidy-redesign input[type=text] {
-  width: auto;
-  border: 0;
-}
-.blades-in-the-dark #tidy-redesign .edit-only {
-  display: none;
-}
-.blades-in-the-dark #tidy-redesign .non-edit {
-  display: initial;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar {
-  background-color: #191813;
-  color: #EEEFFF;
-  padding: 3px;
-  width: 100%;
-  font-family: Kirsty, serif;
-  position: relative;
-  margin-bottom: 5px;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right {
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  display: flex;
-  /* Hide the browser's default checkbox */
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label {
-  height: 25px;
-  width: 10px;
-  background-image: url("assets/teeth/xptooth-red.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  margin-right: 3px;
-  transition: filter 0.1s;
-  cursor: pointer;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label:last-of-type {
-  margin-right: 0px;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label[for$="-0"] {
-  width: auto;
-  height: auto;
-  background-image: none !important;
-  color: #EEEFFF;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label[for$="-0"] i {
-  margin-top: 4px;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label:hover {
-  filter: brightness(0.8);
-  opacity: 0.9;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right input {
-  display: none;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label {
-  background-image: url("assets/teeth/xptooth-white.png");
-  background-size: 100% 100%;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.right label.on {
-  background-image: url("assets/teeth/xptooth-red.png");
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress {
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  display: flex;
-  /* Hide the browser's default checkbox */
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label {
-  height: 25px;
-  width: 10px;
-  background-image: url("assets/teeth/xptooth-red.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  margin-right: 3px;
-  transition: filter 0.1s;
-  cursor: pointer;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label:last-of-type {
-  margin-right: 0px;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label[for$="-0"] {
-  width: auto;
-  height: auto;
-  background-image: none !important;
-  color: #EEEFFF;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label[for$="-0"] i {
-  margin-top: 4px;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label:hover {
-  filter: brightness(0.8);
-  opacity: 0.9;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress input {
-  display: none;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label {
-  background-image: url("assets/teeth/xptooth-white.png");
-  background-size: 100% 100%;
-}
-.blades-in-the-dark #tidy-redesign header.full-bar .stripe-tooth-body.stress label.on {
-  background-image: url("assets/teeth/xptooth-red.png");
-}
-.blades-in-the-dark #tidy-redesign .toggle-allow-edit {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-}
-.blades-in-the-dark #tidy-redesign .toggle-allow-edit span {
-  cursor: pointer;
-  background: #008000;
-  color: rgba(255, 255, 255, 0.6);
-  border-radius: 3px;
-}
-.blades-in-the-dark #tidy-redesign .toggle-allow-edit span:hover {
-  color: #fff;
-}
-.blades-in-the-dark #tidy-redesign .toggle-allow-edit span i {
-  width: 100%;
-  text-align: center;
-  padding: 4px 6px;
-}
-.blades-in-the-dark #tidy-redesign .toggle-allow-edit span .fa-lock-open {
-  display: none;
-}
-.blades-in-the-dark #tidy-redesign.allow-edit .edit-only {
-  display: initial;
-}
-.blades-in-the-dark #tidy-redesign.allow-edit .non-edit {
-  display: none;
-}
-.blades-in-the-dark #tidy-redesign.allow-edit .toggle-allow-edit span {
-  background-color: #800000;
-}
-.blades-in-the-dark #tidy-redesign.allow-edit .toggle-allow-edit span .fa-lock-open {
-  display: inline-block;
-}
-.blades-in-the-dark #tidy-redesign.allow-edit .toggle-allow-edit span .fa-lock {
-  display: none;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view {
-  display: grid;
-  height: 235px;
-  grid-template-columns: auto 1fr;
-  column-gap: 1em;
-  grid-template-rows: 2fr 1fr 1fr 4fr;
-  grid-template-areas: "portrait main-row" "portrait sub-row-1" "portrait sub-row-2" "portrait actions";
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait {
-  grid-area: portrait;
-  place-self: center;
-  width: 200px;
-  height: 200px;
-  flex-shrink: 0;
-  flex-grow: 0;
-  position: relative;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .portrait {
-  border-radius: 100px;
-  overflow: hidden;
-  border: 6px solid #999;
-  width: 100%;
-  height: 100%;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .portrait > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  overflow: hidden;
-  border: 0;
-  border-radius: 50%;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3) inset;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box {
-  transition-property: max-width, max-height, color, background-color;
-  transition-duration: 2.25s;
-  max-width: 50px;
-  max-height: 50px;
-  position: absolute;
-  top: -10px;
-  left: calc(100% - 50px);
-  box-sizing: border-box;
-  font-size: 1.4em;
-  border-radius: 12.5px;
-  color: #191813;
-  font-family: Kirsty, serif;
-  text-align: left;
-  padding: 7px;
-  z-index: 100;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box > div {
-  display: inline-block;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .mini-view {
-  text-align: center;
-  position: relative;
-  width: 50px;
-  height: 50px;
-  background-repeat: no-repeat;
-  background-image: url(assets/icons/money_sack.png);
-  background-size: contain;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .mini-view .coin-values {
-  position: absolute;
-  bottom: 4px;
-  font-weight: bold;
-  font-size: 0.9em;
-  font-family: "Crimson Text", serif;
-  left: 0px;
-  width: 100%;
-  color: #EEEFFF;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view {
-  display: none;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins {
-  display: flex;
-  /* Hide the browser's default checkbox */
-  flex-wrap: wrap;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins label {
-  height: 15px;
-  width: 15px;
-  background-color: #DAA520;
-  vertical-align: middle;
-  border: 1px solid #191813;
-  transition: filter 0.1s;
-  cursor: pointer;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins label[for$="-0"] {
-  margin-right: 0px;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins label:hover {
-  filter: brightness(0.8);
-  opacity: 0.9;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input {
-  display: none;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input:checked ~ label {
-  background-color: #EEEFFF;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input:checked + label {
-  background-color: #DAA520;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input ~ label {
-  margin-right: 3px;
-  margin-bottom: 3px;
-  transition: filter 0.2s;
-  cursor: pointer;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input ~ label[for$="0"] {
-  border-width: 2px;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input ~ label:hover {
-  filter: brightness(0.8);
-  opacity: 0.9;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins.coins-hands {
-  width: 36px;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins.coins-stashed {
-  width: 190px;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box.open {
-  max-width: 1000px;
-  max-height: 1000px;
-  color: #191813;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box.open .full-view {
-  background-color: #bbb;
-  border: 3px solid #666;
-  display: block;
-  padding: 5px;
-  border-radius: 5px;
-  text-align: center;
-  width: 250px;
-  box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.25);
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box.open .full-view .coins {
-  display: flex;
-  justify-content: space-between;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box.open .full-view .coins .hand, .blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .coins-box.open .full-view .coins .stash {
-  display: inline-block;
-  text-align: left;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box {
-  transition-property: max-width, max-height, color, background-color;
-  transition-duration: 2.25s;
-  max-width: 50px;
-  max-height: 50px;
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  box-sizing: border-box;
-  font-size: 1.4em;
-  border-radius: 12.5px;
-  color: #191813;
-  font-family: Kirsty, serif;
-  text-align: left;
-  padding: 7px;
-  z-index: 600;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view {
-  text-align: center;
-  position: relative;
-  width: 50px;
-  height: 50px;
-  background-repeat: no-repeat;
-  background-image: url(assets/icons/harm.png);
-  background-size: contain;
-  z-index: 700;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-1 {
-  background-image: url(assets/icons/harm-1.png);
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-1-2 {
-  background-image: url(assets/icons/harm-1-2.png);
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-1-3 {
-  background-image: url(assets/icons/harm-1-3.png);
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-1-2-3 {
-  background-image: url(assets/icons/harm-1-2-3.png);
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-2 {
-  background-image: url(assets/icons/harm-2.png);
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-2-3 {
-  background-image: url(assets/icons/harm-2-3.png);
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-3 {
-  background-image: url(assets/icons/harm-3.png);
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view .harm-effects {
-  position: absolute;
-  bottom: 4px;
-  font-weight: bold;
-  font-size: 0.9em;
-  font-family: "Crimson Text", serif;
-  left: 0px;
-  width: 100%;
-  color: #EEEFFF;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box .full-view {
-  display: none;
-  position: relative;
-  top: 0;
-  left: 0;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open {
-  max-width: 1000px;
-  max-height: 1000px;
-  color: #191813;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view {
-  background-color: #bbb;
-  border: 3px solid #666;
-  display: block;
-  padding: 5px;
-  border-radius: 5px;
-  text-align: center;
-  top: -10px;
-  width: 550px;
-  box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.25);
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm {
-  display: grid;
-  grid-template-columns: 1em repeat(6, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  grid-column-gap: 1px;
-  grid-row-gap: 1px;
-  place-items: center;
-  grid-template-areas: "empty header-harm header-harm header-harm header-harm header-effect header-healing" "rownum3 heavy heavy heavy heavy heavy-effect healing" "rownum2 medium1 medium1 medium2 medium2 medium-effect healing" "rownum1 light1 light1 light2 light2 light-effect healing";
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm input {
-  height: 100%;
-  width: 100%;
-  border-radius: 0;
-  background-color: #a2a2a2;
-  z-index: 10;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm header {
-  width: calc(100% + 5px);
-  background-color: #191813;
-  color: #EEEFFF;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm header.harm {
-  grid-area: header-harm;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm header.effect {
-  grid-area: header-effect;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm header.healing {
-  grid-area: header-healing;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .rownum3 {
-  grid-area: rownum3;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .heavy {
-  grid-area: heavy;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .effect-text.heavy {
-  grid-area: heavy-effect;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .rownum2 {
-  grid-area: rownum2;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .medium1 {
-  grid-area: medium1;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .medium2 {
-  grid-area: medium2;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .effect-text.medium {
-  grid-area: medium-effect;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .light1 {
-  grid-area: light1;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .light2 {
-  grid-area: light2;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .effect-text.light {
-  grid-area: light-effect;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock {
-  grid-area: healing;
-  position: relative;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock {
-  position: relative;
-  padding: 0;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  list-style: none;
-  overflow: hidden;
-  background-size: cover;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock label {
-  overflow: hidden;
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 100%;
-  height: 100%;
-  transform-origin: 0% 100%;
-  transition: filter 0.1s;
-  cursor: pointer;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock label:hover {
-  filter: brightness(0.8);
-  opacity: 0.9;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock input {
-  position: absolute;
-  display: none;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock input[value="0"] {
-  display: none;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock *:nth-child(3) {
-  transform: rotate(0deg) skewY(180deg);
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock *:nth-child(5) {
-  transform: rotate(90deg) skewY(180deg);
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock *:nth-child(7) {
-  transform: rotate(180deg) skewY(180deg);
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock *:nth-child(9) {
-  transform: rotate(270deg) skewY(180deg);
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .rownum1 {
-  grid-area: rownum1;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .effect-text {
-  font-family: "Crimson Text", serif;
-  font-size: 0.8em;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .grid-lines {
-  background-color: #191813;
-  grid-area: 2/2/6/6;
-  width: 100%;
-  height: calc(100% - 1px);
-  z-index: 1;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box {
-  width: 100%;
-  height: 2em;
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .stress-bar {
-  position: relative;
-  z-index: 100;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box {
-  padding: 0 0 2px;
-  position: relative;
-  z-index: 1;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list {
-  width: 100%;
-  height: 100%;
-  background-color: #bbb;
-  color: #191813;
-  text-align: center;
-  position: relative;
-  top: -5px;
-  padding-top: 5px;
-  border-radius: 0 0 1em 1em;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .trauma-item {
-  pointer-events: all;
-  display: inline-block;
-  font-weight: bold;
-  color: #660000;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .trauma-item:not(:last-of-type)::after {
-  content: " •";
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .add_trauma {
-  font-size: 0.8em;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .name-alias {
-  font-family: Kirsty, serif;
-  font-weight: bold;
-  font-size: 3em;
-  color: #191813;
-  grid-area: main-row;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .name-alias .alias {
-  font-size: 0.6em;
-  font-weight: normal;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .heritage-background {
-  grid-area: sub-row-1;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .look {
-  grid-area: sub-row-2;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .bio {
-  border-bottom: 2px solid #191813;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions {
-  grid-area: actions;
-  display: flex;
-  justify-content: space-between;
-  justify-items: stretch;
-  max-width: 600px;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute {
-  flex-grow: 1;
-  margin: 10px 5px;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action {
-  padding: 0 5px;
-  display: flex;
-  /* Hide the browser's default checkbox */
-  justify-content: flex-start;
-  align-items: stretch;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action label {
-  height: 1em;
-  width: 1em;
-  background-color: #cc0000;
-  vertical-align: middle;
-  border: 2px solid #191813;
-  border-radius: 24px;
-  transition: filter 0.1s;
-  cursor: pointer;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action label[for$="-0"] {
-  height: 5px;
-  width: 5px;
-  border-radius: 24px;
-  background-image: none !important;
-  background-color: red !important;
-  margin-right: 0px;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action label:hover {
-  filter: brightness(0.7);
-  opacity: 0.7;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action input {
-  display: none;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action input:checked ~ label {
-  background-color: transparent;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action input:checked + label {
-  transition: filter 0.1s;
-  cursor: pointer;
-  background-color: #cc0000;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action input:checked + label:hover {
-  filter: brightness(0.7);
-  opacity: 0.7;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action .attribute-skill-label {
-  font-weight: bold;
-  font-variant: small-caps;
-  padding: 3px 0;
-  margin-left: 0.4em;
-  line-height: 0.8em;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action label {
-  margin: 2px;
-  border: 1px solid #666666;
-  box-sizing: border-box;
-  position: relative;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute .action label:first-of-type::after {
-  content: "";
-  display: inline-block;
-  height: 150%;
-  width: 1%;
-  border-right: 1px solid rgba(0, 0, 0, 0.5);
-  position: absolute;
-  right: -3px;
-  top: -3px;
-}
-.blades-in-the-dark #tidy-redesign .minimized-view .attributes-actions .attribute input.zero {
-  display: none;
-}
-.blades-in-the-dark #tidy-redesign .tab-space nav.tabs {
-  display: grid;
-  grid-template-columns: 1fr 1em 1fr;
-  grid-template-rows: auto;
-  grid-template-areas: "tab1 . tab2";
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-item {
-  flex-grow: 0;
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  background-color: #bbb;
-  border-radius: 20px 20px 0 0;
-  font-family: Kirsty, serif;
-  text-transform: capitalize;
-  padding: 5px 15px;
-  font-size: 2.6em;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-item select {
-  font-family: Kirsty;
-  font-size: 0.8em;
-  height: 80%;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-item > div {
-  margin: 5px 10px;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-item.playbook {
-  grid-area: tab1;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-item.downtime {
-  grid-area: tab2;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-item .playbook-description {
-  font-family: "Crimson Text", serif;
-  font-size: 0.4em;
-  font-variant: small-caps;
-  font-weight: bold;
-  color: #666;
-  text-align: center;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-item.active {
-  margin-bottom: 0;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-item:not(.active) {
-  background-color: rgba(187, 187, 187, 0.5);
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content {
-  flex-basis: 100%;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook {
-  display: grid;
-  align-items: stretch;
-  justify-items: stretch;
-  grid-template-columns: 2fr 1em 1fr 1fr;
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-areas: "abilities gutter pb-items all-items" "abilities gutter friends all-items" "abilities gutter xp-notes xp-notes";
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook select {
-  font-family: Kirsty, serif;
-  text-transform: capitalize;
-  font-size: 2.6em;
-  border: none;
-  background-color: #f00;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook::after {
-  content: "";
-  background: #bbb;
-  grid-area: gutter;
-  height: 100%;
-  width: 100%;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities {
-  grid-area: abilities;
-  background: #bbb;
-  padding-bottom: 1em;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block {
-  display: flex;
-  align-items: flex-start;
-  padding: 5px;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block input {
-  margin: 0;
-  margin-right: 3px;
-  position: relative;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block input.offset {
-  margin-top: -3px;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list label {
-  margin: 0;
-  line-height: 0.8em;
-  font-size: 1.2em;
-  margin-bottom: 6px;
-  padding-right: 1em;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list label .ability-name {
-  font-weight: bold;
-  font-variant: small-caps;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .playbook-items {
-  grid-area: pb-items;
-  background: #bbb;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .playbook-items .free-item {
-  font-style: italic;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .item-list {
-  font-size: 1.2em;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block {
-  padding-left: 5px;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block .join-line {
-  border: 1px solid #666;
-  width: 1em;
-  display: inline-block;
-  height: 0px;
-  margin: 0 -0.5em;
-  top: -0.5em;
-  position: relative;
-  z-index: 0;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block * {
-  vertical-align: bottom;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block input {
-  margin-left: 0;
-  position: relative;
-  z-index: 10;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals {
-  grid-area: friends;
-  background: #bbb;
-  font-size: 1.2em;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i {
-  padding: 1px;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i.red-icon {
-  color: #880000;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i.green-icon {
-  color: #006600;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .all-items {
-  grid-area: all-items;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes {
-  grid-area: xp-notes;
-  background: #bbb;
-  font-size: 1.2em;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes p {
-  line-height: 1em;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes ul {
-  list-style-type: square;
-  padding-right: 5px;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes ul li {
-  font-style: italic;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab .playbook header.full-bar {
-  background-color: #666;
-  color: #EEEFFF;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime {
-  line-height: 1em;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime h3 {
-  text-align: center;
-  font-family: Kirsty, serif;
-  font-size: 2em;
-  margin: 0.5em;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime header {
-  width: 100%;
-  font-family: Kirsty, serif;
-  background-color: #191813;
-  color: #EEEFFF;
-  padding: 3px;
-  text-align: center;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime header .header-row {
-  display: flex;
-  justify-content: space-evenly;
-  margin: 2px 0;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper {
-  display: flex;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr {
-  text-align: center;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr td, .blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr th {
-  padding: 3px;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr th {
-  background-color: #191813;
-  color: #EEEFFF;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section {
-  background-color: #bbb;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section p {
-  text-align: center;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section ul {
-  padding-right: 1em;
-}
-.blades-in-the-dark #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section ul li {
-  margin-bottom: 3px;
-}
 .blades-in-the-dark textarea {
   margin-top: 10px;
   margin-bottom: 20px;
@@ -1689,6 +770,929 @@
 .blades-in-the-dark.crew.sheet header {
   margin-bottom: 10px;
 }
+.blades-in-the-dark.actor.pc {
+  /*
+   * General Styles - Redesign
+   */
+}
+.blades-in-the-dark.actor.pc {
+  min-width: 800px;
+  min-height: 275px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign {
+  position: relative;
+  margin: 5px;
+  font-family: "Crimson Text", serif;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign input[type=checkbox] {
+  width: 1em;
+  height: 1em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .rollable-text {
+  transition: color 0.2s;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .rollable-text:hover {
+  cursor: pointer;
+  color: red;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign [contenteditable] {
+  user-select: auto !important;
+  text-decoration: underline;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign [contenteditable]:active, .blades-in-the-dark.actor.pc #tidy-redesign [contenteditable]:focus {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 3px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .hover-details, .blades-in-the-dark.actor.pc #tidy-redesign .hover-term {
+  cursor: help;
+  color: #660000;
+  font-weight: bold;
+  text-decoration: underline;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign ul.diamond {
+  list-style: none;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign ul.diamond li {
+  position: relative;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign ul.diamond li:after {
+  content: "";
+  height: 0.4em;
+  width: 0.4em;
+  background: #191813;
+  display: block;
+  position: absolute;
+  transform: rotate(45deg);
+  top: 0.45em;
+  left: -1em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign #context-menu ol li * {
+  vertical-align: initial;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .clickable-edit {
+  text-decoration: underline;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .rollable-text {
+  cursor: pointer;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign input[type=text] {
+  width: auto;
+  border: 0;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .edit-only {
+  display: none;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .non-edit {
+  display: initial;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar {
+  background-color: #191813;
+  color: #EEEFFF;
+  padding: 3px;
+  width: 100%;
+  font-family: Kirsty, serif;
+  position: relative;
+  margin-bottom: 5px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.right {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  display: flex;
+  /* Hide the browser's default checkbox */
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.right label {
+  height: 25px;
+  width: 10px;
+  background-image: url("assets/teeth/xptooth-red.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 3px;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.right label:last-of-type {
+  margin-right: 0px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.right label[for$="-0"] {
+  width: auto;
+  height: auto;
+  background-image: none !important;
+  color: #EEEFFF;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.right label[for$="-0"] i {
+  margin-top: 4px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.right label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.right input {
+  display: none;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.right label {
+  background-image: url("assets/teeth/xptooth-white.png");
+  background-size: 100% 100%;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.right label.on {
+  background-image: url("assets/teeth/xptooth-red.png");
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.stress {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  display: flex;
+  /* Hide the browser's default checkbox */
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.stress label {
+  height: 25px;
+  width: 10px;
+  background-image: url("assets/teeth/xptooth-red.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 3px;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.stress label:last-of-type {
+  margin-right: 0px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.stress label[for$="-0"] {
+  width: auto;
+  height: auto;
+  background-image: none !important;
+  color: #EEEFFF;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.stress label[for$="-0"] i {
+  margin-top: 4px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.stress label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.stress input {
+  display: none;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.stress label {
+  background-image: url("assets/teeth/xptooth-white.png");
+  background-size: 100% 100%;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign header.full-bar .stripe-tooth-body.stress label.on {
+  background-image: url("assets/teeth/xptooth-red.png");
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .toggle-allow-edit {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .toggle-allow-edit span {
+  cursor: pointer;
+  background: #008000;
+  color: rgba(255, 255, 255, 0.6);
+  border-radius: 3px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .toggle-allow-edit span:hover {
+  color: #fff;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .toggle-allow-edit span i {
+  width: 100%;
+  text-align: center;
+  padding: 4px 6px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .toggle-allow-edit span .fa-lock-open {
+  display: none;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign.allow-edit .edit-only {
+  display: initial;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign.allow-edit .non-edit {
+  display: none;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign.allow-edit .toggle-allow-edit span {
+  background-color: #800000;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign.allow-edit .toggle-allow-edit span .fa-lock-open {
+  display: inline-block;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign.allow-edit .toggle-allow-edit span .fa-lock {
+  display: none;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view {
+  display: grid;
+  height: 235px;
+  grid-template-columns: auto 1fr;
+  column-gap: 1em;
+  grid-template-rows: 2fr 1fr 1fr 4fr;
+  grid-template-areas: "portrait main-row" "portrait sub-row-1" "portrait sub-row-2" "portrait actions";
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait {
+  grid-area: portrait;
+  place-self: center;
+  width: 200px;
+  height: 200px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  position: relative;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .portrait {
+  border-radius: 100px;
+  overflow: hidden;
+  border: 6px solid #999;
+  width: 100%;
+  height: 100%;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .portrait > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3) inset;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box {
+  transition-property: max-width, max-height, color, background-color;
+  transition-duration: 2.25s;
+  max-width: 50px;
+  max-height: 50px;
+  position: absolute;
+  top: -10px;
+  left: calc(100% - 50px);
+  box-sizing: border-box;
+  font-size: 1.4em;
+  border-radius: 12.5px;
+  color: #191813;
+  font-family: Kirsty, serif;
+  text-align: left;
+  padding: 7px;
+  z-index: 100;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box > div {
+  display: inline-block;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .mini-view {
+  text-align: center;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-image: url(assets/icons/money_sack.png);
+  background-size: contain;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .mini-view .coin-values {
+  position: absolute;
+  bottom: 4px;
+  font-weight: bold;
+  font-size: 0.9em;
+  font-family: "Crimson Text", serif;
+  left: 0px;
+  width: 100%;
+  color: #EEEFFF;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .full-view {
+  display: none;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins {
+  display: flex;
+  /* Hide the browser's default checkbox */
+  flex-wrap: wrap;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins label {
+  height: 15px;
+  width: 15px;
+  background-color: #DAA520;
+  vertical-align: middle;
+  border: 1px solid #191813;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins label[for$="-0"] {
+  margin-right: 0px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input {
+  display: none;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input:checked ~ label {
+  background-color: #EEEFFF;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input:checked + label {
+  background-color: #DAA520;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input ~ label {
+  margin-right: 3px;
+  margin-bottom: 3px;
+  transition: filter 0.2s;
+  cursor: pointer;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input ~ label[for$="0"] {
+  border-width: 2px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins input ~ label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins.coins-hands {
+  width: 36px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box .full-view .coins.coins-stashed {
+  width: 190px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box.open {
+  max-width: 1000px;
+  max-height: 1000px;
+  color: #191813;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box.open .full-view {
+  background-color: #bbb;
+  border: 3px solid #666;
+  display: block;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+  width: 250px;
+  box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.25);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box.open .full-view .coins {
+  display: flex;
+  justify-content: space-between;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box.open .full-view .coins .hand, .blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .coins-box.open .full-view .coins .stash {
+  display: inline-block;
+  text-align: left;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box {
+  transition-property: max-width, max-height, color, background-color;
+  transition-duration: 2.25s;
+  max-width: 50px;
+  max-height: 50px;
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  box-sizing: border-box;
+  font-size: 1.4em;
+  border-radius: 12.5px;
+  color: #191813;
+  font-family: Kirsty, serif;
+  text-align: left;
+  padding: 7px;
+  z-index: 600;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view {
+  text-align: center;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-image: url(assets/icons/harm.png);
+  background-size: contain;
+  z-index: 700;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-1 {
+  background-image: url(assets/icons/harm-1.png);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-1-2 {
+  background-image: url(assets/icons/harm-1-2.png);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-1-3 {
+  background-image: url(assets/icons/harm-1-3.png);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-1-2-3 {
+  background-image: url(assets/icons/harm-1-2-3.png);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-2 {
+  background-image: url(assets/icons/harm-2.png);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-2-3 {
+  background-image: url(assets/icons/harm-2-3.png);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view.harm-3 {
+  background-image: url(assets/icons/harm-3.png);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box .mini-view .harm-effects {
+  position: absolute;
+  bottom: 4px;
+  font-weight: bold;
+  font-size: 0.9em;
+  font-family: "Crimson Text", serif;
+  left: 0px;
+  width: 100%;
+  color: #EEEFFF;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box .full-view {
+  display: none;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open {
+  max-width: 1000px;
+  max-height: 1000px;
+  color: #191813;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view {
+  background-color: #bbb;
+  border: 3px solid #666;
+  display: block;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+  top: -10px;
+  width: 550px;
+  box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.25);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm {
+  display: grid;
+  grid-template-columns: 1em repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
+  place-items: center;
+  grid-template-areas: "empty header-harm header-harm header-harm header-harm header-effect header-healing" "rownum3 heavy heavy heavy heavy heavy-effect healing" "rownum2 medium1 medium1 medium2 medium2 medium-effect healing" "rownum1 light1 light1 light2 light2 light-effect healing";
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm input {
+  height: 100%;
+  width: 100%;
+  border-radius: 0;
+  background-color: #a2a2a2;
+  z-index: 10;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm header {
+  width: calc(100% + 5px);
+  background-color: #191813;
+  color: #EEEFFF;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm header.harm {
+  grid-area: header-harm;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm header.effect {
+  grid-area: header-effect;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm header.healing {
+  grid-area: header-healing;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .rownum3 {
+  grid-area: rownum3;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .heavy {
+  grid-area: heavy;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .effect-text.heavy {
+  grid-area: heavy-effect;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .rownum2 {
+  grid-area: rownum2;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .medium1 {
+  grid-area: medium1;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .medium2 {
+  grid-area: medium2;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .effect-text.medium {
+  grid-area: medium-effect;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .light1 {
+  grid-area: light1;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .light2 {
+  grid-area: light2;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .effect-text.light {
+  grid-area: light-effect;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock {
+  grid-area: healing;
+  position: relative;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock {
+  position: relative;
+  padding: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  list-style: none;
+  overflow: hidden;
+  background-size: cover;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock label {
+  overflow: hidden;
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  transform-origin: 0% 100%;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock label:hover {
+  filter: brightness(0.8);
+  opacity: 0.9;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock input {
+  position: absolute;
+  display: none;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock input[value="0"] {
+  display: none;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock *:nth-child(3) {
+  transform: rotate(0deg) skewY(180deg);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock *:nth-child(5) {
+  transform: rotate(90deg) skewY(180deg);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock *:nth-child(7) {
+  transform: rotate(180deg) skewY(180deg);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .healing-clock .blades-clock *:nth-child(9) {
+  transform: rotate(270deg) skewY(180deg);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .rownum1 {
+  grid-area: rownum1;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .effect-text {
+  font-family: "Crimson Text", serif;
+  font-size: 0.8em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .harm-box.open .full-view .character-harm .grid-lines {
+  background-color: #191813;
+  grid-area: 2/2/6/6;
+  width: 100%;
+  height: calc(100% - 1px);
+  z-index: 1;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .stress-trauma-box {
+  width: 100%;
+  height: 2em;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .stress-bar {
+  position: relative;
+  z-index: 100;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box {
+  padding: 0 0 2px;
+  position: relative;
+  z-index: 1;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list {
+  width: 100%;
+  height: 100%;
+  background-color: #bbb;
+  color: #191813;
+  text-align: center;
+  position: relative;
+  top: -5px;
+  padding-top: 5px;
+  border-radius: 0 0 1em 1em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .trauma-item {
+  pointer-events: all;
+  display: inline-block;
+  font-weight: bold;
+  color: #660000;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .trauma-item:not(:last-of-type)::after {
+  content: " •";
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .stress-trauma-box .trauma-box .trauma-list .add_trauma {
+  font-size: 0.8em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .name-alias {
+  font-family: Kirsty, serif;
+  font-weight: bold;
+  font-size: 3em;
+  color: #191813;
+  grid-area: main-row;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .name-alias .alias {
+  font-size: 0.6em;
+  font-weight: normal;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .heritage-background {
+  grid-area: sub-row-1;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .look {
+  grid-area: sub-row-2;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .bio {
+  border-bottom: 2px solid #191813;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions {
+  grid-area: actions;
+  display: flex;
+  justify-content: space-between;
+  justify-items: stretch;
+  max-width: 600px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute {
+  flex-grow: 1;
+  margin: 10px 5px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute .action {
+  padding: 0 5px;
+  display: flex;
+  /* Hide the browser's default checkbox */
+  justify-content: flex-start;
+  align-items: stretch;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute .action label {
+  height: 1em;
+  width: 1em;
+  background-color: #cc0000;
+  vertical-align: middle;
+  border: 2px solid #191813;
+  border-radius: 24px;
+  transition: filter 0.1s;
+  cursor: pointer;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute .action label[for$="-0"] {
+  height: 5px;
+  width: 5px;
+  border-radius: 24px;
+  background-image: none !important;
+  background-color: red !important;
+  margin-right: 0px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute .action label:hover {
+  filter: brightness(0.7);
+  opacity: 0.7;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute .action input {
+  display: none;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute .action input:checked ~ label {
+  background-color: transparent;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute .action input:checked + label {
+  transition: filter 0.1s;
+  cursor: pointer;
+  background-color: #cc0000;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute .action input:checked + label:hover {
+  filter: brightness(0.7);
+  opacity: 0.7;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute .action .attribute-skill-label {
+  font-weight: bold;
+  font-variant: small-caps;
+  padding: 3px 0;
+  margin-left: 0.4em;
+  line-height: 0.8em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute .action label {
+  margin: 2px;
+  border: 1px solid #666666;
+  box-sizing: border-box;
+  position: relative;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute .action label:first-of-type::after {
+  content: "";
+  display: inline-block;
+  height: 150%;
+  width: 1%;
+  border-right: 1px solid rgba(0, 0, 0, 0.5);
+  position: absolute;
+  right: -3px;
+  top: -3px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute input.zero {
+  display: none;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space nav.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1em 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: "tab1 . tab2";
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item {
+  flex-grow: 0;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  background-color: #bbb;
+  border-radius: 20px 20px 0 0;
+  font-family: Kirsty, serif;
+  text-transform: capitalize;
+  padding: 5px 15px;
+  font-size: 2.6em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item select {
+  font-family: Kirsty;
+  font-size: 0.8em;
+  height: 80%;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item > div {
+  margin: 5px 10px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item.playbook {
+  grid-area: tab1;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item.downtime {
+  grid-area: tab2;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item .playbook-description {
+  font-family: "Crimson Text", serif;
+  font-size: 0.4em;
+  font-variant: small-caps;
+  font-weight: bold;
+  color: #666;
+  text-align: center;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item.active {
+  margin-bottom: 0;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item:not(.active) {
+  background-color: rgba(187, 187, 187, 0.5);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content {
+  flex-basis: 100%;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook {
+  display: grid;
+  align-items: stretch;
+  justify-items: stretch;
+  grid-template-columns: 2fr 1em 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas: "abilities gutter pb-items all-items" "abilities gutter friends all-items" "abilities gutter xp-notes xp-notes";
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook select {
+  font-family: Kirsty, serif;
+  text-transform: capitalize;
+  font-size: 2.6em;
+  border: none;
+  background-color: #f00;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook::after {
+  content: "";
+  background: #bbb;
+  grid-area: gutter;
+  height: 100%;
+  width: 100%;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .abilities {
+  grid-area: abilities;
+  background: #bbb;
+  padding-bottom: 1em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block {
+  display: flex;
+  align-items: flex-start;
+  padding: 5px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block input {
+  margin: 0;
+  margin-right: 3px;
+  position: relative;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block input.offset {
+  margin-top: -3px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list label {
+  margin: 0;
+  line-height: 0.8em;
+  font-size: 1.2em;
+  margin-bottom: 6px;
+  padding-right: 1em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list label .ability-name {
+  font-weight: bold;
+  font-variant: small-caps;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .playbook-items {
+  grid-area: pb-items;
+  background: #bbb;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .playbook-items .free-item {
+  font-style: italic;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .item-list {
+  font-size: 1.2em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block {
+  padding-left: 5px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block .join-line {
+  border: 1px solid #666;
+  width: 1em;
+  display: inline-block;
+  height: 0px;
+  margin: 0 -0.5em;
+  top: -0.5em;
+  position: relative;
+  z-index: 0;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block * {
+  vertical-align: bottom;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block input {
+  margin-left: 0;
+  position: relative;
+  z-index: 10;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals {
+  grid-area: friends;
+  background: #bbb;
+  font-size: 1.2em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i {
+  padding: 1px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i.red-icon {
+  color: #880000;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals .acquaintance i.green-icon {
+  color: #006600;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .all-items {
+  grid-area: all-items;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes {
+  grid-area: xp-notes;
+  background: #bbb;
+  font-size: 1.2em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes p {
+  line-height: 1em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes ul {
+  list-style-type: square;
+  padding-right: 5px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .xp-notes ul li {
+  font-style: italic;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook header.full-bar {
+  background-color: #666;
+  color: #EEEFFF;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime {
+  line-height: 1em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime h3 {
+  text-align: center;
+  font-family: Kirsty, serif;
+  font-size: 2em;
+  margin: 0.5em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime header {
+  width: 100%;
+  font-family: Kirsty, serif;
+  background-color: #191813;
+  color: #EEEFFF;
+  padding: 3px;
+  text-align: center;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime header .header-row {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 2px 0;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper {
+  display: flex;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr {
+  text-align: center;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr td, .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr th {
+  padding: 3px;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper table tr th {
+  background-color: #191813;
+  color: #EEEFFF;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section {
+  background-color: #bbb;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section p {
+  text-align: center;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section ul {
+  padding-right: 1em;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab.downtime .downtimeWrapper .column section ul li {
+  margin-bottom: 3px;
+}
+.blades-in-the-dark.actor.clock {
+  min-width: 420px;
+  min-height: 320px;
+}
 .blades-in-the-dark.actor.clock .clock-zero-label {
   color: #191813;
 }
@@ -1853,7 +1857,9 @@
 }
 .blades-in-the-dark.actor.clock .blades-clock-name-type > * {
   margin-bottom: 10px;
-  max-width: 220px;
+}
+.blades-in-the-dark.actor.clock .blades-clock-name-type .blades-clock {
+  margin: 10px auto;
 }
 .blades-in-the-dark.item.sheet .item {
   justify-content: space-between;

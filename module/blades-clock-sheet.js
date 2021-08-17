@@ -12,8 +12,8 @@ export class BladesClockSheet extends BladesSheet {
 	  return foundry.utils.mergeObject(super.defaultOptions, {
   	  classes: ["blades-in-the-dark", "sheet", "actor", "clock"],
   	  template: "systems/blades-in-the-dark/templates/actors/clock-sheet.html",
-      width: 700,
-      height: 970,
+      width: 420,
+      height: 320,
     });
   }
 

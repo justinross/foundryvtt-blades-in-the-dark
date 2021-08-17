@@ -22,18 +22,19 @@ $hover-brightness: 0.8;
 
 //namespacing to avoid conflicts with other modules
 .blades-in-the-dark{
-  @import 'import/character-sheet.scss';
-  //@import 'import/original-styles.scss';
   @import 'import/general-styles.scss';
 
   &.crew.sheet{
     @import 'import/crew-sheet.scss';
   }
 
-  &.actor.clock{
-    @import 'import/clocks.scss';
+  &.actor.pc{
+    @import 'import/character-sheet.scss';
   }
 
+  &.actor.clock{
+    @import 'import/clock-sheet';
+  }
 
   &.item.sheet{
     @import 'import/item-sheet.scss';
