@@ -162,11 +162,12 @@
     //background-color: rgba(255,0,0,0.1);
     grid-template-columns: auto 1fr;
     column-gap: 1em;
-    grid-template-rows: 2fr 1fr 1fr 4fr;
+    grid-template-rows: 2fr 1fr 1fr 1fr 4fr;
     grid-template-areas:
         "portrait main-row"
         "portrait sub-row-1"
         "portrait sub-row-2"
+        "portrait sub-row-3"
         "portrait actions";
 
     .character-portrait{
@@ -492,6 +493,18 @@
       border-bottom: 2px solid $almost_black;
     }
 
+    .abilities-list{
+      grid-area: sub-row-3;
+
+      //span:not(:last-of-type)::after{
+      //  content: " \2022 ";
+      //  text-decoration: none;
+      //  color: $almost_black;
+      //  font-weight: normal;
+      //  display: inline-block;
+      //}
+    }
+
     .attributes-actions{
       grid-area: actions;
       display: flex;
@@ -501,7 +514,7 @@
 
       .attribute{
         flex-grow: 1;
-        margin: 10px 5px;
+        margin: 0 5px 10px 5px;
 
         .action{
           padding: 0 5px;

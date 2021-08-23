@@ -983,8 +983,8 @@
   height: 235px;
   grid-template-columns: auto 1fr;
   column-gap: 1em;
-  grid-template-rows: 2fr 1fr 1fr 4fr;
-  grid-template-areas: "portrait main-row" "portrait sub-row-1" "portrait sub-row-2" "portrait actions";
+  grid-template-rows: 2fr 1fr 1fr 1fr 4fr;
+  grid-template-areas: "portrait main-row" "portrait sub-row-1" "portrait sub-row-2" "portrait sub-row-3" "portrait actions";
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait {
   grid-area: portrait;
@@ -1386,6 +1386,9 @@
 .blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .bio {
   border-bottom: 2px solid #191813;
 }
+.blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .abilities-list {
+  grid-area: sub-row-3;
+}
 .blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions {
   grid-area: actions;
   display: flex;
@@ -1395,7 +1398,7 @@
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute {
   flex-grow: 1;
-  margin: 10px 5px;
+  margin: 0 5px 10px 5px;
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .attributes-actions .attribute .action {
   padding: 0 5px;

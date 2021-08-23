@@ -198,6 +198,9 @@ export class BladesActorSheet extends BladesSheet {
         return item;
       });
 
+      let my_abilities = data.items.filter(ability => ability.type == "ability" && ability.data.purchased);
+      data.my_abilities = my_abilities;
+
       // let playbook_items = data.items.filter(item => item.type == "item" && item.data.class == data.selected_playbook_name);
       let my_items = data.items.filter(item => item.type == "item" && item.data.class != "");
 
@@ -228,7 +231,13 @@ export class BladesActorSheet extends BladesSheet {
   addTermTooltips(html){
     html.find('.hover-term').hover(function(e){ // Hover event
       //todo: the title doesn't need to get added in the hover event
-      var titleText = BladesLookup.getTerm($(this).text());
+      var titleText;
+      if(e.target.title == ""){
+        titleText = BladesLookup.getTerm($(this).text());
+      }
+      else{
+        titleText = e.target.title;
+      }
       $(this).data('tiptext', titleText).removeAttr('title');
       $('<p class="tooltip"></p>').text(titleText).appendTo('body').css('top', (e.pageY - 10) + 'px').css('left', (e.pageX + 20) + 'px').fadeIn('fast');
     }, function(){ // Hover off event
