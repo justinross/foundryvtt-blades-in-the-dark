@@ -18,8 +18,9 @@ import { BladesCrewSheet } from "./blades-crew-sheet.js";
 import { BladesClockSheet } from "./blades-clock-sheet.js";
 import { BladesNPCSheet } from "./blades-npc-sheet.js";
 import { BladesFactionSheet } from "./blades-faction-sheet.js";
-import * as MarkdownIt from "./markdown-it.min.js";
 import * as migrations from "./migration.js";
+import {checkLocalizations} from "./localization.js";
+
 
 window.BladesHelpers = BladesHelpers;
 window.BladesLookup = BladesLookup;
@@ -346,6 +347,10 @@ Hooks.once("ready", function() {
   if ( needMigration && game.user.isGM ) {
     migrations.migrateWorld();
   }
+
+  //checkLocalizations();
+
+
 });
 
 /*
