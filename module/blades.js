@@ -323,6 +323,10 @@ Hooks.once("init", async function() {
     return new Handlebars.SafeString(html);
   });
 
+  Handlebars.registerHelper('upper-first', function(input) {
+    return input.charAt(0).toUpperCase() + input.slice(1);
+  });
+
 
   // Handlebars.registerHelper('tern', function(value, ifTrue, ifFalse){
   //   if(value == "true"){

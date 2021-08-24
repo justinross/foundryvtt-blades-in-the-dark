@@ -211,13 +211,16 @@ export class BladesActorSheet extends BladesSheet {
       });
       data.generic_items = data.items.filter(item => item.type == "item" && item.data.class == "");
     }
-    data.ownedTraumas = [];
-    //testing trauma
-    for (const trauma in data.data.trauma.list){
-      if(data.data.trauma.list[trauma]){
-        data.ownedTraumas.push(trauma.charAt(0).toUpperCase() + trauma.slice(1));
-      }
-    }
+
+    // data.ownedTraumas = [];
+    // if(data.data.trauma.list.length > 0){
+    //   for (const trauma in data.data.trauma.list){
+    //     console.log(trauma);
+    //     if(data.data.trauma.list[trauma]){
+    //       data.ownedTraumas.push(trauma.charAt(0).toUpperCase() + trauma.slice(1));
+    //     }
+    //   }
+    // }
 
     return data;
   }
@@ -358,10 +361,11 @@ export class BladesActorSheet extends BladesSheet {
     });
 
     html.find('.add_trauma').click(ev => {
-      let traumaList = this.actor.data.data.trauma.list;
+      let actorTraumaList = this.actor.data.data.trauma.list;
+      let allTraumas = ["cold", "haunted", "obsessed", "paranoid", "reckless", "soft", "unstable", "vicious"];
       let unownedTraumas = [];
-      for (const traumaListKey in traumaList) {
-        if(!traumaList[traumaListKey]){
+      for (const traumaListKey of allTraumas) {
+        if(!actorTraumaList.includes(traumaListKey)){
           unownedTraumas.push(traumaListKey.charAt(0).toUpperCase() + traumaListKey.slice(1));
         }
       }
@@ -382,15 +386,17 @@ export class BladesActorSheet extends BladesSheet {
           add: {
             icon: "<i class='fas fa-plus'></i>",
             label: "Add",
-            callback: (html)=> {
+            callback: async (html) => {
               let newTrauma = html.find(`#${this.actor.id}-trauma-select`).val().toLowerCase();
-              let newTraumaListValue = {data :
+              let newTraumaListValue = {
+                data:
                   {
-                    trauma : this.actor.data.data.trauma
+                    trauma: this.actor.data.data.trauma
                   }
               };
-              newTraumaListValue.data.trauma.list[newTrauma] = true;
-              this.actor.update(newTraumaListValue);
+              newTraumaListValue.data.trauma.list.push(newTrauma);
+              await this.actor.update(newTraumaListValue);
+
             }
           },
           cancel: {

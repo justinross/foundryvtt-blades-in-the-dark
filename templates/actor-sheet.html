@@ -30,9 +30,9 @@
           </header>
             <div class="trauma-box">
                 <div class="trauma-list count-{{ownedTraumas.length}}">
-                {{#if (gt ownedTraumas.length 0)}}
-                {{#each ownedTraumas as |trauma index|}}
-                  <div class="trauma-item" data-trauma="{{trauma}}">{{localize (concat "BITD.Trauma" trauma)}}</div>
+                {{#if (gt data.trauma.list.length 0)}}
+                {{#each data.trauma.list as |trauma index|}}
+                  <div class="trauma-item" data-trauma="{{trauma}}">{{localize (concat "BITD.Trauma" (upper-first trauma))}}</div>
                 {{/each}}
                 {{else}}
                   <em>{{localize "BITD.Trauma"}}</em>
@@ -96,7 +96,6 @@
                 </div>
               </header>
               <section class="ability-list check-list">
-                {{log my_abilities}}
                 {{#each playbook_abilities as |ability index|}}
                 {{#with ../actor as |actor|}}
                   {{> "systems/blades-in-the-dark/templates/parts/ability.html" actor=actor ability=ability}}
