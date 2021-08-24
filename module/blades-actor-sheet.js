@@ -84,7 +84,8 @@ export class BladesActorSheet extends BladesSheet {
       callback: element => {
         let traumaToDisable = element.data("trauma");
         let traumaUpdateObject = this.actor.data.data.trauma.list;
-        traumaUpdateObject[traumaToDisable.toLowerCase()] = false;
+        let index = traumaUpdateObject.indexOf(traumaToDisable.toLowerCase());
+        traumaUpdateObject.splice(index, 1);
         this.actor.update({data:{trauma:{list: traumaUpdateObject}}});
       }
     }
