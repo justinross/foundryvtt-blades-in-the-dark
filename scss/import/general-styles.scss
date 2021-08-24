@@ -3,7 +3,41 @@ textarea {
   margin-bottom: 20px;
 }
 
+section {
+  margin-bottom: 10px;
+  display: flex;
+  //flex-direction: column;
+  justify-content: space-between;
 
+  > *:not(.label-stripe) {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+
+  .grow-one {
+    flex-grow: 1;
+  }
+
+  .grow-two {
+    flex-grow: 2;
+  }
+
+  &.experience {
+    margin-bottom: 0px;
+    justify-content: center;
+  }
+}
+
+
+.tab[data-tab]{
+  display: none;
+  &.active{
+    display: block;
+  }
+}
 
 .flex-horizontal {
   display: flex;
@@ -23,6 +57,7 @@ textarea {
   padding: 0px 5px;
   height: 30px !important;
   text-transform: capitalize;
+  font-family: Kirsty, serif;
 }
 
 .gray-label {
@@ -33,6 +68,7 @@ textarea {
   padding: 0px 5px;
   height: 30px !important;
   text-transform: capitalize;
+  font-family: Kirsty, serif;
 }
 
 

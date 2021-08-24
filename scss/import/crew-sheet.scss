@@ -3,6 +3,39 @@ $coin_margin: 3px;
 
 @import 'coins.scss';
 
+.item {
+
+  justify-content: space-between;
+
+  .item-body {
+
+    margin-bottom: 10px;
+    * {
+      margin-right: 10px;
+    }
+
+    .item-description {
+      font-style: italic;
+      text-align: justify;
+    }
+  }
+
+  div {
+    flex-grow: 2;
+  }
+  .item-control {
+    flex-grow: 1;
+  }
+  .item-body,
+  .item-class-label {
+    width: 100px;
+  }
+}
+
+.item-class-label {
+  margin-bottom: 10px;
+}
+
 #name,
 #lair,
 {
@@ -19,33 +52,6 @@ nav{
   padding-bottom: 10px;
 }
 
-//section {
-//  margin-bottom: 10px;
-//  display: flex;
-//  flex-direction: column;
-//  justify-content: space-between;
-//
-//  > *:not(.label-stripe) {
-//    margin-right: 10px;
-//
-//    &:last-child {
-//      margin-right: 0px;
-//    }
-//  }
-//
-//  .grow-one {
-//    flex-grow: 1;
-//  }
-//
-//  .grow-two {
-//    flex-grow: 2;
-//  }
-//
-//  &.experience {
-//    margin-bottom: 0px;
-//    justify-content: center;
-//  }
-//}
 
 // Crew Coins
 .crew-coins {
@@ -133,7 +139,15 @@ nav{
 }
 
 #heat-wanted {
-  justify-content: none;
+  //justify-content: none;
+  .small-teeth{
+    height: 20px;
+    label{
+      height: 100%;
+      width: 100%;
+      cursor: default;
+    }
+  }
 }
 
 .experience-clues-container {
@@ -223,10 +237,12 @@ nav{
 
   .big-name {
     font-weight: bold;
+    font-family: Kirsty, serif;
   }
 
   .big-description {
     font-size: 20px;
+    font-family: "Crimson Text", serif;
     color: $almost_black;
   }
 }

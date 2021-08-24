@@ -96,9 +96,39 @@
   font-weight: 600;
   font-style: italic;
 }
+.blades-in-the-dark {
+  font-family: "Crimson Text", serif;
+}
 .blades-in-the-dark textarea {
   margin-top: 10px;
   margin-bottom: 20px;
+}
+.blades-in-the-dark section {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.blades-in-the-dark section > *:not(.label-stripe) {
+  margin-right: 10px;
+}
+.blades-in-the-dark section > *:not(.label-stripe):last-child {
+  margin-right: 0px;
+}
+.blades-in-the-dark section .grow-one {
+  flex-grow: 1;
+}
+.blades-in-the-dark section .grow-two {
+  flex-grow: 2;
+}
+.blades-in-the-dark section.experience {
+  margin-bottom: 0px;
+  justify-content: center;
+}
+.blades-in-the-dark .tab[data-tab] {
+  display: none;
+}
+.blades-in-the-dark .tab[data-tab].active {
+  display: block;
 }
 .blades-in-the-dark .flex-horizontal {
   display: flex;
@@ -117,6 +147,7 @@
   padding: 0px 5px;
   height: 30px !important;
   text-transform: capitalize;
+  font-family: Kirsty, serif;
 }
 .blades-in-the-dark .gray-label {
   background-color: #999;
@@ -126,6 +157,7 @@
   padding: 0px 5px;
   height: 30px !important;
   text-transform: capitalize;
+  font-family: Kirsty, serif;
 }
 .blades-in-the-dark .label-stripe {
   text-transform: uppercase;
@@ -249,6 +281,32 @@
 }
 .blades-in-the-dark.crew.sheet .coins.coins-stashed {
   width: 190px;
+}
+.blades-in-the-dark.crew.sheet .item {
+  justify-content: space-between;
+}
+.blades-in-the-dark.crew.sheet .item .item-body {
+  margin-bottom: 10px;
+}
+.blades-in-the-dark.crew.sheet .item .item-body * {
+  margin-right: 10px;
+}
+.blades-in-the-dark.crew.sheet .item .item-body .item-description {
+  font-style: italic;
+  text-align: justify;
+}
+.blades-in-the-dark.crew.sheet .item div {
+  flex-grow: 2;
+}
+.blades-in-the-dark.crew.sheet .item .item-control {
+  flex-grow: 1;
+}
+.blades-in-the-dark.crew.sheet .item .item-body,
+.blades-in-the-dark.crew.sheet .item .item-class-label {
+  width: 100px;
+}
+.blades-in-the-dark.crew.sheet .item-class-label {
+  margin-bottom: 10px;
 }
 .blades-in-the-dark.crew.sheet #name,
 .blades-in-the-dark.crew.sheet #lair {
@@ -572,8 +630,13 @@
 .blades-in-the-dark.crew.sheet #crew-tier > * {
   margin-right: 5px;
 }
-.blades-in-the-dark.crew.sheet #heat-wanted {
-  justify-content: none;
+.blades-in-the-dark.crew.sheet #heat-wanted .small-teeth {
+  height: 20px;
+}
+.blades-in-the-dark.crew.sheet #heat-wanted .small-teeth label {
+  height: 100%;
+  width: 100%;
+  cursor: default;
 }
 .blades-in-the-dark.crew.sheet .experience-clues-container {
   width: 340px;
@@ -634,9 +697,11 @@
 }
 .blades-in-the-dark.crew.sheet .class-name .big-name {
   font-weight: bold;
+  font-family: Kirsty, serif;
 }
 .blades-in-the-dark.crew.sheet .class-name .big-description {
   font-size: 20px;
+  font-family: "Crimson Text", serif;
   color: #191813;
 }
 .blades-in-the-dark.crew.sheet .big-teeth-section {

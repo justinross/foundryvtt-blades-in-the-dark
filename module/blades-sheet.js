@@ -49,7 +49,6 @@ export class BladesSheet extends ActorSheet {
       //trigger the click on this one
       $(target).trigger('click');
     }
-
   }
 
   groupItems(arr, groupProperty){

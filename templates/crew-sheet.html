@@ -57,14 +57,7 @@
           {{#multiboxes data.tier}}
           <input id="crew-tier-0" type="radio" name="data.tier" value="0">
           <label for="crew-tier-0" class="black-label">{{localize "BITD.Tier"}}</label>
-          <input id="crew-tier-1" type="radio" name="data.tier" value="1">
-          <label for="crew-tier-1"></label>
-          <input id="crew-tier-2" type="radio" name="data.tier" value="2">
-          <label for="crew-tier-2"></label>
-          <input id="crew-tier-3" type="radio" name="data.tier" value="3">
-          <label for="crew-tier-3"></label>
-          <input id="crew-tier-4" type="radio" name="data.tier" value="4">
-          <label for="crew-tier-4"></label>
+          {{> "systems/blades-in-the-dark/templates/parts/radiotoggles.html" count=4 actor=../actor field="data.tier" name="tier" currentval=../data.tier }}
           {{/multiboxes}}
         </div>
       </div>
@@ -77,32 +70,9 @@
     <div id="crew-reputation">
       {{#multiboxes data.reputation}}
       {{#repturf data.turfs_amount}}
-      <input type="radio" id="crew-reputation-0" name="data.reputation" value="0" dtype="Radio">
-      <label class="black-label" for="crew-reputation-0">{{localize "BITD.Rep"}}</label>
-      <input type="radio" id="crew-reputation-1" name="data.reputation" value="1" dtype="Radio">
-      <label for="crew-reputation-1"></label>
-      <input type="radio" id="crew-reputation-2" name="data.reputation" value="2" dtype="Radio">
-      <label for="crew-reputation-2"></label>
-      <input type="radio" id="crew-reputation-3" name="data.reputation" value="3" dtype="Radio">
-      <label for="crew-reputation-3"></label>
-      <input type="radio" id="crew-reputation-4" name="data.reputation" value="4" dtype="Radio">
-      <label for="crew-reputation-4"></label>
-      <input type="radio" id="crew-reputation-5" name="data.reputation" value="5" dtype="Radio">
-      <label for="crew-reputation-5"></label>
-      <input type="radio" id="crew-reputation-6" name="data.reputation" value="6" dtype="Radio">
-      <label for="crew-reputation-6"></label>
-      <input type="radio" id="crew-reputation-7" name="data.reputation" value="7" dtype="Radio">
-      <label for="crew-reputation-7"></label>
-      <input type="radio" id="crew-reputation-8" name="data.reputation" value="8" dtype="Radio">
-      <label for="crew-reputation-8"></label>
-      <input type="radio" id="crew-reputation-9" name="data.reputation" value="9" dtype="Radio" >
-      <label for="crew-reputation-9"></label>
-      <input type="radio" id="crew-reputation-10" name="data.reputation" value="10" dtype="Radio" >
-      <label for="crew-reputation-10"></label>
-      <input type="radio" id="crew-reputation-11" name="data.reputation" value="11" dtype="Radio" >
-      <label for="crew-reputation-11"></label>
-      <input type="radio" id="crew-reputation-12" name="data.reputation" value="12" dtype="Radio" >
-      <label for="crew-reputation-12"></label>
+        <label class="black-label" for="crew-reputation-0">{{localize "BITD.Rep"}}</label>
+        <input type="radio" id="{{../actor._id}}-crew-reputation-0" name="data.reputation" value="0" dtype="Radio">
+        {{> "systems/blades-in-the-dark/templates/parts/radiotoggles.html" count=12 actor=../actor field="data.reputation" name="reputation" currentval=../data.reputation }}
       {{/repturf}}
       {{/multiboxes}}
       <div class="gray-label">{{localize "BITD.Turf"}}</div>
@@ -113,19 +83,11 @@
 
       <div id="crew-coins-hands">
         <div class="stripe">
-          <label for="crew-coins-hands-0">{{localize "BITD.Coins"}} <i class="fab fa-creative-commons-zero nullifier"></i></label>
+          <label for="crew-coins-hands-0">{{localize "BITD.Coins"}} <!-- <i class="fab fa-creative-commons-zero nullifier"></i>--></label>
         </div>
         <div class="crew-coins coins-hands">
           {{#multiboxes data.coins.value}}
-          <input type="radio" id="crew-coins-hands-0" name="data.coins.value" value="0" checked="checked">
-          <input type="radio" id="crew-coins-hands-1" name="data.coins.value" value="1">
-          <label for="crew-coins-hands-1"></label>
-          <input type="radio" id="crew-coins-hands-2" name="data.coins.value" value="2">
-          <label for="crew-coins-hands-2"></label>
-          <input type="radio" id="crew-coins-hands-3" name="data.coins.value" value="3">
-          <label for="crew-coins-hands-3"></label>
-          <input type="radio" id="crew-coins-hands-4" name="data.coins.value" value="4">
-          <label for="crew-coins-hands-4"></label>
+          {{> "systems/blades-in-the-dark/templates/parts/radiotoggles.html" count=4 actor=../actor field="data.coins.value" name="coins-hands" currentval=../data.coins.value }}
           {{/multiboxes}}
         </div>
       </div>
@@ -134,12 +96,12 @@
       <div id="crew-coins-vault">
         
         <div class="stripe">
-          <label for="crew-coins-vault-0">{{localize "BITD.Vault"}} <i class="fab fa-creative-commons-zero nullifier"></i></label>
+          <label for="crew-coins-vault-0">{{localize "BITD.Vault"}} <!-- <i class="fab fa-creative-commons-zero nullifier"></i> --></label>
         </div>
         <div class="crew-coins coins-vault">
           {{#multiboxes data.vault.value}}
-          <input type="radio" id="crew-coins-vault-0" name="data.vault.value" value="0" checked="checked">
-          {{#crew_vault_coins data.vault.max}}{{/crew_vault_coins}}
+<!--          <input type="radio" id="crew-coins-vault-0" name="data.vault.value" value="0" checked="checked">-->
+          {{> "systems/blades-in-the-dark/templates/parts/radiotoggles.html" count=data.vault.max actor=../actor field="data.vault.value" name="coins-vault" currentval=../data.vault.value }}
           {{/multiboxes}}
         </div>
 
@@ -153,26 +115,9 @@
   
       <div id="crew-heat" class="big-teeth">
         {{#multiboxes data.heat}}
-        <input type="radio" id="crew-heat-0" name="data.heat" value="0" dtype="Radio">
-        <label class="black-label" for="crew-heat-0">{{localize "BITD.Heat"}}</label>
-        <input type="radio" id="crew-heat-1" name="data.heat" value="1" dtype="Radio">
-        <label for="crew-heat-1"></label>
-        <input type="radio" id="crew-heat-2" name="data.heat" value="2" dtype="Radio">
-        <label for="crew-heat-2"></label>
-        <input type="radio" id="crew-heat-3" name="data.heat" value="3" dtype="Radio">
-        <label for="crew-heat-3"></label>
-        <input type="radio" id="crew-heat-4" name="data.heat" value="4" dtype="Radio">
-        <label for="crew-heat-4"></label>
-        <input type="radio" id="crew-heat-5" name="data.heat" value="5" dtype="Radio">
-        <label for="crew-heat-5"></label>
-        <input type="radio" id="crew-heat-6" name="data.heat" value="6" dtype="Radio">
-        <label for="crew-heat-6"></label>
-        <input type="radio" id="crew-heat-7" name="data.heat" value="7" dtype="Radio">
-        <label for="crew-heat-7"></label>
-        <input type="radio" id="crew-heat-8" name="data.heat" value="8" dtype="Radio">
-        <label for="crew-heat-8"></label>
-        <input type="radio" id="crew-heat-9" name="data.heat" value="9" dtype="Radio">
-        <label for="crew-heat-9"></label>
+          <label class="black-label" for="crew-heat-0">{{localize "BITD.Heat"}}</label>
+          <input type="radio" id="{{../actor._id}}-crew-heat-0" name="data.heat" value="0" dtype="Radio">
+          {{> "systems/blades-in-the-dark/templates/parts/radiotoggles.html" count=9 actor=actor field="data.heat" name="heat" currentval=data.heat }}
         {{/multiboxes}}
   
       </div>
@@ -181,15 +126,7 @@
         <div id="crew-wanted" class="small-teeth-wrap">
           <label class="black-label" for="crew-wanted-counter-0">{{localize "BITD.Wanted"}}</label>
           <div class="small-teeth">
-            <input type="radio" id="crew-wanted-counter-0" name="data.wanted" value="0">
-            <input type="radio" id="crew-wanted-counter-1" name="data.wanted" value="1">
-            <label for="crew-wanted-counter-1"></label>
-            <input type="radio" id="crew-wanted-counter-2" name="data.wanted" value="2">
-            <label for="crew-wanted-counter-2"></label>
-            <input type="radio" id="crew-wanted-counter-3" name="data.wanted" value="3">
-            <label for="crew-wanted-counter-3"></label>
-            <input type="radio" id="crew-wanted-counter-4" name="data.wanted" value="4">
-            <label for="crew-wanted-counter-4"></label>
+            {{> "systems/blades-in-the-dark/templates/parts/radiotoggles.html" count=4 actor=actor field="data.wanted" name="wanted" currentval=data.wanted }}
           </div>
         </div>
         {{/multiboxes}}
@@ -228,7 +165,8 @@
           <label class="black-label" for="crew-experience-0">{{localize "BITD.CrewXP"}}</label>
           {{#multiboxes data.experience}}
           <input type="radio" id="crew-experience-0" name="data.experience" value="0" dtype="Radio">
-          {{#crew_experience}}{{/crew_experience}}
+          {{> "systems/blades-in-the-dark/templates/parts/radiotoggles.html" count=10 actor=actor field="data.experience" name="experience" currentval=data.experience }}
+<!--          {{#crew_experience}}{{/crew_experience}}-->
           {{/multiboxes}}
         </div>
       </div>

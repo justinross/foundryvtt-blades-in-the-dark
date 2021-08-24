@@ -16,12 +16,16 @@ $hover-opacity: 0.9;
 $hover-brightness: 0.8;
 
 
+
+
 // Utility imports
 @import 'mixin.scss';
 @import 'fonts.scss';
 
 //namespacing to avoid conflicts with other modules
 .blades-in-the-dark{
+  font-family: "Crimson Text", serif;
+
   @import 'import/general-styles.scss';
 
   &.crew.sheet{
