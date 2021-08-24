@@ -7,14 +7,14 @@
       </div>
   </header>
   
-  <section class="flex-vertical">
+  <section class="flex-vertical flex">
 
     <div class="label-stripe">{{localize "BITD.Information"}}</div>
 
     <div>{{{localize "BITD.AddAdditionalTypeOfGangText"}}}</div>
   </section>
 
-  <section class="flex-vertical">
+  <section class="flex-vertical flex">
 
     <div class="label-stripe">{{localize "BITD.CohortType"}}</div>
 
@@ -28,7 +28,7 @@
     </div>
   </section>
 
-  <section id="gang-expert-type-selector" class="flex-vertical">
+  <section id="gang-expert-type-selector" class="flex-vertical flex">
     {{#if (eq data.cohort "Gang")}}
 
       <div class="label-stripe">{{localize "BITD.GangType"}}</div>
@@ -57,7 +57,7 @@
 
   {{!-- Scale and Quality if attached to Actor --}}
   {{#if data.quality}}
-  <section id="quality-scale" class="flex-vertical">
+  <section id="quality-scale" class="flex-vertical flex">
     <div class="label-stripe">{{localize "BITD.ScaleAndQuality"}}</div>
     <div>{{localize "BITD.Quality"}}: {{data.quality}}</div>
     <div>{{localize "BITD.Scale"}}: {{data.scale}}</div>
@@ -65,7 +65,7 @@
   {{/if}}
 
   {{!-- Edges and Flaws --}}
-  <section id="edges-flaws" class="flex-vertical">
+  <section id="edges-flaws" class="flex-vertical flex">
 
     <div class="label-stripe">{{localize "BITD.ChooseOneOrTwoEdges"}}</div>
 
@@ -98,7 +98,7 @@
 
   </section>
   
-  <section id="cohort-harm" class="flex-vertical">
+  <section id="cohort-harm" class="flex-vertical flex">
     <div class="label-stripe">{{localize "BITD.Harm"}}</div>
     <div id="harm-list" class="flex-horizontal">
       {{#multiboxes data.harm}}
@@ -110,12 +110,12 @@
     </div>
   </section>
 
-  <section>
+  <section class="flex">
     <input id="cohort-armor" type="checkbox" name="data.armor" value="{{data.armor}}" {{checked data.armor}}>
     <label for="cohort-armor">{{localize "BITD.Armor"}}</label>
   </section>
 
-  <section class="sheet-body flex-vertical">
+  <section class="sheet-body flex-vertical flex">
     <div class="label-stripe">{{localize "BITD.Description"}}</div>
     <textarea name="data.description">{{data.description}}</textarea>
   </section>

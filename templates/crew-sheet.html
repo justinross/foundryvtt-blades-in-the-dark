@@ -1,6 +1,6 @@
 <form class="{{cssClass}} actor-sheet" autocomplete="off">
 
-  <section class="flex-horizontal">
+  <section class="flex-horizontal flex">
 
     <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
 
@@ -66,7 +66,7 @@
   </section>
 
 
-  <section class="flex-horizontal">
+  <section class="flex-horizontal flex">
     <div id="crew-reputation">
       {{#multiboxes data.reputation}}
       {{#repturf data.turfs_amount}}
@@ -135,7 +135,7 @@
     </div>
   </section>
 
-  <section class="flex-horizontal">
+  <section class="flex-horizontal flex">
 
     <div class="flex-vertical">
 
@@ -185,7 +185,7 @@
   </section>
 
   {{!-- Tabs --}}
-  <section class="tab-content">
+  <section class="tab-content flex">
 
     {{!-- Turfs --}}
     <div class="tab" data-tab="turfs">
