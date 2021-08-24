@@ -7,7 +7,7 @@
     </header>
     
     {{!-- Sheet Body --}}
-    <section class="sheet-body flex-vertical">
+    <section class="sheet-body flex-vertical flex">
       {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
       <label class="label-stripe">{{localize "BITD.Loadout"}}</label>
       <input id="item-load" type="text" name="data.load" value="{{data.load}}">

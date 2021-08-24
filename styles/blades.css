@@ -103,24 +103,24 @@
   margin-top: 10px;
   margin-bottom: 20px;
 }
-.blades-in-the-dark section {
+.blades-in-the-dark section.flex {
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
 }
-.blades-in-the-dark section > *:not(.label-stripe) {
+.blades-in-the-dark section.flex > *:not(.label-stripe) {
   margin-right: 10px;
 }
-.blades-in-the-dark section > *:not(.label-stripe):last-child {
+.blades-in-the-dark section.flex > *:not(.label-stripe):last-child {
   margin-right: 0px;
 }
-.blades-in-the-dark section .grow-one {
+.blades-in-the-dark section.flex .grow-one {
   flex-grow: 1;
 }
-.blades-in-the-dark section .grow-two {
+.blades-in-the-dark section.flex .grow-two {
   flex-grow: 2;
 }
-.blades-in-the-dark section.experience {
+.blades-in-the-dark section.flex.experience {
   margin-bottom: 0px;
   justify-content: center;
 }
