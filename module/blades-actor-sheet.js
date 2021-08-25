@@ -147,7 +147,8 @@ export class BladesActorSheet extends BladesSheet {
 
     // Calculate Load
     let loadout = 0;
-    data.items.forEach(i => {loadout += (i.type === "item") ? parseInt(i.data.load) : 0});
+    data.items.forEach(i => {
+      loadout += (i.type === "item" && i.data.equipped) ? parseInt(i.data.load) : 0});
     data.data.loadout = loadout;
 
     // Encumbrance Levels
@@ -168,7 +169,7 @@ export class BladesActorSheet extends BladesSheet {
     //look for Mule ability
     // @todo - fix translation.
     data.items.forEach(i => {
-      if (i.type == "ability" && i.name == "(C) Mule") {
+      if (i.type == "ability" && i.name == "(C) Mule" && i.data.purchased) {
         mule_present = 1;
       }
     });
@@ -178,6 +179,26 @@ export class BladesActorSheet extends BladesSheet {
       data.data.load_level=mule_level[loadout];
     } else {
       data.data.load_level=load_level[loadout];
+    }
+
+    switch (data.data.selected_load_level){
+      case "BITD.Light":
+        data.max_load = 3;
+        break;
+      case "BITD.Normal":
+        data.max_load = 5;
+        break;
+      case "BITD.Heavy":
+        data.max_load = 6;
+        break;
+      default:
+        data.data.selected_load_level = "BITD.Normal";
+        data.max_load = 5;
+        break;
+    }
+
+    if(mule_present){
+      data.max_load += 2;
     }
 
     data.load_levels = {"BITD.Light":"BITD.Light", "BITD.Normal":"BITD.Normal", "BITD.Heavy":"BITD.Heavy"};
@@ -291,7 +312,7 @@ export class BladesActorSheet extends BladesSheet {
     //   element.slideUp(200, () => this.render(false));
     // });
 
-    html.find('.toggle-allow-edit span').click(async (event) => {
+    html.find('.toggle-allow-edit').click(async (event) => {
       event.preventDefault();
       if(this.actor.getFlag('blades-in-the-dark', 'allow-edit')){
         await this.actor.unsetFlag('blades-in-the-dark', 'allow-edit');
@@ -361,6 +382,14 @@ export class BladesActorSheet extends BladesSheet {
       ev.stopPropagation();
     });
 
+    html.find('.load-box').click(ev => {
+      this.actor.getFlag('blades-in-the-dark', 'load_open') ? this.actor.setFlag('blades-in-the-dark', 'load_open', false) : this.actor.setFlag('blades-in-the-dark', 'load_open', true);
+    });
+
+    html.find('.load-box .full-view').click(ev => {
+      ev.stopPropagation();
+    });
+
     html.find('.add_trauma').click(ev => {
       let actorTraumaList = this.actor.data.data.trauma.list;
       let allTraumas = ["cold", "haunted", "obsessed", "paranoid", "reckless", "soft", "unstable", "vicious"];
@@ -414,6 +443,33 @@ export class BladesActorSheet extends BladesSheet {
 
     // manage active effects
     html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
+
+    html.find(".toggle-expand").click(ev => {
+      let parent = $(ev.target).parents(".window-app").get(0);
+      console.log(parent);
+      if($(parent).hasClass("expanded")){
+        parent.style.height = "275px";
+        $(parent).removeClass("expanded");
+      }
+      else{
+        parent.style.height = "auto";
+        $(parent).addClass("expanded");
+      }
+    });
+
+    // let sheetObserver = new MutationObserver(mutationRecords => {
+    //   // let target = mutationRecords[0].target;
+    //   // if(target.style.height == "auto"){
+    //   //   console.log("expanded");
+    //   //   $(target).addClass("expanded");
+    //   // }
+    //   // else if(target.style.height <= "275px"){
+    //   //   $
+    //   // }
+    // });
+    // let actorsheet = html.parents(".window-app").get(0);
+    // sheetObserver.observe(actorsheet, {childList:false, attributes:true, attributeFilter: ["style"], subtree: false});
+
   }
 
   /* -------------------------------------------- */

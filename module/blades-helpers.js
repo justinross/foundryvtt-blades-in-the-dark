@@ -271,8 +271,6 @@ export class BladesHelpers {
           deleted = await actor.deleteEmbeddedDocuments("Item", abilities_to_delete);
         }
         catch(error){
-          console.log(abilities_to_delete);
-          console.log(current_abilities);
           console.log("Error deleting abilities: ", error);
         }
         // console.log("Deleted playbook abilities: ", deleted);
