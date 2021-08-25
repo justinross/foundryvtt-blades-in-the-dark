@@ -53,7 +53,7 @@
         {{{inline-editable-text "data.heritage" "Heritage" data.heritage actor.id this}}} &bull; {{{inline-editable-text "data.background" "Background" data.background actor.id this}}} &bull; {{{inline-editable-text "data.background-details" "Background Details" data.background-details actor.id this}}} &bull; {{{inline-editable-text "data.vice" "Vice" data.vice actor.id this}}} &bull; {{{inline-editable-text "data.vice-purveyor" "Vice Purveyor" data.vice-purveyor actor.id this}}}
       </div>
       <div class="look bio">{{{inline-editable-text "data.look" "Look" data.look actor.id this}}}</div>
-      <div class="abilities-list">{{#each my_abilities}}<span title="{{this.data.description}}" class="hover-term">{{this.name}}</span> &nbsp;{{/each}}</div>
+      <div class="abilities-list">{{#each my_abilities}}<span title="{{this.data.description}}" class="hover-term">{{this.name}}</span>&nbsp;{{#unless @last}}-&nbsp;{{/unless}}{{/each}}</div>
       <section class="attributes-actions">
         {{> "systems/blades-in-the-dark/templates/parts/attributes.html" actor=actor}}
       </section>
