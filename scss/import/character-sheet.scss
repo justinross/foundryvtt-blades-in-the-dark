@@ -127,14 +127,14 @@
       color: rgba(255, 255, 255, 0.6);
       cursor: pointer;
       border-radius: 3px;
-      .fa-expand{ display: initial; }
-      .fa-compress{ display: none; }
+      .fa-expand{ display: none; }
+      .fa-compress{ display: initial; }
     }
 
-    &.expanded{
+    @at-root .can-expand{
       span.toggle-expand{
-        .fa-expand{ display: none; }
-        .fa-compress{ display: initial; }
+        .fa-expand{ display: initial !important; }
+        .fa-compress{ display: none !important; }
       }
     }
 

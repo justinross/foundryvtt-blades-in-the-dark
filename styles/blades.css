@@ -1023,17 +1023,18 @@
   border-radius: 3px;
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .sheet-toggles span.toggle-expand .fa-expand {
-  display: initial;
+  display: none;
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .sheet-toggles span.toggle-expand .fa-compress {
-  display: none;
-}
-.blades-in-the-dark.actor.pc #tidy-redesign .sheet-toggles.expanded span.toggle-expand .fa-expand {
-  display: none;
-}
-.blades-in-the-dark.actor.pc #tidy-redesign .sheet-toggles.expanded span.toggle-expand .fa-compress {
   display: initial;
 }
+.can-expand span.toggle-expand .fa-expand {
+  display: initial !important;
+}
+.can-expand span.toggle-expand .fa-compress {
+  display: none !important;
+}
+
 .blades-in-the-dark.actor.pc #tidy-redesign .sheet-toggles span.toggle-allow-edit {
   cursor: pointer;
   background: #008000;

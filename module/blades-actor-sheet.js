@@ -445,30 +445,28 @@ export class BladesActorSheet extends BladesSheet {
     html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
 
     html.find(".toggle-expand").click(ev => {
-      let parent = $(ev.target).parents(".window-app").get(0);
-      console.log(parent);
-      if($(parent).hasClass("expanded")){
-        parent.style.height = "275px";
-        $(parent).removeClass("expanded");
+      console.log(this);
+      if(this.position.height > 275){
+        this.setPosition({height: 275});
+        this._element.addClass("can-expand");
       }
       else{
-        parent.style.height = "auto";
-        $(parent).addClass("expanded");
+        this.setPosition({height: "auto"});
+        this._element.removeClass("can-expand");
       }
     });
 
-    // let sheetObserver = new MutationObserver(mutationRecords => {
-    //   // let target = mutationRecords[0].target;
-    //   // if(target.style.height == "auto"){
-    //   //   console.log("expanded");
-    //   //   $(target).addClass("expanded");
-    //   // }
-    //   // else if(target.style.height <= "275px"){
-    //   //   $
-    //   // }
-    // });
-    // let actorsheet = html.parents(".window-app").get(0);
-    // sheetObserver.observe(actorsheet, {childList:false, attributes:true, attributeFilter: ["style"], subtree: false});
+    let sheetObserver = new MutationObserver(mutationRecords => {
+      let scrollbox = this._element.find(".window-content").get(0);
+      let scrollbarVisible = scrollbox.scrollHeight > scrollbox.clientHeight;
+      if(scrollbarVisible){
+        this._element.addClass("can-expand");
+      }
+      else{
+        this._element.removeClass("can-expand");
+      }
+    });
+    sheetObserver.observe(this._element.get(0), {childList:false, attributes:true, attributeFilter: ["style"], subtree: false});
 
   }
 
