@@ -381,7 +381,9 @@ Hooks.on("dropActorSheetData", async (targetActor, sheet, droppedItem) => {
     else if("id" in droppedItem){
       npc = game.actors.get(droppedItem.id);
     }
-    await targetActor.addAcquaintance(npc);
+    if(npc && npc.type == "npc"){
+      await targetActor.addAcquaintance(npc);
+    }
   }
 })
 
