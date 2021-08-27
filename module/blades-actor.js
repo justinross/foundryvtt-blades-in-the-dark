@@ -207,6 +207,175 @@ export class BladesActor extends Actor {
   
   }
 
+  /**
+   * Deletes all "ability" OwnedItems, with an exception for owned "Ghost" abilities, if specified
+   *
+   * @param {bool} keep_owned_ghost_abilities
+   * @returns {object} // the OwnedItems deleted
+   */
+  async clearAbilities(keep_owned_ghost_abilities){
+    let current_abilities = this.items.filter(item => item.type == "ability");
+    console.log("%cDeleting unnecessary abilities", "color: orange");
+    let abilities_to_delete = [];
+    for(const ability of current_abilities){
+      let keep = false;
+      if(keep_owned_ghost_abilities){
+        //delete all abilities except ones with "Ghost" in the name that are owned.
+        keep = /* ability.name.includes("Ghost") && */ ability.data.data.purchased;
+      }
+      if(!keep){
+        abilities_to_delete.push(ability.id);
+      }
+    };
+    let deleted;
+    try{
+      // let testing = this.items.filter(item => item.type == "ability");
+      deleted = await this.deleteEmbeddedDocuments("Item", abilities_to_delete);
+    }
+    catch(error){
+      console.log("Error deleting abilities: ", error);
+    }
+    // console.log("Deleted playbook abilities: ", deleted);
+    return deleted;
+  }
+
+  /**
+   * Adds playbook-specific "ability" OwnedItems to an actor
+   *
+   * @param {string} playbook_name
+   * @returns {object} // the OwnedItems added
+   */
+  async addPlaybookAbilities(playbook_name){
+    console.log("%cAdding new playbook abilities", "color: green");
+    let all_abilities = await game.packs.get("blades-in-the-dark.ability").getDocuments();
+    let new_playbook_abilities = all_abilities.filter(ability => ability.data.data.class == playbook_name);
+    let added = await this.createEmbeddedDocuments("Item", new_playbook_abilities.map(item => item.data), {noHook: true});
+    // console.log("Added playbook abilities: ", added);
+    return added;
+  }
+
+  /**
+   * Deletes playbook-specific "item" OwnedItems from an actor
+   *
+   * @param {string} keep_custom_items
+   * @returns {object} // the OwnedItems deleted
+   */
+  async clearPlaybookItems(keep_custom_items = false){
+    console.log("%cDeleting unnecessary playbook items", "color: orange");
+    let current_playbook_items = this.items.filter(item => item.type == "item" && item.data.data.class != "");
+    let items_to_delete = [];
+    for(const item of current_playbook_items){
+      let keep = false;
+      if(keep_custom_items){
+        keep = false;
+      }
+      if(!keep){
+        items_to_delete.push(item.id);
+      }
+    }
+
+    let deleted = await this.deleteEmbeddedDocuments("Item", items_to_delete);
+    console.log("Deleted playbook items: ", deleted);
+    return deleted;
+  }
+
+  /**
+   * Adds playbook-specific "item" OwnedItems to an actor
+   *
+   * @param {string} playbook_name
+   * @returns {object} // the OwnedItems added
+   */
+  async addPlaybookItems(playbook_name){
+    console.log("%cAdding new playbook items", "color: green");
+    let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
+    let new_playbook_items = all_items.filter(item => item.data.data.class == playbook_name);
+    let added = await this.createEmbeddedDocuments("Item", new_playbook_items.map(item => item.data), {noHook: true});
+    // console.log("Added playbook items: ", added);
+    return added;
+  }
+
+  /**
+   * Adds generic "item" OwnedItems to an actor
+   *
+   * @returns {object} // the OwnedItems added
+   */
+  async addGenericItems(){
+    console.log("%cAdding generic items", "color: green");
+    let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
+    let new_items = all_items.filter(item => item.data.data.class == "");
+    let added = await this.createEmbeddedDocuments("Item", new_items.map(item => item.data), {noHook: true});
+    // console.log("Added playbook items: ", added);
+    return added;
+  }
+
+  /**
+   * Deletes playbook-specific acquaintances from an actor
+   *
+   * @param {string} keep_friends_and_rivals
+   * @returns {object} // the deleted
+   */
+  async clearAcquaintances(keep_friends_and_rivals = false){
+    console.log("%cDeleting unnecessary playbook acquaintances", "color: orange");
+    let current_acquaintances = this.data.data.acquaintances;
+    let new_acquaintances_array = current_acquaintances.filter(acq => keep_friends_and_rivals && acq.standing != "neutral");
+    let update = await this.update({data : {acquaintances : new_acquaintances_array}});
+    // console.log("Deleted: ", update);
+    return update;
+  }
+
+  /**
+   * Adds playbook-specific "item" OwnedItems to an actor
+   *
+   * @param {string} playbook_name
+   * @returns {object} // the OwnedItems added
+   */
+  async addPlaybookAcquaintances(playbook_name){
+    console.log("%cAdding new playbook acquaintances", "color: green");
+    //add class aquaintances
+    let all_npcs = await game.packs.get("blades-in-the-dark.npc").getDocuments();
+    let current_acquaintances = this.data.data.acquaintances;
+    let new_class_acquaintances = all_npcs.filter(obj => {
+      let class_match = obj.data.data.associated_class == playbook_name
+      let unique_id =  !current_acquaintances.some(acq => acq.id == obj.id);
+      return class_match && unique_id;
+    });
+    new_class_acquaintances = new_class_acquaintances.map(acq => {
+      return {
+        _id : acq.id,
+        name : acq.name,
+        description_short : acq.data.data.description_short,
+        standing: "neutral"
+      }
+    });
+
+    await this.update({data: {acquaintances : current_acquaintances.concat(new_class_acquaintances)}});
+  }
+
+  async addAcquaintance(acq){
+    let current_acquaintances = this.data.data.acquaintances;
+    let acquaintance = {
+      _id : acq.id,
+      name : acq.name,
+      description_short : acq.data.data.description_short,
+      standing: "neutral"
+    };
+    let unique_id =  !current_acquaintances.some((oldAcq) => {
+      return oldAcq._id == acq.id
+    });
+    if(unique_id){
+      await this.update({data: {acquaintances : current_acquaintances.concat(acquaintance)}});
+    }
+    else{
+      ui.notifications.info("The dropped NPC is already an acquaintance of this character.");
+    }
+  }
+
+  async removeAcquaintance(acqId){
+    let current_acquaintances = this.data.data.acquaintances;
+    let new_acquaintances = current_acquaintances.filter(acq => acq._id != acqId);
+    await this.update({data: {acquaintances : new_acquaintances}});
+  }
+
   /* -------------------------------------------- */
 
 }

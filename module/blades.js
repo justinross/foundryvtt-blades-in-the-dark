@@ -295,7 +295,6 @@ Hooks.once("init", async function() {
     let output_value = current_value;
     if(use_markdown){
       var md = window.markdownit();
-      console.log(current_value);
       output_value = md.render(current_value);
       // output_value = current_value;
     }
@@ -373,6 +372,19 @@ Hooks.on("createOwnedItem", async (parent_entity, child_data, options, userId) =
   return true;
 });
 
+Hooks.on("dropActorSheetData", async (targetActor, sheet, droppedItem) => {
+  if(sheet instanceof BladesActorSheet){
+    let npc;
+    if("pack" in droppedItem && droppedItem.pack == "blades-in-the-dark.npc"){
+      npc = await game.packs.get("blades-in-the-dark.npc").getDocument(droppedItem.id);
+    }
+    else if("id" in droppedItem){
+      npc = game.actors.get(droppedItem.id);
+    }
+    await targetActor.addAcquaintance(npc);
+  }
+})
+
 Hooks.on("deleteOwnedItem", async (parent_entity, child_data, options, userId) => {
 
   await BladesHelpers.undoItemLogic(child_data, parent_entity);
@@ -422,23 +434,23 @@ Hooks.on("createActor", async (actor, options, actorId)=>{
 
     if(abilities.length <= 0){
       //add class abilities
-      await BladesHelpers.addPlaybookAbilities(actor, selected_playbook_name);
+      await actor.addPlaybookAbilities(selected_playbook_name);
     }
 
 
     if(class_items.length <= 0){
       //let allAvailableItems = await BladesHelpers.getAllItemsByType('item', game);
-      await BladesHelpers.addPlaybookItems(actor, selected_playbook_name);
+      await actor.addPlaybookItems(selected_playbook_name);
     }
 
     if(generic_items.length <= 0){
       //let allAvailableItems = await BladesHelpers.getAllItemsByType('item', game);
-      await BladesHelpers.addGenericItems(actor);
+      await actor.addGenericItems();
     }
 
     if(Object.keys(actor.data.data.acquaintances).length <= 0){
       //add class aquaintances
-      await BladesHelpers.addPlaybookAcquaintances(actor, selected_playbook_name);
+      await actor.addPlaybookAcquaintances(selected_playbook_name);
     }
 
     //adding traumas for testing - doesn't render correctly on first load after creation, but it should also probably never get added this way, so *shrug*. 
@@ -458,12 +470,12 @@ Hooks.on("updateActor", async (actor, newData, meta, actorId) => {
     //remove all skills, with an exception for new weird playbook selection
     let new_attributes = await BladesHelpers.getStartingAttributes(new_playbook_name);
     let updated = await actor.update({data:{attributes: new_attributes}}, {no_hook: true});
-    await BladesHelpers.clearAbilities(actor, new_playbook_name == "Ghost" || new_playbook_name == "Hull" || new_playbook_name == "Vampire");
-    await BladesHelpers.addPlaybookAbilities(actor, new_playbook_name);
-    await BladesHelpers.clearPlaybookItems(actor, true);
-    await BladesHelpers.addPlaybookItems(actor, new_playbook_name);
-    await BladesHelpers.clearAcquaintances(actor, true);
-    await BladesHelpers.addPlaybookAcquaintances(actor, new_playbook_name);
+    await actor.clearAbilities(new_playbook_name == "Ghost" || new_playbook_name == "Hull" || new_playbook_name == "Vampire");
+    await actor.addPlaybookAbilities(new_playbook_name);
+    await actor.clearPlaybookItems(true);
+    await actor.addPlaybookItems(new_playbook_name);
+    await actor.clearAcquaintances(true);
+    await actor.addPlaybookAcquaintances(new_playbook_name);
     
   }
   return true;

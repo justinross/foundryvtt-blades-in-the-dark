@@ -1,6 +1,7 @@
 
 import { BladesSheet } from "./blades-sheet.js";
 import {onManageActiveEffect, prepareActiveEffectCategories} from "./effects.js";
+import { BladesHelpers } from "./blades-helpers.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -66,17 +67,6 @@ export class BladesActorSheet extends BladesSheet {
     }
   ];
 
-  abilityContextMenu = [
-    {
-      name: game.i18n.localize("BITD.DeleteAbility"),
-      icon: '<i class="fas fa-trash"></i>',
-      callback: element => {
-        this.actor.deleteEmbeddedDocuments("Item", [element.data("ability-id")]);
-      }
-    }
-  ]
-
-
   traumaListContextMenu = [
     {
       name: game.i18n.localize("BITD.DeleteTrauma"),
@@ -89,7 +79,29 @@ export class BladesActorSheet extends BladesSheet {
         this.actor.update({data:{trauma:{list: traumaUpdateObject}}});
       }
     }
-  ]
+  ];
+
+  abilityContextMenu = [
+    {
+      name: game.i18n.localize("BITD.DeleteAbility"),
+      icon: '<i class="fas fa-trash"></i>',
+      callback: element => {
+        this.actor.deleteEmbeddedDocuments("Item", [element.data("ability-id")]);
+      }
+    }
+  ];
+
+  acquaintanceContextMenu = [
+    {
+      name: game.i18n.localize("BITD.DeleteItem"),
+      icon: '<i class="fas fa-trash"></i>',
+      callback: element => {
+        this.actor.removeAcquaintance(element.data("acquaintance"));
+        // this.actor.deleteEmbeddedDocuments("Item", [element.data("ability-id")]);
+      }
+    }
+  ];
+
 
   abilityListContextMenu = [
     {
@@ -289,6 +301,7 @@ export class BladesActorSheet extends BladesSheet {
     new ContextMenu(html, ".context-items", this.itemListContextMenu);
     new ContextMenu(html, ".context-abilities", this.abilityListContextMenu);
     new ContextMenu(html, ".trauma-item", this.traumaListContextMenu);
+    new ContextMenu(html, ".acquaintance", this.acquaintanceContextMenu);
 
     // Update Inventory Item
     html.find('.item-block .clickable-edit').click(ev => {
