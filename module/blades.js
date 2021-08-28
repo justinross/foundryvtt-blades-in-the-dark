@@ -307,20 +307,21 @@ Hooks.once("init", async function() {
     return html;
   });
 
-  Handlebars.registerHelper('icon', function(icon_name, classes){
-    let icon_folder = "/systems/blades-in-the-dark/styles/assets/icons/";
-    let icon_info = BladesHelpers.icons[icon_name];
-    let html = '';
-    switch(icon_info.type){
-      case 'fa':
-        html = `<i class='${icon_info.icon} ${classes}'></i>`;
-        break;
-      case 'svg':
-        html = `<img src="${icon_folder}${icon_info.icon}" alt="">`
-
-    }
-    return new Handlebars.SafeString(html);
-  });
+  // Commented out to avoid conflict with existing foundry helper that I somehow didn't notice
+  // Handlebars.registerHelper('icon', function(icon_name, classes){
+  //   let icon_folder = "/systems/blades-in-the-dark/styles/assets/icons/";
+  //   let icon_info = BladesHelpers.icons[icon_name];
+  //   let html = '';
+  //   switch(icon_info.type){
+  //     case 'fa':
+  //       html = `<i class='${icon_info.icon} ${classes}'></i>`;
+  //       break;
+  //     case 'svg':
+  //       html = `<img src="${icon_folder}${icon_info.icon}" alt="">`
+  //
+  //   }
+  //   return new Handlebars.SafeString(html);
+  // });
 
   Handlebars.registerHelper('upper-first', function(input) {
     return input.charAt(0).toUpperCase() + input.slice(1);
