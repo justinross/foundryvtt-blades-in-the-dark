@@ -458,8 +458,7 @@ export class BladesActorSheet extends BladesSheet {
     html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
 
     html.find(".toggle-expand").click(ev => {
-      console.log(this);
-      if(this.position.height > 275){
+      if(!this._element.hasClass("can-expand")){
         this.setPosition({height: 275});
         this._element.addClass("can-expand");
       }
@@ -470,7 +469,7 @@ export class BladesActorSheet extends BladesSheet {
     });
 
     let sheetObserver = new MutationObserver(mutationRecords => {
-      let scrollbox = this._element.find(".window-content").get(0);
+      let scrollbox = $(mutationRecords[0].target).find(".window-content").get(0);
       let scrollbarVisible = scrollbox.scrollHeight > scrollbox.clientHeight;
       if(scrollbarVisible){
         this._element.addClass("can-expand");
