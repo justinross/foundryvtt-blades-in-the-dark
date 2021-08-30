@@ -83,7 +83,7 @@
   max-height: $mini-view-height;
   box-sizing: border-box;
   font-size: 1.4em;
-  border-radius: $mini-view-width / 4;
+  border-radius: math.div($mini-view-width, 4);
   color: $almost_black;
   font-family: Kirsty, serif;
   text-align: left;
@@ -268,7 +268,7 @@
  */
 @mixin clock($segments, $size, $default_color:null, $accent_color:null) {
 
-  $angle: 360 / $segments;
+  $angle: math.div(360, $segments);
   $skew: 90 + $angle;
   $border_width: 3;
 
@@ -343,7 +343,7 @@
 
 
   $turf_margin: 20px;
-  $connector_height: $turf_height/10;
+  $connector_height: math.div($turf_height, 10);
   $connector_width: $turf_margin * 2;
 
   width: $turf_width;
@@ -369,8 +369,8 @@
     &.right,
     &.left {
       width: $turf_margin * 2;
-      height: $turf_height/5;
-      top: $turf_height/2 - $turf_height/10;
+      height: math.div($turf_height, 5);
+      top: math.div($turf_height, 2) - math.div($turf_height, 10);
     }
     &.left {
       left: -$turf_margin * 2;
@@ -382,8 +382,8 @@
     &.top,
     &.bottom {
       height: $turf_margin * 2;
-      width: $turf_height/5;
-      left: $turf_width/2 - $turf_height/10;
+      width: math.div($turf_height, 5);
+      left: math.div($turf_width, 2) - math.div($turf_height, 10);
     }
     &.top {
       top: -$turf_margin * 2;
@@ -481,7 +481,7 @@
 
       vertical-align: middle;
       border: 2px solid $accent_color;
-      border-radius: $diameter / 2;
+      border-radius: math.div($diameter, 2);
     }
   }
 
