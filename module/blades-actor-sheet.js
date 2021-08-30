@@ -32,37 +32,71 @@ export class BladesActorSheet extends BladesSheet {
 
   itemListContextMenu = [
     {
-      name: game.i18n.localize("BITD.AddItem"),
+      name: game.i18n.localize("BITD.AddNewItem"),
       icon: '<i class="fas fa-plus"></i>',
       callback: async (element) => {
         await this.addNewItem();
-        // let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
-        // let items_html = '<ul>';
-        // all_items.sort((a, b) => a.name > b.name ? 1 : -1);
-        // for (const item of all_items) {
-        //   items_html += `<li><input type="checkbox" id="character-${this.actor.id}-itemadd-${item.id}"><label for="character-${this.actor.id}-itemadd-${item.id}">${item.name}</label></li>`;
-        // }
-        // items_html += '</ul';
-        // let d = new Dialog({
-        //   title: "Add New Item",
-        //   content:  `<h3>Select items to add:</h3>
-        //             ${items_html}
-        //             `,
-        //   buttons: {
-        //     one: {
-        //       icon: "<i class='fas fa-check'></i>",
-        //       label: "One",
-        //       callback: ()=> console.log("One")
-        //     }
-        //   },
-        //   render: (html) => {
-        //
-        //   },
-        //   close: (html) => {
-        //
-        //   }
-        // });
-        // d.render(true);
+      }
+    },
+    {
+      name: game.i18n.localize("BITD.AddExistingItem"),
+      icon: '<i class="fas fa-plus"></i>',
+      callback: async (element) => {
+        let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
+        let grouped_items = {};
+
+        let items_html = '<div>';
+        let sorted_grouped_items = BladesHelpers.groupItemsByClass(all_items);
+
+        for (const [itemclass, group] of Object.entries(sorted_grouped_items)) {
+          items_html += `<div class="item-group"><header>${itemclass}</header>`;
+          for (const item of group) {
+            let trimmedname = item.name.replace(/\([^)]*\)\ /, "");
+            items_html += `
+            <div class="item-block">
+              <input type="checkbox" id="character-${this.actor.id}-itemadd-${item.id}" data-item-id="${item.id}" data-source="${item.pack}">
+              <label for="character-${this.actor.id}-itemadd-${item.id}">${trimmedname}</label>
+            </div>
+          `;
+          }
+        }
+
+        items_html += '</div>';
+        let d = new Dialog({
+          title: "Add New Item",
+          content:  `<h3>Select items to add:</h3>
+                    ${items_html}
+                    `,
+          buttons: {
+            add: {
+              icon: "<i class='fas fa-check'></i>",
+              label: "Add",
+              callback: async (html)=> {
+                let itemInputs = html.find("input:checked");
+                let items = [];
+                for (const itemelement of itemInputs) {
+                  console.log(itemelement);
+                  let item = await BladesHelpers.getItemByType("item", itemelement.dataset.itemId, game);
+                  items.push(item);
+                }
+                console.log(items);
+                this.actor.createEmbeddedDocuments("Item", items);
+              }
+            },
+            cancel: {
+              icon: "<i class='fas fa-times'></i>",
+              label: "Cancel",
+              callback: ()=> close()
+            }
+          },
+          render: (html) => {
+
+          },
+          close: (html) => {
+
+          }
+        });
+        d.render(true);
       }
     }
   ];
@@ -133,7 +167,8 @@ export class BladesActorSheet extends BladesSheet {
 
   async addNewItem(){
       let playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
-      let playbook_name = playbooks_index.find(pb => pb._id == this.actor.data.data.playbook).name;
+      // let playbook_name = playbooks_index.find(pb => pb._id == this.actor.data.data.playbook).name;
+      let playbook_name = "custom";
       let item_data_model = game.system.model.Item.item;
       let new_item_data = { name : "New Item", type : "item", data : {...item_data_model} };
       new_item_data.data.class = playbook_name;
@@ -298,7 +333,8 @@ export class BladesActorSheet extends BladesSheet {
 
     new ContextMenu(html, ".item-block", this.itemContextMenu);
     new ContextMenu(html, ".ability-block", this.abilityContextMenu);
-    new ContextMenu(html, ".context-items", this.itemListContextMenu);
+    new ContextMenu(html, ".context-items > span", this.itemListContextMenu);
+    new ContextMenu(html, ".item-list-add", this.itemListContextMenu, {eventName : "click"});
     new ContextMenu(html, ".context-abilities", this.abilityListContextMenu);
     new ContextMenu(html, ".trauma-item", this.traumaListContextMenu);
     new ContextMenu(html, ".acquaintance", this.acquaintanceContextMenu);
@@ -319,11 +355,11 @@ export class BladesActorSheet extends BladesSheet {
     });
 
     // Delete Inventory Item -- not used in new design
-    // html.find('.item-delete').click( async ev => {
-    //   const element = $(ev.currentTarget).parents(".item");
-    //   await this.actor.deleteEmbeddedDocuments("Item", [element.data("itemId")]);
-    //   element.slideUp(200, () => this.render(false));
-    // });
+    html.find('.delete-button').click( async ev => {
+      const element = $(ev.currentTarget);
+      await this.actor.deleteEmbeddedDocuments("Item", [element.data("id")]);
+      element.slideUp(200, () => this.render(false));
+    });
 
     html.find('.toggle-allow-edit').click(async (event) => {
       event.preventDefault();
@@ -469,13 +505,14 @@ export class BladesActorSheet extends BladesSheet {
     });
 
     let sheetObserver = new MutationObserver(mutationRecords => {
+      let element = $(mutationRecords[0].target);
       let scrollbox = $(mutationRecords[0].target).find(".window-content").get(0);
       let scrollbarVisible = scrollbox.scrollHeight > scrollbox.clientHeight;
       if(scrollbarVisible){
-        this._element.addClass("can-expand");
+        element.addClass("can-expand");
       }
       else{
-        this._element.removeClass("can-expand");
+        element.removeClass("can-expand");
       }
     });
     sheetObserver.observe(this._element.get(0), {childList:false, attributes:true, attributeFilter: ["style"], subtree: false});

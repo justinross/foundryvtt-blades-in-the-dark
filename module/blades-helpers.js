@@ -25,6 +25,37 @@ export class BladesHelpers {
     return dupe_list;
   }
 
+  static groupItemsByClass(item_list, generic_last = true){
+    let grouped_items = {};
+    let generics = [];
+    for (const item of item_list) {
+      let itemclass= getProperty(item, "data.data.class");
+      if(itemclass == ""){
+        generics.push(item);
+      }
+      else{
+        if(!(itemclass in grouped_items) || !Array.isArray(grouped_items[itemclass])){
+          grouped_items[itemclass] = [];
+        }
+        grouped_items[itemclass].push(item);
+      }
+    }
+    if(!generic_last && generics.length > 0){
+      grouped_items["Generic"] = generics;
+    }
+    let sorted_grouped_items = Object.keys(grouped_items).sort().reduce(
+      (obj, key) => {
+        obj[key] = grouped_items[key];
+        return obj;
+      },
+      {}
+    );
+    if(generic_last && generics.length > 0){
+      sorted_grouped_items["Generic"] = generics;
+    }
+    return sorted_grouped_items;
+  }
+
   /**
    * Add item modification if logic exists.
    * @param {Object} item_data
@@ -184,6 +215,12 @@ export class BladesHelpers {
     });
     return list_of_items;
 
+  }
+
+  static async getItemByType(item_type, item_id, game){
+    let game_items = await this.getAllItemsByType(item_type, game);
+    let item = game_items.find(item => item._id == item_id);
+    return item;
   }
 
   /* -------------------------------------------- */

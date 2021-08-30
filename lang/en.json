@@ -194,6 +194,8 @@
 
   "BITD.AddAbility": "Add Ability",
   "BITD.AddItem": "Add Item",
+  "BITD.AddExistingItem": "Add Existing Item",
+  "BITD.AddNewItem": "Add New Item",
   "BITD.DeleteAbility": "Delete Ability",
   "BITD.DeleteItem": "Delete Item",
   "BITD.DeleteTrauma": "Delete Trauma",

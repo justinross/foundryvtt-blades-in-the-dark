@@ -860,6 +860,16 @@
   cursor: pointer;
   color: red;
 }
+.blades-in-the-dark.actor.pc #tidy-redesign a.add-button {
+  margin-left: 5px;
+  font-size: 0.9rem;
+}
+.blades-in-the-dark.actor.pc #tidy-redesign a.delete-button {
+  position: absolute;
+  right: 5px;
+  top: 2px;
+  font-size: 0.6rem;
+}
 .blades-in-the-dark.actor.pc #tidy-redesign [contenteditable] {
   user-select: auto !important;
   text-decoration: underline;
@@ -917,6 +927,7 @@
   padding: 3px;
   width: 100%;
   font-family: Kirsty, serif;
+  font-size: 1rem;
   position: relative;
   margin-bottom: 5px;
 }
@@ -1311,7 +1322,7 @@
   position: absolute;
   bottom: 4px;
   font-weight: bold;
-  font-size: 0.9em;
+  font-size: 0.9rem;
   font-family: "Crimson Text", serif;
   left: 0px;
   width: 100%;
@@ -1430,7 +1441,7 @@
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .status-buttons .harm-box.open .full-view .character-harm .effect-text {
   font-family: "Crimson Text", serif;
-  font-size: 0.8em;
+  font-size: 0.9rem;
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .minimized-view .character-portrait .status-buttons .harm-box.open .full-view .character-harm .grid-lines {
   background-color: #191813;
@@ -1670,8 +1681,11 @@
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item select {
   font-family: Kirsty;
-  font-size: 0.8em;
+  font-size: 1em;
   height: 80%;
+  position: relative;
+  top: -6px;
+  left: 2px;
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-item > div {
   margin: 5px 10px;
@@ -1729,6 +1743,7 @@
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block {
   display: flex;
   align-items: flex-start;
+  position: relative;
   padding: 5px;
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .abilities .ability-list .ability-block:nth-child(even) {
@@ -1765,6 +1780,15 @@
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block {
   padding-left: 5px;
+  position: relative;
+}
+.allow-edit .item-block:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block .item-name {
+  width: 100%;
+  position: relative;
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block .join-line {
   border: 1px solid #666;
@@ -1772,7 +1796,7 @@
   display: inline-block;
   height: 0px;
   margin: 0 -0.5em;
-  top: -0.5em;
+  top: calc(-0.5em - 2px);
   position: relative;
   z-index: 0;
 }
@@ -1783,6 +1807,8 @@
   margin-left: 0;
   position: relative;
   z-index: 10;
+  position: relative;
+  bottom: 2px;
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals {
   grid-area: friends;

@@ -4,4 +4,5 @@
         <span class="ability-name {{#if actor.flags.blades-in-the-dark.allow-edit}}clickable-edit{{/if}}">{{ability.name}}:</span>
         <span class="ability-description">{{ability.data.description}}</span>
     </label>
+    {{#if actor.flags.blades-in-the-dark.allow-edit}}<a class="ability-delete delete-button" data-type="ability" data-id="{{ability._id}}"><i class="fas fa-trash"></i></a>{{/if}}
 </div>
