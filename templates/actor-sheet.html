@@ -103,7 +103,7 @@
                 </div>
               </header>
               <section class="ability-list check-list">
-                {{#each playbook_abilities as |ability index|}}
+                {{#each available_abilities as |ability index|}}
                 {{#with ../actor as |actor|}}
                   {{> "systems/blades-in-the-dark/templates/parts/ability.html" actor=actor ability=ability}}
                 {{/with}}
@@ -153,7 +153,7 @@
               <ul>
                 <li>Every time you roll a desperate action, mark xp in that action's attribute.</li>
                 <p>At the end of each session, for each item below, mark 1 xp (in your playbook or an attribute) or 2 xp if that item occurred multiple times.</p>
-                <li>{{selected_playbook_full.data.data.experience_clues}}</li>
+                <li>{{selected_playbook_full.data.experience_clues}}</li>
                 <li>You expressed your beliefs, drives, heritage, or background.</li>
                 <li>You struggled with issues from your vice or traumas during the session.</li>
               </ul>

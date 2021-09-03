@@ -25,6 +25,30 @@ export class BladesHelpers {
     return dupe_list;
   }
 
+  /**
+   * Identifies duplicate items by type and returns a array of item ids to remove
+   *
+   * @param {Object} item_data
+   * @param {Document} actor
+   * @returns {Array}
+   *
+   */
+  static filterItemsForDuplicatesOnActor(item_list, type, actor) {
+    let unduped_list = [];
+    let distinct_types = ["crew_reputation", "class", "vice", "background", "heritage", "ability"];
+    let allowed_types = ["item"];
+    let existing_items = actor.items.filter(i=> i.type === type);
+    let should_be_distinct = distinct_types.includes(type);
+
+    // If the Item has the exact same name - remove it from list.
+    // Remove Duplicate items from the array.
+    unduped_list = item_list.filter(new_item => {
+      return !existing_items.some(existing => new_item.name === existing.name);
+    })
+
+    return unduped_list;
+  }
+
   static groupItemsByClass(item_list, generic_last = true){
     let grouped_items = {};
     let generics = [];
@@ -113,53 +137,53 @@ export class BladesHelpers {
    * @param {Object} item_data
    * @param {Document} entity
    */
-  static async undoItemLogic(item_data, entity) {
-
-    if ('logic' in item_data.data && item_data.data.logic !== '') {
-      let logic = JSON.parse(item_data.data.logic)
-
-      // Should be an array to support multiple expressions
-      if (!Array.isArray(logic)) {
-        logic = [logic];
-      }
-
-      if (logic) {
-        let logic_update = { "_id": entity.id };
-        var entity_data = entity.data;
-
-        logic.forEach(expression => {
-          // Different logic behav. dep on operator.
-          switch (expression.operator) {
-
-            // Subtract when removing.
-            case "addition":
-              foundry.utils.mergeObject(
-                logic_update,
-                {[expression.attribute]: Number(BladesHelpers.getNestedProperty(entity, expression.attribute)) - expression.value},
-                {insertKeys: true}
-              );
-            break;
-
-            // Change name back to default.
-            case "attribute_change":
-              // Get the array path to take data.
-              let default_expression_attribute_path = expression.attribute + '_default';
-              let default_name = default_expression_attribute_path.split(".").reduce((o, i) => o[i], entity_data);
-
-              foundry.utils.mergeObject(
-                logic_update,
-                {[expression.attribute]: default_name},
-			        	{insertKeys: true}
-              );
-
-            break;
-          }
-        });
-        await Actor.updateDocuments( logic_update );
-      }
-    }
-
-  }
+  // static async undoItemLogic(item_data, entity) {
+  //
+  //   if ('logic' in item_data.data && item_data.data.logic !== '') {
+  //     let logic = JSON.parse(item_data.data.logic)
+  //
+  //     // Should be an array to support multiple expressions
+  //     if (!Array.isArray(logic)) {
+  //       logic = [logic];
+  //     }
+  //
+  //     if (logic) {
+  //       let logic_update = { "_id": entity.id };
+  //       var entity_data = entity.data;
+  //
+  //       logic.forEach(expression => {
+  //         // Different logic behav. dep on operator.
+  //         switch (expression.operator) {
+  //
+  //           // Subtract when removing.
+  //           case "addition":
+  //             foundry.utils.mergeObject(
+  //               logic_update,
+  //               {[expression.attribute]: Number(BladesHelpers.getNestedProperty(entity, expression.attribute)) - expression.value},
+  //               {insertKeys: true}
+  //             );
+  //           break;
+  //
+  //           // Change name back to default.
+  //           case "attribute_change":
+  //             // Get the array path to take data.
+  //             let default_expression_attribute_path = expression.attribute + '_default';
+  //             let default_name = default_expression_attribute_path.split(".").reduce((o, i) => o[i], entity_data);
+  //
+  //             foundry.utils.mergeObject(
+  //               logic_update,
+  //               {[expression.attribute]: default_name},
+	// 		        	{insertKeys: true}
+  //             );
+  //
+  //           break;
+  //         }
+  //       });
+  //       await Actor.updateDocuments( logic_update );
+  //     }
+  //   }
+  //
+  // }
 
   /**
    * Get a nested dynamic attribute.
@@ -267,18 +291,19 @@ export class BladesHelpers {
    * @returns {object}
    */
   static async getStartingAttributes(playbook_name) {
-        let empty_attributes = game.system.model.Actor.character.attributes;
-        let attributes_to_return = empty_attributes;
-        let all_playbooks = await game.packs.get("blades-in-the-dark.class").getDocuments();
-        let selected_playbook_base_skills = all_playbooks.find(pb => pb.name == playbook_name).data.data.base_skills;
-        for(const [key, value] of Object.entries(empty_attributes)){
-          for(const [childKey, childValue] of Object.entries(value.skills)){
-            if(selected_playbook_base_skills[childKey]){
-              attributes_to_return[key].skills[childKey].value = selected_playbook_base_skills[childKey];
-            }
-          }
+    let empty_attributes = game.system.model.Actor.character.attributes;
+    //not sure what was getting linked rather than copied in empty_attributes, but the JSON hack below seems to fix the weirdness I was seeing
+    let attributes_to_return = JSON.parse(JSON.stringify(empty_attributes));
+    let all_playbooks = await game.packs.get("blades-in-the-dark.class").getDocuments();
+    let selected_playbook_base_skills = all_playbooks.find(pb => pb.name == playbook_name).data.data.base_skills;
+    for(const [key, value] of Object.entries(empty_attributes)){
+      for(const [childKey, childValue] of Object.entries(value.skills)){
+        if(selected_playbook_base_skills[childKey]){
+          attributes_to_return[key].skills[childKey].value = selected_playbook_base_skills[childKey].toString();
         }
-        return attributes_to_return;
+      }
+    }
+    return attributes_to_return;
   }
 
 

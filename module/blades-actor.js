@@ -24,6 +24,25 @@ export class BladesActor extends Actor {
     return super.create(data, options);
   }
 
+  async _onCreate(data, options, userId) {
+    await super._onCreate(data, options, userId);
+    console.log(data);
+    let newData = {};
+    // if it's a character and it doesn't have a playbook yet, pick a default class
+    if(data.type === "character" && (data.data.playbook === "" || typeof(data.data.playbook === "undefined"))){
+      let classIndex = await game.packs.get("blades-in-the-dark.class").getIndex();
+      let classContent = await game.packs.get("blades-in-the-dark.class").getDocuments();
+      //add default class and all the stuff that goes with it.
+      let default_class = classContent[0];
+      let attributes = await BladesHelpers.getStartingAttributes(default_class.name);
+      newData.data = {};
+      newData.data.playbook = default_class.id;
+      newData.data.attributes = attributes;
+      newData.data.trauma = {list : []};
+      await this.update(newData);
+    }
+  }
+
   /** @override */
   getRollData() {
     const data = super.getRollData();
@@ -245,12 +264,14 @@ export class BladesActor extends Actor {
    * @param {string} playbook_name
    * @returns {object} // the OwnedItems added
    */
-  async addPlaybookAbilities(playbook_name){
+  async addPlaybookAbilities(playbook_name, mark_existing_as_owned){
     console.log("%cAdding new playbook abilities", "color: green");
     let all_abilities = await game.packs.get("blades-in-the-dark.ability").getDocuments();
     let new_playbook_abilities = all_abilities.filter(ability => ability.data.data.class == playbook_name);
-    let added = await this.createEmbeddedDocuments("Item", new_playbook_abilities.map(item => item.data), {noHook: true});
-    // console.log("Added playbook abilities: ", added);
+
+    let abilities_to_add = BladesHelpers.filterItemsForDuplicatesOnActor(new_playbook_abilities, "ability", this);
+    let added = await this.createEmbeddedDocuments("Item", abilities_to_add.map(item => item.data), {noHook: true});
+    console.log("Added playbook abilities: ", added);
     return added;
   }
 
@@ -289,9 +310,36 @@ export class BladesActor extends Actor {
     console.log("%cAdding new playbook items", "color: green");
     let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
     let new_playbook_items = all_items.filter(item => item.data.data.class == playbook_name);
-    let added = await this.createEmbeddedDocuments("Item", new_playbook_items.map(item => item.data), {noHook: true});
+    let items_to_add = BladesHelpers.filterItemsForDuplicatesOnActor(new_playbook_items, "item", this);
+    let added = await this.createEmbeddedDocuments("Item", items_to_add.map(item => item.data), {noHook: true});
     // console.log("Added playbook items: ", added);
     return added;
+  }
+
+  /**
+   * Deletes generic "item" OwnedItems from an actor
+   *
+   * @param {boolean} keep_custom_items
+   * @returns {object} // the OwnedItems deleted
+   */
+  async clearGenericItems(keep_custom_items = false){
+    console.log("%cDeleting generic items", "color: orange");
+    let current_generic_items = this.items.filter(item => item.type == "item" && item.data.data.class == "");
+    let items_to_delete = [];
+    //todo keep_custom_items doesn't do anything, it seems
+    for(const item of current_generic_items){
+      let keep = false;
+      if(keep_custom_items){
+        keep = false;
+      }
+      if(!keep){
+        items_to_delete.push(item.id);
+      }
+    }
+
+    let deleted = await this.deleteEmbeddedDocuments("Item", items_to_delete);
+    console.log("Deleted generic items: ", deleted);
+    return deleted;
   }
 
   /**
@@ -303,7 +351,8 @@ export class BladesActor extends Actor {
     console.log("%cAdding generic items", "color: green");
     let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
     let new_items = all_items.filter(item => item.data.data.class == "");
-    let added = await this.createEmbeddedDocuments("Item", new_items.map(item => item.data), {noHook: true});
+    let items_to_add = BladesHelpers.filterItemsForDuplicatesOnActor(new_items, "item", this);
+    let added = await this.createEmbeddedDocuments("Item", items_to_add.map(item => item.data), {noHook: true});
     // console.log("Added playbook items: ", added);
     return added;
   }
@@ -336,12 +385,14 @@ export class BladesActor extends Actor {
     let current_acquaintances = this.data.data.acquaintances;
     let new_class_acquaintances = all_npcs.filter(obj => {
       let class_match = obj.data.data.associated_class == playbook_name
-      let unique_id =  !current_acquaintances.some(acq => acq.id == obj.id);
+      let unique_id =  !current_acquaintances.some(acq => {
+        return acq._id == obj.id || acq.id == obj.id;
+      });
       return class_match && unique_id;
     });
     new_class_acquaintances = new_class_acquaintances.map(acq => {
       return {
-        _id : acq.id,
+        id : acq.id,
         name : acq.name,
         description_short : acq.data.data.description_short,
         standing: "neutral"
@@ -354,13 +405,13 @@ export class BladesActor extends Actor {
   async addAcquaintance(acq){
     let current_acquaintances = this.data.data.acquaintances;
     let acquaintance = {
-      _id : acq.id,
+      _id : acq._id,
       name : acq.name,
-      description_short : acq.data.data.description_short,
+      description_short : acq.data.description_short,
       standing: "neutral"
     };
     let unique_id =  !current_acquaintances.some((oldAcq) => {
-      return oldAcq._id == acq.id
+      return oldAcq._id == acq.id;
     });
     if(unique_id){
       await this.update({data: {acquaintances : current_acquaintances.concat(acquaintance)}});

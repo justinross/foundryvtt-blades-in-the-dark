@@ -20,6 +20,45 @@ export class BladesActorSheet extends BladesSheet {
     });
   }
 
+
+  async _onDropItem(event, droppedItem) {
+	  this.handleDrop(event, droppedItem);
+    return super._onDropItem(event, droppedItem);
+  }
+
+  async _onDropActor(event, droppedActor){
+    await this.handleDrop(event, droppedActor);
+    return super._onDropActor(event, droppedActor);
+  }
+
+  async handleDrop(event, droppedEntity){
+    let droppedEntityFull;
+    if("pack" in droppedEntity){
+      droppedEntityFull = await BladesHelpers.getItemByType(droppedEntity.pack.replace("blades-in-the-dark.", ""), droppedEntity.id, game);
+    }
+    else{
+      droppedEntityFull = game.items.find(i => i.id == droppedEntity.id);
+    }
+    switch (droppedEntityFull.type) {
+      case "npc":
+        await this.actor.addAcquaintance(droppedEntityFull);
+        break;
+      case "class":
+        await this.onDroppedClass(droppedEntity.id);
+        break;
+    }
+  }
+
+  async onDroppedClass(class_id){
+    let other_classes = this.actor.items.filter(item => item.type == "class");
+    other_classes = other_classes.map(item => {
+      return item.id;
+    });
+    await this.actor.deleteEmbeddedDocuments("Item", other_classes);
+    let updateData = {data : { playbook : class_id}};
+    await this.actor.update(updateData);
+  }
+
   itemContextMenu = [
     {
       name: game.i18n.localize("BITD.TitleDeleteItem"),
@@ -182,7 +221,7 @@ export class BladesActorSheet extends BladesSheet {
 
   /** @override */
   async getData() {
-    var data = super.getData();
+    let data = super.getData();
     data.editable = this.options.editable;
     data.isGM = game.user.isGM;
     const actorData = data.data;
@@ -216,7 +255,7 @@ export class BladesActorSheet extends BladesSheet {
     //look for Mule ability
     // @todo - fix translation.
     data.items.forEach(i => {
-      if (i.type == "ability" && i.name == "(C) Mule" && i.data.purchased) {
+      if (i.type === "ability" && i.name === "(C) Mule" && i.data.purchased) {
         mule_present = 1;
       }
     });
@@ -251,24 +290,38 @@ export class BladesActorSheet extends BladesSheet {
     data.load_levels = {"BITD.Light":"BITD.Light", "BITD.Normal":"BITD.Normal", "BITD.Heavy":"BITD.Heavy"};
 
     //load up playbook options/data for playbook select
-    data.playbook_options = await game.packs.get("blades-in-the-dark.class").getIndex();
+    // data.playbook_options = await game.packs.get("blades-in-the-dark.class").getIndex();
+    data.playbook_options = await BladesHelpers.getAllItemsByType("class", game);
     data.playbook_select = this.prepIndexForHelper(data.playbook_options);
 
-    if(data.data.playbook != ""){
-      data.selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getDocument(data.data.playbook);
-      data.selected_playbook_name = data.selected_playbook_full.name;
-      data.selected_playbook_description = data.selected_playbook_full.data.data.description;
+    if(data.data.playbook !== ""){
+      data.selected_playbook_full = await BladesHelpers.getItemByType("class", data.data.playbook, game);
+      if(typeof data.selected_playbook_full != "undefined"){
+        data.selected_playbook_name = data.selected_playbook_full.name;
+        data.selected_playbook_description = data.selected_playbook_full.data.description;
+      }
+    }
+    let available_abilities = data.items.filter(item => item.type == "ability" );
 
-      let playbook_abilities = data.items.filter(item => item.type == "ability" );
+    //hide the playbook abbreviations for display
+    data.available_abilities = available_abilities.map(item => {
+      item.name = item.name.replace(/\([^)]*\)\s/, "");
+      return item;
+    });
 
-      //hide the playbook abbreviations for display
-      data.playbook_abilities = playbook_abilities.map(item => {
-        item.name = item.name.replace(/\([^)]*\)\s/, "");
-        return item;
-      });
+    data.available_abilities = data.available_abilities.sort((a, b) => {
+      if(a.name == "Veteran"){
+        return 1;
+      }
+      if(b.name == "Veteran"){
+        return -1;
+      }
+      if(a.name == b.name){ return 0; }
+      return a.name > b.name ? 1 : -1;
+    });
 
-      let my_abilities = data.items.filter(ability => ability.type == "ability" && ability.data.purchased);
-      data.my_abilities = my_abilities;
+    let my_abilities = data.items.filter(ability => ability.type == "ability" && ability.data.purchased);
+    data.my_abilities = my_abilities;
 
       // let playbook_items = data.items.filter(item => item.type == "item" && item.data.class == data.selected_playbook_name);
       let my_items = data.items.filter(item => item.type == "item" && item.data.class != "");
@@ -504,6 +557,7 @@ export class BladesActorSheet extends BladesSheet {
       }
     });
 
+    // todo - bug on this. mutationobserver not going away when window closes?
     let sheetObserver = new MutationObserver(mutationRecords => {
       let element = $(mutationRecords[0].target);
       let scrollbox = $(mutationRecords[0].target).find(".window-content").get(0);

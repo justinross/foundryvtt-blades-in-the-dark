@@ -32,7 +32,7 @@ export class BladesItem extends Item {
       let actor = this.parent ? this.parent : null;
 
       if( ( actor?.documentName === "Actor" ) && ( actor?.permission >= CONST.ENTITY_PERMISSIONS.OWNER ) ) {
-        await BladesHelpers.callItemLogic( data, actor );
+        // await BladesHelpers.callItemLogic( data, actor );
       }
     }
   }
@@ -45,9 +45,9 @@ export class BladesItem extends Item {
 
     let actor = this.parent ? this.parent : null;
     let data = this.data;
-    if ( ( actor?.documentName === "Actor" ) && ( actor?.permission >= CONST.ENTITY_PERMISSIONS.OWNER ) ) {
-      await BladesHelpers.undoItemLogic( data, actor );
-    }
+    // if ( ( actor?.documentName === "Actor" ) && ( actor?.permission >= CONST.ENTITY_PERMISSIONS.OWNER ) ) {
+    //   await BladesHelpers.undoItemLogic( data, actor );
+    // }
   }
 
   /* -------------------------------------------- */
