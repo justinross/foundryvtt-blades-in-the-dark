@@ -45,7 +45,7 @@
   ],
   "url": "https://github.com/justinross/foundryvtt-blades-in-the-dark/",
   "manifest": "https://raw.githubusercontent.com/justinross/foundryvtt-blades-in-the-dark/tidy-sheet-redesign/system.json",
-  "download": "https://github.com/justinross/foundryvtt-blades-in-the-dark/archive/refs/tags/3.4.1-beta.4.zip",
+  "download": "https://github.com/justinross/foundryvtt-blades-in-the-dark/archive/refs/tags/3.5.0-b1.zip",
   "packs": [
     {
       "name": "class",
