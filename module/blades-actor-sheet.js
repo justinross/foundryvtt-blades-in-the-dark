@@ -574,19 +574,18 @@ export class BladesActorSheet extends BladesSheet {
       }
     });
 
-    // todo - bug on this. mutationobserver not going away when window closes?
-    let sheetObserver = new MutationObserver(mutationRecords => {
-      let element = $(mutationRecords[0].target);
-      let scrollbox = $(mutationRecords[0].target).find(".window-content").get(0);
-      let scrollbarVisible = scrollbox.scrollHeight > scrollbox.clientHeight;
-      if(scrollbarVisible){
-        element.addClass("can-expand");
-      }
-      else{
-        element.removeClass("can-expand");
-      }
-    });
-    sheetObserver.observe(this._element.get(0), {childList:false, attributes:true, attributeFilter: ["style"], subtree: false});
+    // let sheetObserver = new MutationObserver(mutationRecords => {
+    //   let element = $(mutationRecords[0].target);
+    //   let scrollbox = $(mutationRecords[0].target).find(".window-content").get(0);
+    //   let scrollbarVisible = scrollbox.scrollHeight > scrollbox.clientHeight;
+    //   if(scrollbarVisible){
+    //     element.addClass("can-expand");
+    //   }
+    //   else{
+    //     element.removeClass("can-expand");
+    //   }
+    // });
+    // sheetObserver.observe(this._element.get(0), {childList:false, attributes:true, attributeFilter: ["style"], subtree: false});
 
   }
 
