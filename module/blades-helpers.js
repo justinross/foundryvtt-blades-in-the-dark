@@ -294,23 +294,43 @@ export class BladesHelpers {
     let empty_attributes = game.system.model.Actor.character.attributes;
     //not sure what was getting linked rather than copied in empty_attributes, but the JSON hack below seems to fix the weirdness I was seeing
     let attributes_to_return = JSON.parse(JSON.stringify(empty_attributes));
-    let all_playbooks = await game.packs.get("blades-in-the-dark.class").getDocuments();
-    let selected_playbook_base_skills = all_playbooks.find(pb => pb.name == playbook_name).data.data.base_skills;
-    for(const [key, value] of Object.entries(empty_attributes)){
-      for(const [childKey, childValue] of Object.entries(value.skills)){
-        if(selected_playbook_base_skills[childKey]){
-          attributes_to_return[key].skills[childKey].value = selected_playbook_base_skills[childKey].toString();
+    try{
+      let all_playbooks = await game.packs.get("blades-in-the-dark.class").getDocuments();
+      let selected_playbook_base_skills = all_playbooks.find(pb => pb.name == playbook_name).data.data.base_skills;
+      for(const [key, value] of Object.entries(empty_attributes)){
+        for(const [childKey, childValue] of Object.entries(value.skills)){
+          if(selected_playbook_base_skills[childKey]){
+            attributes_to_return[key].skills[childKey].value = selected_playbook_base_skills[childKey].toString();
+          }
         }
       }
+    }
+    catch (e) {
+      console.log("Error: ", e);
     }
     return attributes_to_return;
   }
 
+  static async getPlaybookName(id){
+    let playbook = await this.getItemByType("class", id, game);
+    return playbook.name;
+  }
 
-
-
-
-
-
+  static async checkIfCustom(playbook_name, entity){
+    let custom = false;
+    console.log(entity);
+    switch(entity.type){
+      case "ability":
+        custom = playbook_name == entity.data.data.class;
+        break;
+      case "item":
+        custom = playbook_name == entity.data.data.class;
+        break;
+      case "npc":
+        custom = playbook_name == entity.data.data.associated_class;
+        break;
+    }
+    return custom;
+  }
 
 }

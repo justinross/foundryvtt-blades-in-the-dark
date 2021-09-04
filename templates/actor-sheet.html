@@ -1,6 +1,6 @@
 <form class="{{cssClass}} actor-sheet" autocomplete="off">
   <div id="tidy-redesign" class="{{#if actor.flags.blades-in-the-dark.allow-edit}}allow-edit{{/if}}">
-    <div class="sheet-toggles"><span class="toggle-expand"><i class="fas fa-expand"></i><i class="fas fa-compress"></i></span><span class="toggle-allow-edit"><i class="fas fa-lock"></i><i class="fas fa-lock-open"></i></span></div>
+    <div class="sheet-toggles"><span class="toggle-expand"><i class="fas fa-expand"></i><i class="fas fa-compress"></i></span><span class="toggle-allow-edit"><i class="fas fa-lock"></i><i class="fas fa-lock-open"></i></span><span class="migrate-test">mig</span></div>
     <section class="minimized-view">
       <section class="character-portrait">
         <div class="portrait">
@@ -69,7 +69,7 @@
       <nav class="tabs" data-group="primary-tabs">
         <div class="tab-item playbook" data-tab="playbook">
           {{#if actor.flags.blades-in-the-dark.allow-edit}}
-            <select name="data.playbook" class="dropdown">
+            <select class="dropdown playbook-select">
               {{selectOptions playbook_select selected=data.playbook localize=false}}
             </select>
           {{else}}
@@ -126,13 +126,13 @@
             <section class="friends-rivals">
               <header class="full-bar">Strange Friends</header>
               {{#each data.acquaintances}}
-                <div class="acquaintance" data-acquaintance="{{this._id}}">
+                <div class="acquaintance" data-acquaintance="{{this.id}}">
                   <i data-acquaintance="{{this._id}}" class="standing-toggle fas
-                    {{#if (eq this.standing "friend")}}fa-smile green-icon
+                    {{#if (eq this.standing "friend")}} fa-smile green-icon
                     {{else if (eq this.standing "rival")}}fa-angry red-icon
                     {{else}}fa-meh
-                    {{/if}}">
-                  </i> <strong class="standing-toggle">{{this.name}}</strong>, {{this.description_short}}</div>
+                    {{/if}}"></i><strong class="standing-toggle">{{this.name}}</strong>, {{this.description_short}}
+                </div>
               {{/each}}
             </section>
             <section class="all-items item-list">
@@ -304,6 +304,7 @@
 <!--          </div>-->
 <!--        </div>-->
 <!--      </section>-->
+    </section>
     </section>
   </div>
 </form>

@@ -52,6 +52,27 @@ export class BladesActor extends Actor {
     return data;
   }
 
+  /** @override */
+  // async _preUpdate(changed, options, user){
+  //   super._preUpdate(changed, options, user);
+    // if(this.type == "character" && changed.data?.playbook){
+    //   //if the actor's playbook has changed, clean up and add playbook-specific abilities, items, attributes, and contacts
+    //   const playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
+    //   const new_playbook_name = playbooks_index.find(item => item._id == changed.data.playbook).name;
+    //   const old_playbook_name = playbooks_index.find(item => item._id == this.data.data.playbook).name;
+    //   console.log(`Switching playbook to ${new_playbook_name}`);
+    //   // changed.data.attributes
+    //   //remove all skills, with an exception for new weird playbook selection
+    //   await this.clearAbilities(new_playbook_name == "Ghost" || new_playbook_name == "Hull" || new_playbook_name == "Vampire");
+    //   // await actor.addPlaybookAbilities(new_playbook_name);
+    //   // await actor.clearPlaybookItems(true);
+    //   // await actor.addPlaybookItems(new_playbook_name);
+    //   // await actor.clearAcquaintances(true);
+    //   // await actor.addPlaybookAcquaintances(new_playbook_name);
+    // }
+    // return changed;
+  // }
+
   /* -------------------------------------------- */
   /**
    * Calculate Attribute Dice to throw.
@@ -170,6 +191,7 @@ export class BladesActor extends Actor {
   
     let text, attribute, skill;
     let attributes = this.data.data.attributes;
+    text = "";
   
     for ( attribute in attributes ) {
   
@@ -205,9 +227,9 @@ export class BladesActor extends Actor {
   createListOfDiceMods(rs, re, s) {
   
     var text = ``;
-    var i = 0;
+    var i;
   
-    if ( s == "" ) {
+    if ( s === "" ) {
       s = 0;
     }
   
@@ -232,29 +254,42 @@ export class BladesActor extends Actor {
    * @param {bool} keep_owned_ghost_abilities
    * @returns {object} // the OwnedItems deleted
    */
-  async clearAbilities(keep_owned_ghost_abilities){
+  async deleteAbilities(what_to_keep, playbook_name){
     let current_abilities = this.items.filter(item => item.type == "ability");
     console.log("%cDeleting unnecessary abilities", "color: orange");
     let abilities_to_delete = [];
+    // let playbook_name = await BladesHelpers.getPlaybookName(this.data.data.playbook);
     for(const ability of current_abilities){
       let keep = false;
-      if(keep_owned_ghost_abilities){
-        //delete all abilities except ones with "Ghost" in the name that are owned.
-        keep = /* ability.name.includes("Ghost") && */ ability.data.data.purchased;
+      switch(what_to_keep){
+        case "all":
+          keep = true;
+          break;
+        case "owned":
+          keep = ability.data.data.purchased;
+          break;
+        case "custom":
+          keep = await BladesHelpers.checkIfCustom(playbook_name, ability);
+          console.log(keep, ability.name);
+          break;
+        case "ghost":
+          keep = ability.name.includes("Ghost") && ability.data.data.purchased
+          break;
+        case "none":
+          keep = false;
+          break;
       }
       if(!keep){
         abilities_to_delete.push(ability.id);
       }
-    };
+    }
     let deleted;
     try{
-      // let testing = this.items.filter(item => item.type == "ability");
       deleted = await this.deleteEmbeddedDocuments("Item", abilities_to_delete);
     }
     catch(error){
       console.log("Error deleting abilities: ", error);
     }
-    // console.log("Deleted playbook abilities: ", deleted);
     return deleted;
   }
 
@@ -267,11 +302,11 @@ export class BladesActor extends Actor {
   async addPlaybookAbilities(playbook_name, mark_existing_as_owned){
     console.log("%cAdding new playbook abilities", "color: green");
     let all_abilities = await game.packs.get("blades-in-the-dark.ability").getDocuments();
+    // let existing_abilities = this.items.filter(item => item.type == "ability");
     let new_playbook_abilities = all_abilities.filter(ability => ability.data.data.class == playbook_name);
 
     let abilities_to_add = BladesHelpers.filterItemsForDuplicatesOnActor(new_playbook_abilities, "ability", this);
     let added = await this.createEmbeddedDocuments("Item", abilities_to_add.map(item => item.data), {noHook: true});
-    console.log("Added playbook abilities: ", added);
     return added;
   }
 
@@ -281,14 +316,22 @@ export class BladesActor extends Actor {
    * @param {string} keep_custom_items
    * @returns {object} // the OwnedItems deleted
    */
-  async clearPlaybookItems(keep_custom_items = false){
+  async deletePlaybookItems(what_to_keep, playbook_name){
     console.log("%cDeleting unnecessary playbook items", "color: orange");
     let current_playbook_items = this.items.filter(item => item.type == "item" && item.data.data.class != "");
     let items_to_delete = [];
     for(const item of current_playbook_items){
       let keep = false;
-      if(keep_custom_items){
-        keep = false;
+      switch(what_to_keep){
+        case "all":
+          keep = true;
+          break;
+        case "custom":
+          keep = BladesHelpers.checkIfCustom(playbook_name, item);
+          break;
+        case "none":
+          keep = false;
+          break;
       }
       if(!keep){
         items_to_delete.push(item.id);
@@ -296,7 +339,6 @@ export class BladesActor extends Actor {
     }
 
     let deleted = await this.deleteEmbeddedDocuments("Item", items_to_delete);
-    console.log("Deleted playbook items: ", deleted);
     return deleted;
   }
 
@@ -314,6 +356,79 @@ export class BladesActor extends Actor {
     let added = await this.createEmbeddedDocuments("Item", items_to_add.map(item => item.data), {noHook: true});
     // console.log("Added playbook items: ", added);
     return added;
+  }
+
+  /**
+   * Checks for modifications that would be overwritten by a playbook change
+   *
+   * @returns {object} object of items that have been modified
+   */
+  async checkForPlaybookModifications() {
+    let skillsChanged = false;
+    let newAbilities = false;
+    let ownedAbilities = false;
+    let relationships = false;
+    let acquaintanceList = false;
+    let addedItems = false;
+
+    //get the original playbook
+
+    let selected_playbook_source;
+    if(this.data.data.playbook !== "" && this.data.data.playbook){
+      selected_playbook_source = await game.packs.get("blades-in-the-dark.class").getDocument(this.data.data.playbook);
+    }
+    let startingAttributes = await BladesHelpers.getStartingAttributes(selected_playbook_source.name);
+    let currentAttributes = this.data.data.attributes;
+    for (const attribute in currentAttributes) {
+      currentAttributes[attribute].exp = 0;
+    }
+    if(!isObjectEmpty(diffObject(currentAttributes, startingAttributes))){
+      skillsChanged = true;
+    }
+
+    //check for added abilities
+    let all_abilities = await game.packs.get("blades-in-the-dark.ability").getDocuments();
+    let pb_abilities = all_abilities.filter(ab=> ab.data.data.class === selected_playbook_source.name);
+    let my_abilities = this.items.filter(i => i.type === "ability");
+    for (const ability of my_abilities) {
+      if(!pb_abilities.some(ab=> ab.name === ability.name)){
+        newAbilities = true;
+      }
+      //check for purchased abilities
+      if(ability.data.data.purchased){
+        ownedAbilities = true;
+      }
+    }
+    //check for non-default acquaintances
+    let all_acquaintances = await game.packs.get("blades-in-the-dark.npc").getDocuments();
+    let pb_acquaintances = all_acquaintances.filter(acq=>acq.data.data.associated_class === selected_playbook_source.name);
+    let my_acquaintances = this.data.data.acquaintances;
+    for (const my_acq of my_acquaintances) {
+      if(!pb_acquaintances.some(acq=> acq.id === my_acq.id || acq.id === my_acq._id)){
+        acquaintanceList = true;
+      }
+      //check for acquaintance relationships
+      if(my_acq.standing !== "neutral"){
+        relationships = true;
+      }
+    }
+    //check for added items
+    let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
+    let pb_items = all_items.filter(i=> i.data.data.class === selected_playbook_source.name);
+    let my_non_generic_items = this.items.filter(i=> i.type === "item" && i.data.data.class !== "");
+    for (const myNGItem of my_non_generic_items) {
+      if(!pb_items.some(i=> i.name ===  myNGItem.name)){
+        addedItems = true;
+      }
+    }
+    console.log();
+
+    if(skillsChanged || newAbilities || ownedAbilities || relationships || acquaintanceList || addedItems){
+      return {skillsChanged, newAbilities, ownedAbilities, relationships, acquaintanceList, addedItems};
+    }
+    else{
+      return false;
+    }
   }
 
   /**
@@ -363,12 +478,41 @@ export class BladesActor extends Actor {
    * @param {string} keep_friends_and_rivals
    * @returns {object} // the deleted
    */
-  async clearAcquaintances(keep_friends_and_rivals = false){
+  async deleteAcquaintances(what_to_keep, playbook_name){
     console.log("%cDeleting unnecessary playbook acquaintances", "color: orange");
     let current_acquaintances = this.data.data.acquaintances;
-    let new_acquaintances_array = current_acquaintances.filter(acq => keep_friends_and_rivals && acq.standing != "neutral");
-    let update = await this.update({data : {acquaintances : new_acquaintances_array}});
-    // console.log("Deleted: ", update);
+    // let playbook_name = await BladesHelpers.getPlaybookName(this.data.data.playbook);
+    let acquaintances_to_delete = [];
+    for(const acq of current_acquaintances) {
+      let keep = false;
+      switch (what_to_keep) {
+        case "all":
+          keep = true;
+          break;
+        case "friendsrivals":
+          keep = acq.standing != "neutral";
+          break;
+        case "custom":
+          keep = BladesHelpers.checkIfCustom(playbook_name, acq);
+          break;
+        case "both":
+          keep = BladesHelpers.checkIfCustom(playbook_name, acq) || acq.standing != "neutral";
+          break;
+        case "none":
+          keep = false;
+          break;
+      }
+      if(!keep){
+        acquaintances_to_delete.push(acq);
+      }
+    }
+    let acquaintances_to_keep = current_acquaintances.filter(currAcq => {
+      return !acquaintances_to_delete.some(delAcq => {
+        let match = delAcq.id === currAcq.id
+        return match;
+      });
+    });
+    let update = await this.update({data : {acquaintances : acquaintances_to_keep}});
     return update;
   }
 
@@ -402,16 +546,17 @@ export class BladesActor extends Actor {
     await this.update({data: {acquaintances : current_acquaintances.concat(new_class_acquaintances)}});
   }
 
+  // adds an NPC to the character as an acquaintance of neutral standing
   async addAcquaintance(acq){
     let current_acquaintances = this.data.data.acquaintances;
     let acquaintance = {
-      _id : acq._id,
+      id : acq.id,
       name : acq.name,
       description_short : acq.data.description_short,
       standing: "neutral"
     };
     let unique_id =  !current_acquaintances.some((oldAcq) => {
-      return oldAcq._id == acq.id;
+      return oldAcq.id == acq.id;
     });
     if(unique_id){
       await this.update({data: {acquaintances : current_acquaintances.concat(acquaintance)}});
@@ -423,9 +568,31 @@ export class BladesActor extends Actor {
 
   async removeAcquaintance(acqId){
     let current_acquaintances = this.data.data.acquaintances;
-    let new_acquaintances = current_acquaintances.filter(acq => acq._id != acqId);
+    let new_acquaintances = current_acquaintances.filter(acq => acq._id !== acqId && acq.id !== acqId);
     await this.update({data: {acquaintances : new_acquaintances}});
   }
+
+  // todo
+  async setToPlaybookBaseSkills(new_playbook_name){
+    const new_playbook_attributes = await BladesHelpers.getStartingAttributes(new_playbook_name);
+    await this.update({data: {attributes : new_playbook_attributes}});
+  }
+
+  async resetMigTest(){
+    this.data.data.playbook = "";
+    // this.clearAbilities();
+    // this.clearPlaybookItems();
+    // this.clearAcquaintances();
+    // this.clearGenericItems();
+  }
+
+  // todo
+  // async addItemFromSource(item_id, source){
+  //   if(source != "undefined"){
+  //     let item = game.packs.get(source).getDocument(item_id);
+  //   }
+  //   console.log(item);
+  // }
 
   /* -------------------------------------------- */
 

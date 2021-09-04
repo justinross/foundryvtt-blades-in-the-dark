@@ -51,7 +51,7 @@ Hooks.once("init", async function() {
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("blades", BladesItemSheet, {makeDefault: true});
   await preloadHandlebarsTemplates();
-  
+
   Actors.registeredSheets.forEach(element => console.log(element.Actor.name));
 
 
@@ -374,9 +374,6 @@ Hooks.once("ready", function() {
 //   return true;
 // });
 
-  await BladesHelpers.callItemLogic(child_data, parent_entity);
-  return true;
-});
 
 // Hooks.on("deleteOwnedItem", async (parent_entity, child_data, options, userId) => {
 //

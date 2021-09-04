@@ -136,6 +136,17 @@ async function _migrateActor(actor) {
     let old_playbook = actor.data.items.find(item => {
       return item.type == "class";
     });
+    //fix the fact that you're not using _id in the acquaintances array anymore
+    if(actor.data.data.acquaintances.length > 0){
+      let fixed = actor.data.data.acquaintances.map(acq => {
+        if("_id" in acq){
+          acq.id = acq._id;
+        }
+        return acq;
+      });
+      let diff = diffObject(actor.data.data.acquaintances, fixed);
+      console.log(diff);
+    }
     if(typeof old_playbook != "undefined"){
       let playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
       updateData[`data.playbook`] = playbooks_index.find(pb => pb.name === old_playbook.name)._id;
@@ -151,7 +162,7 @@ async function _migrateActor(actor) {
       // Migrate character generic items
       await actor.addGenericItems();
 
-      // Migrate character NPCs
+      // Add default character NPCs
       await actor.addPlaybookAcquaintances(old_playbook.name);
       if (typeof actor.data.data.heritage === "undefined" || actor.data.data.heritage == "" || actor.data.data.heritage == "Heritage") {
         let old_heritage = actor.data.items.find(item => {

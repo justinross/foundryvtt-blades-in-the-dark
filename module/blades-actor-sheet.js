@@ -2,6 +2,7 @@
 import { BladesSheet } from "./blades-sheet.js";
 import {onManageActiveEffect, prepareActiveEffectCategories} from "./effects.js";
 import { BladesHelpers } from "./blades-helpers.js";
+import { migrateWorld } from "./migration.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -118,7 +119,6 @@ export class BladesActorSheet extends BladesSheet {
                   let item = await BladesHelpers.getItemByType("item", itemelement.dataset.itemId, game);
                   items.push(item);
                 }
-                console.log(items);
                 this.actor.createEmbeddedDocuments("Item", items);
               }
             },
@@ -210,7 +210,7 @@ export class BladesActorSheet extends BladesSheet {
       let playbook_name = "custom";
       let item_data_model = game.system.model.Item.item;
       let new_item_data = { name : "New Item", type : "item", data : {...item_data_model} };
-      new_item_data.data.class = playbook_name;
+      new_item_data.data.class = "custom";
       new_item_data.data.load = 1;
 
       let new_item = await this.actor.createEmbeddedDocuments("Item", [new_item_data], {renderSheet : true});
@@ -323,16 +323,15 @@ export class BladesActorSheet extends BladesSheet {
     let my_abilities = data.items.filter(ability => ability.type == "ability" && ability.data.purchased);
     data.my_abilities = my_abilities;
 
-      // let playbook_items = data.items.filter(item => item.type == "item" && item.data.class == data.selected_playbook_name);
-      let my_items = data.items.filter(item => item.type == "item" && item.data.class != "");
+    // let playbook_items = data.items.filter(item => item.type == "item" && item.data.class == data.selected_playbook_name);
+    let my_items = data.items.filter(item => item.type == "item" && item.data.class != "");
 
-      //hide the playbook abbreviations for display
-      data.my_items = my_items.map(item => {
-        item.name = item.name.replace(/\([^)]*\)\s/, "")
-        return item;
-      });
-      data.generic_items = data.items.filter(item => item.type == "item" && item.data.class == "");
-    }
+    //hide the playbook abbreviations for display
+    data.my_items = my_items.map(item => {
+      item.name = item.name.replace(/\([^)]*\)\s/, "")
+      return item;
+    });
+    data.generic_items = data.items.filter(item => item.type == "item" && item.data.class == "");
 
     // data.ownedTraumas = [];
     // if(data.data.trauma.list.length > 0){
@@ -373,6 +372,25 @@ export class BladesActorSheet extends BladesSheet {
     });
   }
 
+  async handleNewPlaybook(selectedOptions, old_playbook_id, new_playbook_id) {
+    let old_playbook_name = await BladesHelpers.getPlaybookName(old_playbook_id);
+    let new_playbook_name = await BladesHelpers.getPlaybookName(new_playbook_id);
+    await this.actor.deleteAbilities(selectedOptions.abilities, old_playbook_name);
+    await this.actor.deleteAcquaintances(selectedOptions.acquaintances, old_playbook_name);
+    await this.actor.deletePlaybookItems(selectedOptions.playbookitems, old_playbook_name);
+    switch(selectedOptions.skillpoints){
+      case "keep":
+        break;
+      case "reset":
+        await this.actor.setToPlaybookBaseSkills(new_playbook_name);
+        break;
+    }
+    await this.actor.addPlaybookAbilities(new_playbook_name);
+    await this.actor.addPlaybookAcquaintances(new_playbook_name);
+    await this.actor.addPlaybookItems(new_playbook_name);
+    await this.actor.update({data : {playbook : new_playbook_id}});
+  }
+
   /* -------------------------------------------- */
 
   /** @override */
@@ -391,6 +409,94 @@ export class BladesActorSheet extends BladesSheet {
     new ContextMenu(html, ".context-abilities", this.abilityListContextMenu);
     new ContextMenu(html, ".trauma-item", this.traumaListContextMenu);
     new ContextMenu(html, ".acquaintance", this.acquaintanceContextMenu);
+
+    // // todo - remove
+    html.find('.migrate-test').click(async ev => {
+      console.log("Testing world migration");
+      this.actor.resetMigTest();
+      await migrateWorld();
+    });
+
+    // TODO - fix weird select flickering
+    html.find('.playbook-select').change(async ev =>{
+      let modifications = await this.actor.checkForPlaybookModifications(this.actor.data.data.playbook);
+      if(modifications){
+        let abilitiesToKeepOptions = {name : "abilities", value:"none", options : {all: "Keep all Abilities", custom: "Keep added abilities", owned: "Keep owned abilities", ghost: `Keep "Ghost" abilities`, none: "Replace all"}};
+        let acquaintancesToKeepOptions = {name : "acquaintances", value:"none", options : {all: "All contacts", friendsrivals: "Keep only friends and rivals", custom: "Keep any added contacts", both: "Keep added contacts and friends/rivals", none: "Replace all"}};
+        let keepSkillPointsOptions = {name : "skillpoints", value:"reset", options : {keep: "Keep current skill points", reset: "Reset to new playbook starting skill points"}};
+        let playbookItemsToKeepOptions = {name : "playbookitems", value: "none", options: {all: "Keep all playbook items", custom: "Keep added items", none: "Replace all"}};
+        let selectTemplate = Handlebars.compile(`<select name="{{name}}">{{selectOptions options selected=value}}</select>`)
+        let dialogContent = `
+          <p>Changes have been made to this character that would be overwritten by a playbook switch. Please select how you'd like to handle this data and click "Ok", or click "Cancel" to cancel this change.</p>
+          <p>Note that this process only uses the Item, Ability, Playbook, and NPC compendia to decide what is "default". If you have created entities outside the relevant compendia and added them to your character, those items will be considered "custom" and removed unless you choose to save.</p>
+          <h2>Changes to keep</h2>
+<!--          <div ${modifications.newAbilities || modifications.ownedAbilities ? "" : "hidden"}>-->
+          <div>
+            <label>Abilities to keep</label>
+            ${selectTemplate(abilitiesToKeepOptions)}
+          </div>
+<!--          <div ${modifications.addedItems ? "" : "hidden"}>-->
+          <div>
+            <label>Playbook Items</label>
+            ${selectTemplate(playbookItemsToKeepOptions)}
+          </div>
+<!--          <div ${modifications.skillsChanged ? "" : "hidden"}>-->
+          <div>
+            <label>Skill Points</label>
+            ${selectTemplate(keepSkillPointsOptions)}
+          </div>
+<!--          <div ${modifications.acquaintanceList || modifications.relationships ? "" : "hidden"}>-->
+          <div>
+            <label>Acquaintances</label>
+            ${selectTemplate(acquaintancesToKeepOptions)}
+          </div>
+        `;
+
+        //TODO - wire up the playbook switch handling options
+        let pbConfirm = new Dialog({
+          title: `Change playbook to ${await BladesHelpers.getPlaybookName(ev.target.value)}?`,
+          content: dialogContent,
+          buttons:{
+            ok:{
+              icon: '<i class="fas fa-check"></i>',
+              label: 'Ok',
+              callback: (html)=> {
+                let selects = html.find("select");
+                let selectedOptions = {};
+                for (const select of $.makeArray(selects)) {
+                  selectedOptions[select.name] = select.value;
+                };
+                console.log(selectedOptions);
+                this.handleNewPlaybook(selectedOptions, this.actor.data.data.playbook, ev.target.value);
+              }
+            },
+            cancel:{
+              icon: '<i class="fas fa-times"></i>',
+              label: 'Cancel',
+              callback: async ()=> {}
+            }
+          },
+          close: () => {}
+          // close: () => ev.target.value = this.actor.data.data.playbook
+        });
+        pbConfirm.render(true);
+      }
+      else{
+        let selectedOptions = {
+          "abilities": "none",
+          "playbookitems": "none",
+          "skillpoints": "reset",
+          "acquaintances": "none"
+        };
+        this.handleNewPlaybook(selectedOptions, this.actor.data.data.playbook, ev.target.value);
+      }
+    });
+
+    // html.find('.playbook-select').focus(async ev => {
+    //   console.log("focus");
+    //   this.previousPlaybook = await BladesHelpers.getItemByType("class", this.actor.data.data.playbook, game);
+    // });
+
 
     // Update Inventory Item
     html.find('.item-block .clickable-edit').click(ev => {
@@ -447,7 +553,7 @@ export class BladesActorSheet extends BladesSheet {
     html.find('.standing-toggle').click(ev => {
       let acquaintances = this.actor.data.data.acquaintances;
       let acqId = ev.target.closest('.acquaintance').dataset.acquaintance;
-      let clickedAcqIdx = acquaintances.findIndex(item => item._id == acqId);
+      let clickedAcqIdx = acquaintances.findIndex(item => item._id == acqId || item.id == acqId);
       let clickedAcq = acquaintances[clickedAcqIdx];
       let oldStanding = clickedAcq.standing;
       let newStanding;
