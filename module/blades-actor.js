@@ -43,6 +43,14 @@ export class BladesActor extends Actor {
     }
   }
 
+  async _preUpdate(changed, options, user){
+    console.log(changed);
+    if(changed.data?.playbook && this.data.data.playbook && this.data.data.playbook != ""){
+      changed = await this.handlePlaybookChange(changed);
+    }
+    return await super._preUpdate(changed, options, user);
+  }
+
   /** @override */
   getRollData() {
     const data = super.getRollData();
@@ -52,26 +60,78 @@ export class BladesActor extends Actor {
     return data;
   }
 
-  /** @override */
-  // async _preUpdate(changed, options, user){
-  //   super._preUpdate(changed, options, user);
-    // if(this.type == "character" && changed.data?.playbook){
-    //   //if the actor's playbook has changed, clean up and add playbook-specific abilities, items, attributes, and contacts
-    //   const playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
-    //   const new_playbook_name = playbooks_index.find(item => item._id == changed.data.playbook).name;
-    //   const old_playbook_name = playbooks_index.find(item => item._id == this.data.data.playbook).name;
-    //   console.log(`Switching playbook to ${new_playbook_name}`);
-    //   // changed.data.attributes
-    //   //remove all skills, with an exception for new weird playbook selection
-    //   await this.clearAbilities(new_playbook_name == "Ghost" || new_playbook_name == "Hull" || new_playbook_name == "Vampire");
-    //   // await actor.addPlaybookAbilities(new_playbook_name);
-    //   // await actor.clearPlaybookItems(true);
-    //   // await actor.addPlaybookItems(new_playbook_name);
-    //   // await actor.clearAcquaintances(true);
-    //   // await actor.addPlaybookAcquaintances(new_playbook_name);
-    // }
-    // return changed;
-  // }
+  async handlePlaybookChange(changed){
+    let modifications = await this.modifiedFromPlaybookDefault(this.data.data.playbook);
+    if(modifications){
+      let abilitiesToKeepOptions = {name : "abilities", value:"none", options : {all: "Keep all Abilities", custom: "Keep added abilities", owned: "Keep owned abilities", ghost: `Keep "Ghost" abilities`, none: "Replace all"}};
+      let acquaintancesToKeepOptions = {name : "acquaintances", value:"none", options : {all: "All contacts", friendsrivals: "Keep only friends and rivals", custom: "Keep any added contacts", both: "Keep added contacts and friends/rivals", none: "Replace all"}};
+      let keepSkillPointsOptions = {name : "skillpoints", value:"reset", options : {keep: "Keep current skill points", reset: "Reset to new playbook starting skill points"}};
+      let playbookItemsToKeepOptions = {name : "playbookitems", value: "none", options: {all: "Keep all playbook items", custom: "Keep added items", none: "Replace all"}};
+      let selectTemplate = Handlebars.compile(`<select name="{{name}}" class="pb-migrate-options">{{selectOptions options selected=value}}</select>`)
+      let dialogContent = `
+          <p>Changes have been made to this character that would be overwritten by a playbook switch. Please select how you'd like to handle this data and click "Ok", or click "Cancel" to cancel this change.</p>
+          <p>Note that this process only uses the Item, Ability, Playbook, and NPC compendia to decide what is "default". If you have created entities outside the relevant compendia and added them to your character, those items will be considered "custom" and removed unless you choose to save.</p>
+          <h2>Changes to keep</h2>
+          <div ${modifications.newAbilities || modifications.ownedAbilities ? "" : "hidden"}>
+<!--          <div>-->
+            <label>Abilities to keep</label>
+            ${selectTemplate(abilitiesToKeepOptions)}
+          </div>
+          <div ${modifications.addedItems ? "" : "hidden"}>
+<!--          <div>-->
+            <label>Playbook Items</label>
+            ${selectTemplate(playbookItemsToKeepOptions)}
+          </div>
+          <div ${modifications.skillsChanged ? "" : "hidden"}>
+<!--          <div>-->
+            <label>Skill Points</label>
+            ${selectTemplate(keepSkillPointsOptions)}
+          </div>
+          <div ${modifications.acquaintanceList || modifications.relationships ? "" : "hidden"}>
+<!--          <div>-->
+            <label>Acquaintances</label>
+            ${selectTemplate(acquaintancesToKeepOptions)}
+          </div>
+        `;
+
+      let pbConfirm = new Dialog({
+        title: `Change playbook to ${await BladesHelpers.getPlaybookName(changed.data.playbook)}?`,
+        content: dialogContent,
+        buttons:{
+          ok:{
+            icon: '<i class="fas fa-check"></i>',
+            label: 'Ok',
+            callback: (html)=> {
+              let selects = html.find("select.pb-migrate-options");
+              let selectedOptions = {};
+              for (const select of $.makeArray(selects)) {
+                selectedOptions[select.name] = select.value;
+              };
+              this.setUpNewPlaybook(selectedOptions, this.data.data.playbook, changed.data.playbook);
+            }
+          },
+          cancel:{
+            icon: '<i class="fas fa-times"></i>',
+            label: 'Cancel',
+            callback: ()=> {delete changed.data.playbook}
+          }
+        },
+        close: () => {}
+      });
+      pbConfirm.render(true);
+    }
+    else{
+      let selectedOptions = {
+        "abilities": "none",
+        "playbookitems": "none",
+        "skillpoints": "reset",
+        "acquaintances": "none"
+      };
+      this.setUpNewPlaybook(selectedOptions, this.data.data.playbook, changed.data.playbook);
+    }
+    return changed;
+  }
+
 
   /* -------------------------------------------- */
   /**
@@ -251,7 +311,7 @@ export class BladesActor extends Actor {
   /**
    * Deletes all "ability" OwnedItems, with an exception for owned "Ghost" abilities, if specified
    *
-   * @param {bool} keep_owned_ghost_abilities
+   * @param {boolean} keep_owned_ghost_abilities
    * @returns {object} // the OwnedItems deleted
    */
   async deleteAbilities(what_to_keep, playbook_name){
@@ -363,7 +423,7 @@ export class BladesActor extends Actor {
    *
    * @returns {object} object of items that have been modified
    */
-  async checkForPlaybookModifications() {
+  async modifiedFromPlaybookDefault() {
     let skillsChanged = false;
     let newAbilities = false;
     let ownedAbilities = false;
@@ -372,56 +432,57 @@ export class BladesActor extends Actor {
     let addedItems = false;
 
     //get the original playbook
-
     let selected_playbook_source;
     if(this.data.data.playbook !== "" && this.data.data.playbook){
       selected_playbook_source = await game.packs.get("blades-in-the-dark.class").getDocument(this.data.data.playbook);
-    }
-    let startingAttributes = await BladesHelpers.getStartingAttributes(selected_playbook_source.name);
-    let currentAttributes = this.data.data.attributes;
-    for (const attribute in currentAttributes) {
-      currentAttributes[attribute].exp = 0;
-    }
-    if(!isObjectEmpty(diffObject(currentAttributes, startingAttributes))){
-      skillsChanged = true;
+      let startingAttributes = await BladesHelpers.getStartingAttributes(selected_playbook_source.name);
+      let currentAttributes = this.data.data.attributes;
+      for (const attribute in currentAttributes) {
+        currentAttributes[attribute].exp = 0;
+      }
+      if(!isObjectEmpty(diffObject(currentAttributes, startingAttributes))){
+        skillsChanged = true;
+      }
+
+      //check for added abilities
+      let all_abilities = await game.packs.get("blades-in-the-dark.ability").getDocuments();
+      let pb_abilities = all_abilities.filter(ab=> ab.data.data.class === selected_playbook_source.name);
+      let my_abilities = this.items.filter(i => i.type === "ability");
+      for (const ability of my_abilities) {
+        if(!pb_abilities.some(ab=> ab.name === ability.name)){
+          newAbilities = true;
+        }
+        //check for purchased abilities
+        if(ability.data.data.purchased){
+          ownedAbilities = true;
+        }
+      }
+
+      //check for non-default acquaintances
+      let all_acquaintances = await game.packs.get("blades-in-the-dark.npc").getDocuments();
+      let pb_acquaintances = all_acquaintances.filter(acq=>acq.data.data.associated_class === selected_playbook_source.name);
+      let my_acquaintances = this.data.data.acquaintances;
+      for (const my_acq of my_acquaintances) {
+        if(!pb_acquaintances.some(acq=> acq.id === my_acq.id || acq.id === my_acq._id)){
+          acquaintanceList = true;
+        }
+        //check for acquaintance relationships
+        if(my_acq.standing !== "neutral"){
+          relationships = true;
+        }
+      }
+
+      //check for added items
+      let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
+      let pb_items = all_items.filter(i=> i.data.data.class === selected_playbook_source.name);
+      let my_non_generic_items = this.items.filter(i=> i.type === "item" && i.data.data.class !== "");
+      for (const myNGItem of my_non_generic_items) {
+        if(!pb_items.some(i=> i.name ===  myNGItem.name)){
+          addedItems = true;
+        }
+      }
     }
 
-    //check for added abilities
-    let all_abilities = await game.packs.get("blades-in-the-dark.ability").getDocuments();
-    let pb_abilities = all_abilities.filter(ab=> ab.data.data.class === selected_playbook_source.name);
-    let my_abilities = this.items.filter(i => i.type === "ability");
-    for (const ability of my_abilities) {
-      if(!pb_abilities.some(ab=> ab.name === ability.name)){
-        newAbilities = true;
-      }
-      //check for purchased abilities
-      if(ability.data.data.purchased){
-        ownedAbilities = true;
-      }
-    }
-    //check for non-default acquaintances
-    let all_acquaintances = await game.packs.get("blades-in-the-dark.npc").getDocuments();
-    let pb_acquaintances = all_acquaintances.filter(acq=>acq.data.data.associated_class === selected_playbook_source.name);
-    let my_acquaintances = this.data.data.acquaintances;
-    for (const my_acq of my_acquaintances) {
-      if(!pb_acquaintances.some(acq=> acq.id === my_acq.id || acq.id === my_acq._id)){
-        acquaintanceList = true;
-      }
-      //check for acquaintance relationships
-      if(my_acq.standing !== "neutral"){
-        relationships = true;
-      }
-    }
-    //check for added items
-    let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
-    let pb_items = all_items.filter(i=> i.data.data.class === selected_playbook_source.name);
-    let my_non_generic_items = this.items.filter(i=> i.type === "item" && i.data.data.class !== "");
-    for (const myNGItem of my_non_generic_items) {
-      if(!pb_items.some(i=> i.name ===  myNGItem.name)){
-        addedItems = true;
-      }
-    }
-    console.log();
 
     if(skillsChanged || newAbilities || ownedAbilities || relationships || acquaintanceList || addedItems){
       return {skillsChanged, newAbilities, ownedAbilities, relationships, acquaintanceList, addedItems};
@@ -429,6 +490,27 @@ export class BladesActor extends Actor {
     else{
       return false;
     }
+  }
+
+  async setUpNewPlaybook(selectedOptions, old_playbook_id, new_playbook_id) {
+    // await this.actor.update({data : {playbook : new_playbook_id}});
+    if(old_playbook_id){
+      let old_playbook_name = await BladesHelpers.getPlaybookName(old_playbook_id);
+      let new_playbook_name = await BladesHelpers.getPlaybookName(new_playbook_id);
+      await this.deleteAbilities(selectedOptions.abilities, old_playbook_name);
+      await this.deleteAcquaintances(selectedOptions.acquaintances, old_playbook_name);
+      await this.deletePlaybookItems(selectedOptions.playbookitems, old_playbook_name);
+    }
+    switch(selectedOptions.skillpoints){
+      case "keep":
+        break;
+      case "reset":
+        await this.setToPlaybookBaseSkills(new_playbook_name);
+        break;
+    }
+    await this.addPlaybookAbilities(new_playbook_name);
+    await this.addPlaybookAcquaintances(new_playbook_name);
+    await this.addPlaybookItems(new_playbook_name);
   }
 
   /**

@@ -28,7 +28,6 @@ export class BladesActorSheet extends BladesSheet {
   }
 
   async _onDropActor(event, droppedActor){
-    await this.handleDrop(event, droppedActor);
     return super._onDropActor(event, droppedActor);
   }
 
@@ -49,6 +48,7 @@ export class BladesActorSheet extends BladesSheet {
         break;
     }
   }
+
 
   async onDroppedClass(class_id){
     let other_classes = this.actor.items.filter(item => item.type == "class");
@@ -372,24 +372,6 @@ export class BladesActorSheet extends BladesSheet {
     });
   }
 
-  async handleNewPlaybook(selectedOptions, old_playbook_id, new_playbook_id) {
-    let old_playbook_name = await BladesHelpers.getPlaybookName(old_playbook_id);
-    let new_playbook_name = await BladesHelpers.getPlaybookName(new_playbook_id);
-    await this.actor.deleteAbilities(selectedOptions.abilities, old_playbook_name);
-    await this.actor.deleteAcquaintances(selectedOptions.acquaintances, old_playbook_name);
-    await this.actor.deletePlaybookItems(selectedOptions.playbookitems, old_playbook_name);
-    switch(selectedOptions.skillpoints){
-      case "keep":
-        break;
-      case "reset":
-        await this.actor.setToPlaybookBaseSkills(new_playbook_name);
-        break;
-    }
-    await this.actor.addPlaybookAbilities(new_playbook_name);
-    await this.actor.addPlaybookAcquaintances(new_playbook_name);
-    await this.actor.addPlaybookItems(new_playbook_name);
-    await this.actor.update({data : {playbook : new_playbook_id}});
-  }
 
   /* -------------------------------------------- */
 
@@ -419,77 +401,6 @@ export class BladesActorSheet extends BladesSheet {
 
     // TODO - fix weird select flickering
     html.find('.playbook-select').change(async ev =>{
-      let modifications = await this.actor.checkForPlaybookModifications(this.actor.data.data.playbook);
-      if(modifications){
-        let abilitiesToKeepOptions = {name : "abilities", value:"none", options : {all: "Keep all Abilities", custom: "Keep added abilities", owned: "Keep owned abilities", ghost: `Keep "Ghost" abilities`, none: "Replace all"}};
-        let acquaintancesToKeepOptions = {name : "acquaintances", value:"none", options : {all: "All contacts", friendsrivals: "Keep only friends and rivals", custom: "Keep any added contacts", both: "Keep added contacts and friends/rivals", none: "Replace all"}};
-        let keepSkillPointsOptions = {name : "skillpoints", value:"reset", options : {keep: "Keep current skill points", reset: "Reset to new playbook starting skill points"}};
-        let playbookItemsToKeepOptions = {name : "playbookitems", value: "none", options: {all: "Keep all playbook items", custom: "Keep added items", none: "Replace all"}};
-        let selectTemplate = Handlebars.compile(`<select name="{{name}}">{{selectOptions options selected=value}}</select>`)
-        let dialogContent = `
-          <p>Changes have been made to this character that would be overwritten by a playbook switch. Please select how you'd like to handle this data and click "Ok", or click "Cancel" to cancel this change.</p>
-          <p>Note that this process only uses the Item, Ability, Playbook, and NPC compendia to decide what is "default". If you have created entities outside the relevant compendia and added them to your character, those items will be considered "custom" and removed unless you choose to save.</p>
-          <h2>Changes to keep</h2>
-<!--          <div ${modifications.newAbilities || modifications.ownedAbilities ? "" : "hidden"}>-->
-          <div>
-            <label>Abilities to keep</label>
-            ${selectTemplate(abilitiesToKeepOptions)}
-          </div>
-<!--          <div ${modifications.addedItems ? "" : "hidden"}>-->
-          <div>
-            <label>Playbook Items</label>
-            ${selectTemplate(playbookItemsToKeepOptions)}
-          </div>
-<!--          <div ${modifications.skillsChanged ? "" : "hidden"}>-->
-          <div>
-            <label>Skill Points</label>
-            ${selectTemplate(keepSkillPointsOptions)}
-          </div>
-<!--          <div ${modifications.acquaintanceList || modifications.relationships ? "" : "hidden"}>-->
-          <div>
-            <label>Acquaintances</label>
-            ${selectTemplate(acquaintancesToKeepOptions)}
-          </div>
-        `;
-
-        //TODO - wire up the playbook switch handling options
-        let pbConfirm = new Dialog({
-          title: `Change playbook to ${await BladesHelpers.getPlaybookName(ev.target.value)}?`,
-          content: dialogContent,
-          buttons:{
-            ok:{
-              icon: '<i class="fas fa-check"></i>',
-              label: 'Ok',
-              callback: (html)=> {
-                let selects = html.find("select");
-                let selectedOptions = {};
-                for (const select of $.makeArray(selects)) {
-                  selectedOptions[select.name] = select.value;
-                };
-                console.log(selectedOptions);
-                this.handleNewPlaybook(selectedOptions, this.actor.data.data.playbook, ev.target.value);
-              }
-            },
-            cancel:{
-              icon: '<i class="fas fa-times"></i>',
-              label: 'Cancel',
-              callback: async ()=> {}
-            }
-          },
-          close: () => {}
-          // close: () => ev.target.value = this.actor.data.data.playbook
-        });
-        pbConfirm.render(true);
-      }
-      else{
-        let selectedOptions = {
-          "abilities": "none",
-          "playbookitems": "none",
-          "skillpoints": "reset",
-          "acquaintances": "none"
-        };
-        this.handleNewPlaybook(selectedOptions, this.actor.data.data.playbook, ev.target.value);
-      }
     });
 
     // html.find('.playbook-select').focus(async ev => {

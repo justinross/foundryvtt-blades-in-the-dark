@@ -54,7 +54,7 @@ export class BladesHelpers {
     let generics = [];
     for (const item of item_list) {
       let itemclass= getProperty(item, "data.data.class");
-      if(itemclass == ""){
+      if(itemclass === ""){
         generics.push(item);
       }
       else{
@@ -293,7 +293,7 @@ export class BladesHelpers {
   static async getStartingAttributes(playbook_name) {
     let empty_attributes = game.system.model.Actor.character.attributes;
     //not sure what was getting linked rather than copied in empty_attributes, but the JSON hack below seems to fix the weirdness I was seeing
-    let attributes_to_return = JSON.parse(JSON.stringify(empty_attributes));
+    let attributes_to_return = deepClone(empty_attributes);
     try{
       let all_playbooks = await game.packs.get("blades-in-the-dark.class").getDocuments();
       let selected_playbook_base_skills = all_playbooks.find(pb => pb.name == playbook_name).data.data.base_skills;

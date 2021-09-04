@@ -132,10 +132,12 @@ async function _migrateActor(actor) {
   }
 
   // Migrate character playbook
-  if (typeof actor.data.data.playbook === "undefined" || actor.data.data.playbook == ""){
+  if (typeof actor.data.data.playbook === "undefined" || actor.data.data.playbook === ""){
+    console.log("No playbook set");
     let old_playbook = actor.data.items.find(item => {
-      return item.type == "class";
+      return item.type === "class";
     });
+    console.log("Old playbook:", old_playbook);
     //fix the fact that you're not using _id in the acquaintances array anymore
     if(actor.data.data.acquaintances.length > 0){
       let fixed = actor.data.data.acquaintances.map(acq => {
@@ -150,7 +152,7 @@ async function _migrateActor(actor) {
     if(typeof old_playbook != "undefined"){
       let playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
       updateData[`data.playbook`] = playbooks_index.find(pb => pb.name === old_playbook.name)._id;
-      let existing_abilities = actor.items.filter(item => item.type == "ability");
+      let existing_abilities = actor.items.filter(item => item.type === "ability");
       for (const existingAbility of existing_abilities) {
         await existingAbility.update({data : { purchased : true } });
       }
@@ -164,27 +166,27 @@ async function _migrateActor(actor) {
 
       // Add default character NPCs
       await actor.addPlaybookAcquaintances(old_playbook.name);
-      if (typeof actor.data.data.heritage === "undefined" || actor.data.data.heritage == "" || actor.data.data.heritage == "Heritage") {
+      if (typeof actor.data.data.heritage === "undefined" || actor.data.data.heritage === "" || actor.data.data.heritage === "Heritage") {
         let old_heritage = actor.data.items.find(item => {
-          return item.type == "heritage";
+          return item.type === "heritage";
         });
         if (typeof old_heritage != "undefined") {
           updateData[`data.heritage`] = old_heritage.name;
         }
       }
 
-      if (typeof actor.data.data.background === "undefined" || actor.data.data.background == "" || actor.data.data.background == "Background") {
+      if (typeof actor.data.data.background === "undefined" || actor.data.data.background === "" || actor.data.data.background === "Background") {
         let old_background = actor.data.items.find(item => {
-          return item.type == "background";
+          return item.type === "background";
         });
         if (typeof old_background != "undefined") {
           updateData[`data.background`] = old_background.name;
         }
       }
 
-      if (typeof actor.data.data.vice === "undefined" || actor.data.data.vice == "" || actor.data.data.vice == "Vice") {
+      if (typeof actor.data.data.vice === "undefined" || actor.data.data.vice === "" || actor.data.data.vice === "Vice") {
         let old_vice = actor.data.items.find(item => {
-          return item.type == "vice";
+          return item.type === "vice";
         });
         if (typeof old_vice != "undefined") {
           updateData[`data.vice`] = old_vice.name;

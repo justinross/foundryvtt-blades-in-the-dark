@@ -1,6 +1,7 @@
 <form class="{{cssClass}} actor-sheet" autocomplete="off">
+  {{log actor}}
   <div id="tidy-redesign" class="{{#if actor.flags.blades-in-the-dark.allow-edit}}allow-edit{{/if}}">
-    <div class="sheet-toggles"><span class="toggle-expand"><i class="fas fa-expand"></i><i class="fas fa-compress"></i></span><span class="toggle-allow-edit"><i class="fas fa-lock"></i><i class="fas fa-lock-open"></i></span><span class="migrate-test">mig</span></div>
+    <div class="sheet-toggles"><span class="toggle-expand"><i class="fas fa-expand"></i><i class="fas fa-compress"></i></span><span class="toggle-allow-edit"><i class="fas fa-lock"></i><i class="fas fa-lock-open"></i></span><!--<span class="migrate-test">mig</span>--></div>
     <section class="minimized-view">
       <section class="character-portrait">
         <div class="portrait">
@@ -69,7 +70,7 @@
       <nav class="tabs" data-group="primary-tabs">
         <div class="tab-item playbook" data-tab="playbook">
           {{#if actor.flags.blades-in-the-dark.allow-edit}}
-            <select class="dropdown playbook-select">
+            <select class="dropdown playbook-select" name="data.playbook">
               {{selectOptions playbook_select selected=data.playbook localize=false}}
             </select>
           {{else}}
