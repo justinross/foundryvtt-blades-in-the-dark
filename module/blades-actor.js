@@ -494,9 +494,9 @@ export class BladesActor extends Actor {
 
   async setUpNewPlaybook(selectedOptions, old_playbook_id, new_playbook_id) {
     // await this.actor.update({data : {playbook : new_playbook_id}});
+    let new_playbook_name = await BladesHelpers.getPlaybookName(new_playbook_id);
     if(old_playbook_id){
       let old_playbook_name = await BladesHelpers.getPlaybookName(old_playbook_id);
-      let new_playbook_name = await BladesHelpers.getPlaybookName(new_playbook_id);
       await this.deleteAbilities(selectedOptions.abilities, old_playbook_name);
       await this.deleteAcquaintances(selectedOptions.acquaintances, old_playbook_name);
       await this.deletePlaybookItems(selectedOptions.playbookitems, old_playbook_name);
