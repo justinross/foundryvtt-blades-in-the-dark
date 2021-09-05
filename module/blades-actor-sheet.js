@@ -28,6 +28,7 @@ export class BladesActorSheet extends BladesSheet {
   }
 
   async _onDropActor(event, droppedActor){
+    this.handleDrop(event, droppedActor);
     return super._onDropActor(event, droppedActor);
   }
 
@@ -464,7 +465,7 @@ export class BladesActorSheet extends BladesSheet {
     html.find('.standing-toggle').click(ev => {
       let acquaintances = this.actor.data.data.acquaintances;
       let acqId = ev.target.closest('.acquaintance').dataset.acquaintance;
-      let clickedAcqIdx = acquaintances.findIndex(item => item._id == acqId || item.id == acqId);
+      let clickedAcqIdx = acquaintances.findIndex(item => item.id == acqId);
       let clickedAcq = acquaintances[clickedAcqIdx];
       let oldStanding = clickedAcq.standing;
       let newStanding;

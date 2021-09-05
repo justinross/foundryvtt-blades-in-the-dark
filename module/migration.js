@@ -138,17 +138,6 @@ async function _migrateActor(actor) {
       return item.type === "class";
     });
     console.log("Old playbook:", old_playbook);
-    //fix the fact that you're not using _id in the acquaintances array anymore
-    if(actor.data.data.acquaintances.length > 0){
-      let fixed = actor.data.data.acquaintances.map(acq => {
-        if("_id" in acq){
-          acq.id = acq._id;
-        }
-        return acq;
-      });
-      let diff = diffObject(actor.data.data.acquaintances, fixed);
-      console.log(diff);
-    }
     if(typeof old_playbook != "undefined"){
       let playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
       updateData[`data.playbook`] = playbooks_index.find(pb => pb.name === old_playbook.name)._id;
@@ -197,6 +186,20 @@ async function _migrateActor(actor) {
     else{
       ui.notifications.info(`No playbook/class item found. Please select a class manually via the dropdown`, {permanent: true});
     }
+  }
+
+  console.log("fixing acquaintances")
+  //fix the fact that you're not using _id in the acquaintances array anymore
+  if(actor.data.data.acquaintances.length > 0){
+    let fixed = actor.data.data.acquaintances.map(acq => {
+      if("_id" in acq){
+        acq.id = acq._id;
+      }
+      return acq;
+    });
+    // let diff = diffObject(actor.data.data.acquaintances, fixed);
+    updateData["data.acquaintances"] = fixed;
+
   }
 
 

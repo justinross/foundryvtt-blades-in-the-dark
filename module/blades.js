@@ -343,10 +343,11 @@ Hooks.once("ready", function() {
 
   // Determine whether a system migration is required
   const currentVersion = game.settings.get("bitd", "systemMigrationVersion");
-  const NEEDS_MIGRATION_VERSION = "3.4.0";
+  const NEEDS_MIGRATION_VERSION = "3.5.0-b2";
 
   // let needMigration = (currentVersion < NEEDS_MIGRATION_VERSION) || (currentVersion === null);
   let needMigration = !isNewerVersion(currentVersion, NEEDS_MIGRATION_VERSION) || (currentVersion === null) || (typeof currentVersion === "undefined");
+
 
   // Perform the migration
   if ( needMigration && game.user.isGM ) {
@@ -388,50 +389,6 @@ Hooks.on("renderSceneControls", async (app, html) => {
     await simpleRollPopup();
   });
   html.append(dice_roller);
-});
-
-
-Hooks.on("createActor", async (actor, options, actorId)=>{
-  // console.log(actor);
-  //I'm just looking for an alias value to see if the character is new, rather than a duplicate. It's silly. There should be a better way, but I don't know it.
-
-    // let selected_playbook_full = await game.packs.get("blades-in-the-dark.class").getDocument(actor.data.data.playbook);
-    // let selected_playbook_name = selected_playbook_full.name;
-    // let all_owned_items = actor.items.filter(item => item.data.type == "item");
-    // let class_items = all_owned_items.filter(item => item.data.data.class == selected_playbook_name);
-    // let generic_items = all_owned_items.filter(item => item.data.data.class == "");
-    //
-    // let abilities = actor.items.filter(item => {
-    //   return getProperty(item, 'data.type') == "ability"
-    // });
-    //
-    // if(abilities.length <= 0){
-    //   //add class abilities
-    //   await actor.addPlaybookAbilities(selected_playbook_name);
-    // }
-    //
-    //
-    // if(class_items.length <= 0){
-    //   await actor.addPlaybookItems(selected_playbook_name);
-    // }
-    //
-    // if(generic_items.length <= 0){
-    //   await actor.addGenericItems();
-    // }
-    //
-    // if(Object.keys(actor.data.data.acquaintances).length <= 0){
-    //   //add class aquaintances
-    //   await actor.addPlaybookAcquaintances(selected_playbook_name);
-    // }
-
-    //clearing default [0] array
-});
-
-
-Hooks.on("preUpdateActor", async (actor, newData, meta, actorId) => {
-});
-
-Hooks.on("updateActor", async (actor, newData, meta, actorId) => {
 });
 
 
