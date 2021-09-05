@@ -51,21 +51,45 @@ export class BladesActorSheet extends BladesSheet {
       case "npc":
         await this.actor.addAcquaintance(droppedEntityFull);
         break;
-      case "class":
-        await this.onDroppedClass(droppedEntity.id);
+      case "item":
+        break;
+      case "ability":
+        break;
+      default:
+        await this.onDroppedFieldItem(droppedEntityFull);
         break;
     }
   }
 
 
-  async onDroppedClass(class_id){
-    let other_classes = this.actor.items.filter(item => item.type == "class");
-    other_classes = other_classes.map(item => {
+  async onDroppedFieldItem(droppedFieldItem){
+	  let updateData;
+	  switch(droppedFieldItem.type){
+      case "class":
+        let class_id = droppedFieldItem.id;
+        updateData = {data : { playbook : class_id}};
+        console.log(droppedFieldItem);
+        break;
+      case "background":
+        let background = droppedFieldItem.name;
+        updateData = {data : { background : background}};
+        break;
+      case "heritage":
+        let heritage = droppedFieldItem.name;
+        updateData = {data : { heritage : heritage}};
+        break;
+      case "vice":
+        let vice = droppedFieldItem.name;
+        updateData = {data : { vice : vice}};
+        break;
+    }
+
+    await this.actor.update(updateData);
+    let all_items_of_type = this.actor.items.filter(item => item.type == droppedFieldItem.type);
+    all_items_of_type = all_items_of_type.map(item => {
       return item.id;
     });
-    await this.actor.deleteEmbeddedDocuments("Item", other_classes);
-    let updateData = {data : { playbook : class_id}};
-    await this.actor.update(updateData);
+    await this.actor.deleteEmbeddedDocuments("Item", all_items_of_type);
   }
 
   itemContextMenu = [
