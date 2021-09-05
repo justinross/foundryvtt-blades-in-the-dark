@@ -8,7 +8,7 @@
     
     {{!-- Sheet Body --}}
     <section class="sheet-body flex">
-      {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+      {{{editable-textarea "data.description" "Description" false editable data.description item.id this}}}
     </section>
     
     <div class="flex-vertical">

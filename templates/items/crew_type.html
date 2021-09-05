@@ -8,10 +8,10 @@
 
   <section class="flex-vertical flex">
     <label class="label-stripe">{{localize "BITD.Description"}}</label>
-    {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+    {{{editable-textarea "data.description" "Description" false editable data.description item.id this}}}
     <label class="label-stripe">{{localize "BITD.ExpClues"}}</label>
-    {{editor content=data.experience_clues target="data.experience_clues" button=true owner=owner editable=editable}}
-  
+    {{{editable-textarea "data.experience_clues" "Experience clues" false editable data.experience_clues item.id this}}}
+
     <label class="label-stripe">{{localize "BITD.Turf"}}</label>
     <div id="turf-container">{{> "systems/blades-in-the-dark/templates/parts/turf-list.html" turfs_data=data.turfs can_edit=true editable=editable}}</div>
   </section>
