@@ -7,53 +7,12 @@
   <div class="clocks clocks-4 healing-clock">
     {{{blades-clock "data.healing-clock" 4 data.healing-clock (concat "healing-" actor._id)}}}
   </div>
-<!--  <table>-->
-<!--    <thead>-->
-<!--    <th class="black-white" colspan="4">{{localize "BITD.Harm"}}</th>-->
-<!--    <th class="black-white"><label>{{localize "BITD.Healing"}}</label></th>-->
-<!--    <th class="black-white">{{localize "BITD.Armor"}}</th>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr>-->
-<!--      <td>3</td>-->
-<!--      <td colspan="2">-->
-<!--      </td>-->
-<!--      <td>{{localize "BITD.NeedHelp"}}</td>-->
-<!--      <td rowspan="3">-->
-<!--        <div id="character-health-clock">-->
-<!--        </div>-->
-<!--      </td>-->
-<!--      <td rowspan="3" id="character-armor-uses">-->
-<!--        <div>-->
-<!--          <label for="armor-uses-armor">{{localize "BITD.Armor"}}</label>-->
-<!--          <input id="armor-uses-armor" type="checkbox" name="data.armor-uses.armor" {{checked data.armor-uses.armor}}>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--          <label for="armor-uses-heavy">{{localize "BITD.Heavy"}}</label>-->
-<!--          <input id="armor-uses-heavy" type="checkbox" name="data.armor-uses.heavy" {{checked data.armor-uses.heavy}}>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--          <label for="armor-uses-special">{{localize "BITD.Special"}}</label>-->
-<!--          <input id="armor-uses-special" type="checkbox" name="data.armor-uses.special" {{checked data.armor-uses.special}}>-->
-<!--        </div>-->
-<!--      </td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>2</td>-->
-<!--      <td>-->
-<!--      </td>-->
-<!--      <td>-->
-<!--      </td>-->
-<!--      <td>-1D</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1</td>-->
-<!--      <td>-->
-<!--      </td>-->
-<!--      <td>-->
-<!--      </td>-->
-<!--      <td>{{localize "BITD.LessEffect"}}</td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--  </table>-->
+  <div class="armor-use">
+    <label for="armor-use-armor-{{actor._id}}" class="armorlabel">Armor</label>
+    <input id="armor-use-armor-{{actor._id}}" type="checkbox" name="data.armor-uses.armor" {{checked data.armor-uses.armor}} class="armorinput">
+    <label for="armor-use-heavy-{{actor._id}}" class="heavylabel">Heavy</label>
+    <input id="armor-use-heavy-{{actor._id}}" type="checkbox" name="data.armor-uses.heavy" {{checked data.armor-uses.heavy}} class="heavyinput">
+    <label for="armor-use-special-{{actor._id}}" class="speciallabel">Special</label>
+    <input id="armor-use-special-{{actor._id}}" type="checkbox" name="data.armor-uses.special" {{checked data.armor-uses.special}} class="specialinput">
+  </div>
 </div>

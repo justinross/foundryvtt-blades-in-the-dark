@@ -325,7 +325,7 @@
               .character-harm{
                 display: grid;
                 grid-template-columns: 1em repeat(6, 1fr);
-                grid-template-rows: repeat(4, 1fr);
+                grid-template-rows: repeat(5, 1.6em);
                 grid-column-gap: 1px;
                 grid-row-gap: 1px;
                 place-items: center;
@@ -333,8 +333,9 @@
                 "empty header-harm header-harm header-harm header-harm header-effect header-healing"
                 "rownum3 heavy heavy heavy heavy heavy-effect healing"
                 "rownum2 medium1 medium1 medium2 medium2 medium-effect healing"
-                "rownum1 light1 light1 light2 light2 light-effect healing";
-                input{
+                "rownum1 light1 light1 light2 light2 light-effect healing"
+                "armor armor armor armor armor armor armor";
+                input[type=text]{
                   height: 100%;
                   width: 100%;
                   border-radius: 0;
@@ -361,10 +362,11 @@
                 .effect-text.light{grid-area: light-effect;}
                 .healing-clock{grid-area: healing; @include clock(4, 100);}
                 .rownum1{grid-area: rownum1;}
+                .armor-use{grid-area: armor; text-align: right;}
                 .effect-text{font-family: "Crimson Text", serif;font-size: .9rem;}
                 .grid-lines{
                   background-color: $almost_black;
-                  grid-area: 2 / 2 / 6 / 6;
+                  grid-area: 2 / 2 / 5 / 6;
                   width: 100%;
                   height: calc(100% - 1px);
                   z-index: 1;
