@@ -287,7 +287,7 @@ Hooks.once("init", async function() {
     return html;
   });
 
-  Handlebars.registerHelper('editable-textarea', function(parameter_name, blank_value, use_markdown = false, current_value, uniq_id, context){
+  Handlebars.registerHelper('editable-textarea', function(parameter_name, blank_value, use_markdown = false, force_editable=false, current_value, uniq_id, context){
     let html = '';
     if(!current_value || current_value.length === 0){
       current_value = "Click the edit lock above to add character notes.";
@@ -298,7 +298,7 @@ Hooks.once("init", async function() {
       output_value = md.render(current_value);
       // output_value = current_value;
     }
-    if(context.owner && context.actor.flags["blades-in-the-dark"]?.["allow-edit"]){
+    if(force_editable || context.owner && context.actor.flags["blades-in-the-dark"]?.["allow-edit"]){
      html += `<textarea data-input="character-${uniq_id}-${parameter_name}" name="${parameter_name}" value="${current_value}" placeholder="${blank_value}">${current_value}</textarea>`;
     }
     else{
