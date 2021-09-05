@@ -44,7 +44,6 @@ export class BladesActor extends Actor {
   }
 
   async _preUpdate(changed, options, user){
-    console.log(changed);
     if(changed.data?.playbook && this.data.data.playbook && this.data.data.playbook != ""){
       changed = await this.handlePlaybookChange(changed);
     }

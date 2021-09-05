@@ -83,7 +83,7 @@ export class BladesSheet extends ActorSheet {
       input_type = "radio";
     }
 
-    let items = await BladesHelpers.getAllItemsByType(item_type, game);
+    let items = await BladesHelpers.getAllItemsByType(item_type);
 
     let html = `<div id="items-to-add">`;
 
@@ -133,7 +133,7 @@ export class BladesSheet extends ActorSheet {
 
   async addItemsToSheet(item_type, el) {
 
-    let items = await BladesHelpers.getAllItemsByType(item_type, game);
+    let items = await BladesHelpers.getAllItemsByType(item_type);
     let items_to_add = [];
 
     el.find("input:checked").each(function() {

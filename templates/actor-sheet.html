@@ -1,5 +1,4 @@
 <form class="{{cssClass}} actor-sheet" autocomplete="off">
-  {{log actor}}
   <div id="tidy-redesign" class="{{#if actor.flags.blades-in-the-dark.allow-edit}}allow-edit{{/if}}">
     <div class="sheet-toggles"><span class="toggle-expand"><i class="fas fa-expand"></i><i class="fas fa-compress"></i></span><span class="toggle-allow-edit"><i class="fas fa-lock"></i><i class="fas fa-lock-open"></i></span><!--<span class="migrate-test">mig</span>--></div>
     <section class="minimized-view">
@@ -132,7 +131,7 @@
                     {{#if (eq this.standing "friend")}} fa-smile green-icon
                     {{else if (eq this.standing "rival")}}fa-angry red-icon
                     {{else}}fa-meh
-                    {{/if}}"></i><strong class="standing-toggle">{{this.name}}</strong>, {{this.description_short}}
+                    {{/if}}"></i><strong class="standing-toggle">{{this.name}}</strong>{{#if this.description_short}}, {{this.description_short}}{{/if}}
                 </div>
               {{/each}}
             </section>

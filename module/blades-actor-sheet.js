@@ -21,7 +21,6 @@ export class BladesActorSheet extends BladesSheet {
     });
   }
 
-
   async _onDropItem(event, droppedItem) {
 	  this.handleDrop(event, droppedItem);
     return super._onDropItem(event, droppedItem);
@@ -33,13 +32,21 @@ export class BladesActorSheet extends BladesSheet {
   }
 
   async handleDrop(event, droppedEntity){
-    let droppedEntityFull;
+	  let droppedEntityFull;
     if("pack" in droppedEntity){
-      droppedEntityFull = await BladesHelpers.getItemByType(droppedEntity.pack.replace("blades-in-the-dark.", ""), droppedEntity.id, game);
+      droppedEntityFull = await game.packs.get(droppedEntity.pack).getDocument(droppedEntity.id);
     }
     else{
-      droppedEntityFull = game.items.find(i => i.id == droppedEntity.id);
+      switch(droppedEntity.type){
+        case "Actor":
+            droppedEntityFull = game.actors.find(actor=> actor.id === droppedEntity.id);
+          break;
+        case "Item":
+          droppedEntityFull = game.actors.find(actor=> actor.id === droppedEntity.id);
+          break;
+      }
     }
+    console.log(droppedEntityFull);
     switch (droppedEntityFull.type) {
       case "npc":
         await this.actor.addAcquaintance(droppedEntityFull);
@@ -117,7 +124,7 @@ export class BladesActorSheet extends BladesSheet {
                 let items = [];
                 for (const itemelement of itemInputs) {
                   console.log(itemelement);
-                  let item = await BladesHelpers.getItemByType("item", itemelement.dataset.itemId, game);
+                  let item = await BladesHelpers.getItemByType("item", itemelement.dataset.itemId);
                   items.push(item);
                 }
                 this.actor.createEmbeddedDocuments("Item", items);
@@ -292,11 +299,11 @@ export class BladesActorSheet extends BladesSheet {
 
     //load up playbook options/data for playbook select
     // data.playbook_options = await game.packs.get("blades-in-the-dark.class").getIndex();
-    data.playbook_options = await BladesHelpers.getAllItemsByType("class", game);
+    data.playbook_options = await BladesHelpers.getAllItemsByType("class");
     data.playbook_select = this.prepIndexForHelper(data.playbook_options);
 
     if(data.data.playbook !== ""){
-      data.selected_playbook_full = await BladesHelpers.getItemByType("class", data.data.playbook, game);
+      data.selected_playbook_full = await BladesHelpers.getItemByType("class", data.data.playbook);
       if(typeof data.selected_playbook_full != "undefined"){
         data.selected_playbook_name = data.selected_playbook_full.name;
         data.selected_playbook_description = data.selected_playbook_full.data.description;

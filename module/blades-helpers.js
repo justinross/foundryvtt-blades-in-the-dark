@@ -219,7 +219,7 @@ export class BladesHelpers {
    * @param {string} item_type
    * @param {Object} game
    */
-  static async getAllItemsByType(item_type, game) {
+  static async getAllItemsByType(item_type) {
 
     let list_of_items = [];
     let game_items = [];
@@ -241,8 +241,8 @@ export class BladesHelpers {
 
   }
 
-  static async getItemByType(item_type, item_id, game){
-    let game_items = await this.getAllItemsByType(item_type, game);
+  static async getItemByType(item_type, item_id){
+    let game_items = await this.getAllItemsByType(item_type);
     let item = game_items.find(item => item._id == item_id);
     return item;
   }
@@ -312,7 +312,7 @@ export class BladesHelpers {
   }
 
   static async getPlaybookName(id){
-    let playbook = await this.getItemByType("class", id, game);
+    let playbook = await this.getItemByType("class", id);
     return playbook.name;
   }
 
