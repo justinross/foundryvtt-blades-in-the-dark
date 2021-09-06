@@ -193,6 +193,8 @@
   "BITD.SkillsSway": "Sway",
 
   "BITD.AddAbility": "Add Ability",
+  "BITD.AddExistingAbility": "Add Existing Ability",
+  "BITD.AddNewAbility": "Add New Ability",
   "BITD.AddItem": "Add Item",
   "BITD.AddExistingItem": "Add Existing Item",
   "BITD.AddNewItem": "Add New Item",

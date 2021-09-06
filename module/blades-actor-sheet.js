@@ -117,7 +117,7 @@ export class BladesActorSheet extends BladesSheet {
         let all_items = await BladesHelpers.getSourcedItemsByType("item");
         let grouped_items = {};
 
-        let items_html = '<div>';
+        let items_html = '<div class="items-list">';
         let sorted_grouped_items = BladesHelpers.groupItemsByClass(all_items);
 
         for (const [itemclass, group] of Object.entries(sorted_grouped_items)) {
@@ -126,16 +126,18 @@ export class BladesActorSheet extends BladesSheet {
             let trimmedname = item.name.replace(/\([^)]*\)\ /, "");
             items_html += `
             <div class="item-block">
-              <input type="checkbox" id="character-${this.actor.id}-itemadd-${item.id}" data-item-id="${item.id}" data-source="${item.pack}">
+              <input type="checkbox" id="character-${this.actor.id}-itemadd-${item.id}" data-item-id="${item.id}" >
               <label for="character-${this.actor.id}-itemadd-${item.id}">${trimmedname}</label>
             </div>
           `;
           }
+          items_html += '</div>';
         }
-
         items_html += '</div>';
+
+        console.log(items_html);
         let d = new Dialog({
-          title: "Add New Item",
+          title: game.i18n.localize("BITD.AddExistingItem"),
           content:  `<h3>Select items to add:</h3>
                     ${items_html}
                     `,
@@ -147,9 +149,8 @@ export class BladesActorSheet extends BladesSheet {
                 let itemInputs = html.find("input:checked");
                 let items = [];
                 for (const itemelement of itemInputs) {
-                  console.log(itemelement);
                   let item = await BladesHelpers.getItemByType("item", itemelement.dataset.itemId);
-                  items.push(item);
+                  items.push(item.data);
                 }
                 this.actor.createEmbeddedDocuments("Item", items);
               }
@@ -166,7 +167,7 @@ export class BladesActorSheet extends BladesSheet {
           close: (html) => {
 
           }
-        });
+        }, {classes:["add-existing-dialog"], width: "650"});
         d.render(true);
       }
     }
@@ -210,17 +211,60 @@ export class BladesActorSheet extends BladesSheet {
 
   abilityListContextMenu = [
     {
-      name: game.i18n.localize("BITD.AddAbility"),
+      name: game.i18n.localize("BITD.AddNewAbility"),
       icon: '<i class="fas fa-plus"></i>',
-      callback: element => {
+      callback: async (element) => {
+        await this.addNewAbility();
+      }
+    },
+    {
+      name: game.i18n.localize("BITD.AddExistingAbility"),
+      icon: '<i class="fas fa-plus"></i>',
+      callback: async (element) => {
+        let all_abilities = await BladesHelpers.getSourcedItemsByType("ability");
+        let grouped_abilities = {};
+
+        let abilities_html = '<div class="items-list">';
+        let sorted_grouped_abilities = BladesHelpers.groupItemsByClass(all_abilities);
+
+        for (const [abilityclass, group] of Object.entries(sorted_grouped_abilities)) {
+          abilities_html += `<div class="item-group"><header>${abilityclass}</header>`;
+          for (const ability of group) {
+            let trimmedname = ability.name.replace(/\([^)]*\)\ /, "");
+            abilities_html += `
+            <div class="item-block">
+              <input type="checkbox" id="character-${this.actor.id}-abilityadd-${ability.id}" data-ability-id="${ability.id}" >
+              <label for="character-${this.actor.id}-abilityadd-${ability.id}">${trimmedname}</label>
+            </div>
+          `;
+          }
+          abilities_html += '</div>';
+        }
+
+        abilities_html += '</div>';
         let d = new Dialog({
-          title: "Add Item",
-          content: "Pick an ability to add",
+          title: game.i18n.localize("BITD.AddExistingAbility"),
+          content:  `<h3>Select abilities to add:</h3>
+                    ${abilities_html}
+                    `,
           buttons: {
-            one: {
+            add: {
               icon: "<i class='fas fa-check'></i>",
-              label: "One",
-              callback: ()=> console.log("One")
+              label: "Add",
+              callback: async (html)=> {
+                let abilityInputs = html.find("input:checked");
+                let abilities = [];
+                for (const abilityelement of abilityInputs) {
+                  let ability = await BladesHelpers.getItemByType("ability", abilityelement.dataset.abilityId);
+                  abilities.push(ability.data);
+                }
+                this.actor.createEmbeddedDocuments("Item", abilities);
+              }
+            },
+            cancel: {
+              icon: "<i class='fas fa-times'></i>",
+              label: "Cancel",
+              callback: ()=> close()
             }
           },
           render: (html) => {
@@ -229,16 +273,13 @@ export class BladesActorSheet extends BladesSheet {
           close: (html) => {
 
           }
-        });
+        }, {classes:["add-existing-dialog"], width: "650"});
         d.render(true);
-
       }
     }
-  ]
+  ];
 
   async addNewItem(){
-      // let playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
-      // let playbook_name = playbooks_index.find(pb => pb._id == this.actor.data.data.playbook).name;
       let playbook_name = "custom";
       let item_data_model = game.system.model.Item.item;
       let new_item_data = { name : "New Item", type : "item", data : {...item_data_model} };
@@ -247,6 +288,16 @@ export class BladesActorSheet extends BladesSheet {
 
       let new_item = await this.actor.createEmbeddedDocuments("Item", [new_item_data], {renderSheet : true});
       return new_item;
+  }
+
+  async addNewAbility(){
+    let playbook_name = "custom";
+    let ability_data_model = game.system.model.Item.ability;
+    let new_ability_data = { name : "New Ability", type : "ability", data : {...ability_data_model} };
+    new_ability_data.data.class = "custom";
+
+    let new_ability = await this.actor.createEmbeddedDocuments("Item", [new_ability_data], {renderSheet : true});
+    return new_ability;
   }
 
   /* -------------------------------------------- */
@@ -422,7 +473,7 @@ export class BladesActorSheet extends BladesSheet {
     new ContextMenu(html, ".ability-block", this.abilityContextMenu);
     new ContextMenu(html, ".context-items > span", this.itemListContextMenu);
     new ContextMenu(html, ".item-list-add", this.itemListContextMenu, {eventName : "click"});
-    new ContextMenu(html, ".context-abilities", this.abilityListContextMenu);
+    new ContextMenu(html, ".context-abilities", this.abilityListContextMenu, {eventName : "click"});
     new ContextMenu(html, ".trauma-item", this.traumaListContextMenu);
     new ContextMenu(html, ".acquaintance", this.acquaintanceContextMenu);
 

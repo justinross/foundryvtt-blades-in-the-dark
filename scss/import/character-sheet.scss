@@ -74,6 +74,32 @@
     }
   }
 
+  @at-root {
+    .add-existing-dialog{
+      .items-list{
+        display: flex;
+        flex-wrap: wrap;
+        align-content: space-between;
+      }
+      .item-group {
+        background-color: rgba(255, 255, 255, 0.4);
+        vertical-align: top;
+        flex-grow: 1;
+        margin: .5px;
+        padding: .5em;
+
+        header {
+          background-color: $almost-black;
+          padding: .1em .25em;
+          width: 100%;
+          font-size: 2em;
+          font-family: Kirsty, serif;
+          color: $almost_white;
+        }
+      }
+    }
+  }
+
   #context-menu ol li *{
     vertical-align: initial;
   }
@@ -686,6 +712,7 @@
             }
             .item-block{
               padding-left: 5px;
+              padding-right: 1em;
               position: relative;
               @at-root .allow-edit .item-block:nth-child(even){
                 background-color: rgba(0,0,0,0.1);
@@ -717,7 +744,6 @@
                 margin-left: 0;
                 position: relative;
                 z-index: 10;
-                position:relative;
                 bottom: 2px;
               }
             }

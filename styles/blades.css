@@ -902,6 +902,27 @@
   top: 0.45em;
   left: -1em;
 }
+.add-existing-dialog .items-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+.add-existing-dialog .item-group {
+  background-color: rgba(255, 255, 255, 0.4);
+  vertical-align: top;
+  flex-grow: 1;
+  margin: 0.5px;
+  padding: 0.5em;
+}
+.add-existing-dialog .item-group header {
+  background-color: #191813;
+  padding: 0.1em 0.25em;
+  width: 100%;
+  font-size: 2em;
+  font-family: Kirsty, serif;
+  color: #EEEFFF;
+}
+
 .blades-in-the-dark.actor.pc #tidy-redesign #context-menu ol li * {
   vertical-align: initial;
 }
@@ -1784,6 +1805,7 @@
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .item-list .item-block {
   padding-left: 5px;
+  padding-right: 1em;
   position: relative;
 }
 .allow-edit .item-block:nth-child(even) {
@@ -1811,7 +1833,6 @@
   margin-left: 0;
   position: relative;
   z-index: 10;
-  position: relative;
   bottom: 2px;
 }
 .blades-in-the-dark.actor.pc #tidy-redesign .tab-space .tab-content .tab .playbook .friends-rivals {
