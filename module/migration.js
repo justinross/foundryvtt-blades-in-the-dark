@@ -139,8 +139,8 @@ async function _migrateActor(actor) {
     });
     console.log("Old playbook:", old_playbook);
     if(typeof old_playbook != "undefined"){
-      let playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
-      updateData[`data.playbook`] = playbooks_index.find(pb => pb.name === old_playbook.name)._id;
+      let playbooks_content = await BladesHelpers.getSourcedItemsByType("class");
+      updateData[`data.playbook`] = playbooks_content.find(pb => pb.name === old_playbook.name)._id;
       let existing_abilities = actor.items.filter(item => item.type === "ability");
       for (const existingAbility of existing_abilities) {
         await existingAbility.update({data : { purchased : true } });

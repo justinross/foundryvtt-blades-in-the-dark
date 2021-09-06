@@ -114,7 +114,7 @@ export class BladesActorSheet extends BladesSheet {
       name: game.i18n.localize("BITD.AddExistingItem"),
       icon: '<i class="fas fa-plus"></i>',
       callback: async (element) => {
-        let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
+        let all_items = await BladesHelpers.getSourcedItemsByType("item");
         let grouped_items = {};
 
         let items_html = '<div>';
@@ -237,7 +237,7 @@ export class BladesActorSheet extends BladesSheet {
   ]
 
   async addNewItem(){
-      let playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
+      // let playbooks_index = await game.packs.get("blades-in-the-dark.class").getIndex();
       // let playbook_name = playbooks_index.find(pb => pb._id == this.actor.data.data.playbook).name;
       let playbook_name = "custom";
       let item_data_model = game.system.model.Item.item;
@@ -323,7 +323,7 @@ export class BladesActorSheet extends BladesSheet {
 
     //load up playbook options/data for playbook select
     // data.playbook_options = await game.packs.get("blades-in-the-dark.class").getIndex();
-    data.playbook_options = await BladesHelpers.getAllItemsByType("class");
+    data.playbook_options = await BladesHelpers.getSourcedItemsByType("class");
     data.playbook_select = this.prepIndexForHelper(data.playbook_options);
 
     if(data.data.playbook !== ""){
@@ -380,7 +380,9 @@ export class BladesActorSheet extends BladesSheet {
 
   prepIndexForHelper(index){
     let prepped = {};
-    index.forEach(item => prepped[item._id] = item.name);
+    if(index){
+      index.forEach(item => prepped[item.id] = item.name);
+    }
     return prepped;
   }
 

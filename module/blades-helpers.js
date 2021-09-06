@@ -225,25 +225,59 @@ export class BladesHelpers {
     let game_items = [];
     let compendium_items = [];
 
-    game_items = game.items.filter(e => e.type === item_type).map(e => {return e.data});
+    game_items = game.items.filter(e => e.type === item_type).map(e => {return e});
 
     let pack = game.packs.find(e => e.metadata.name === item_type);
     let compendium_content = await pack.getDocuments();
-    compendium_items = compendium_content.map(e => {return e.data});
+    compendium_items = compendium_content.map(e => {return e});
 
     list_of_items = game_items.concat(compendium_items);
     list_of_items.sort(function(a, b) {
-      let nameA = a.name.toUpperCase();
-      let nameB = b.name.toUpperCase();
+      let nameA = a.data.name.toUpperCase();
+      let nameB = b.data.name.toUpperCase();
       return nameA.localeCompare(nameB);
     });
     return list_of_items;
 
   }
 
+  static async getSourcedItemsByType(item_type){
+    const populateFromCompendia = game.settings.get('blades-in-the-dark','populateFromCompendia');
+    const populateFromWorld = game.settings.get('blades-in-the-dark','populateFromWorld');
+    let limited_items;
+
+    if(populateFromCompendia && populateFromWorld){
+      limited_items = await this.getAllItemsByType(item_type);
+    }
+    else if(populateFromCompendia && !populateFromWorld){
+      limited_items = await game.packs.get("blades-in-the-dark." + item_type).getDocuments();
+    }
+    else if(!populateFromCompendia && populateFromWorld){
+      if(item_type === "npc"){
+        limited_items = game.actors.filter(actor=> actor.type === item_type);
+      }
+      else{
+        limited_items = game.items.filter(item=>item.type === item_type);
+      }
+    }
+    else{
+      ui.notifications.error(`No playbook auto-population source has been selected in the system settings. Please choose at least one source.`, {permanent: true});
+    }
+    if(limited_items){
+      limited_items.sort(function(a, b) {
+        let nameA = a.name.toUpperCase();
+        let nameB = b.name.toUpperCase();
+        return nameA.localeCompare(nameB);
+      });
+    }
+
+    return limited_items;
+
+  }
+
   static async getItemByType(item_type, item_id){
     let game_items = await this.getAllItemsByType(item_type);
-    let item = game_items.find(item => item._id == item_id);
+    let item = game_items.find(item => item.id === item_id);
     return item;
   }
 
@@ -295,12 +329,14 @@ export class BladesHelpers {
     //not sure what was getting linked rather than copied in empty_attributes, but the JSON hack below seems to fix the weirdness I was seeing
     let attributes_to_return = deepClone(empty_attributes);
     try{
-      let all_playbooks = await game.packs.get("blades-in-the-dark.class").getDocuments();
-      let selected_playbook_base_skills = all_playbooks.find(pb => pb.name == playbook_name).data.data.base_skills;
-      for(const [key, value] of Object.entries(empty_attributes)){
-        for(const [childKey, childValue] of Object.entries(value.skills)){
-          if(selected_playbook_base_skills[childKey]){
-            attributes_to_return[key].skills[childKey].value = selected_playbook_base_skills[childKey].toString();
+      let all_playbooks = await BladesHelpers.getSourcedItemsByType("class");
+      if(all_playbooks){
+        let selected_playbook_base_skills = all_playbooks.find(pb => pb.name == playbook_name).data.data.base_skills;
+        for(const [key, value] of Object.entries(empty_attributes)){
+          for(const [childKey, childValue] of Object.entries(value.skills)){
+            if(selected_playbook_base_skills[childKey]){
+              attributes_to_return[key].skills[childKey].value = selected_playbook_base_skills[childKey].toString();
+            }
           }
         }
       }

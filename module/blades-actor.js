@@ -30,8 +30,7 @@ export class BladesActor extends Actor {
     let newData = {};
     // if it's a character and it doesn't have a playbook yet, pick a default class
     if(data.type === "character" && (data.data.playbook === "" || typeof(data.data.playbook === "undefined"))){
-      let classIndex = await game.packs.get("blades-in-the-dark.class").getIndex();
-      let classContent = await game.packs.get("blades-in-the-dark.class").getDocuments();
+      let classContent = await BladesHelpers.getSourcedItemsByType("class");
       //add default class and all the stuff that goes with it.
       let default_class = classContent[0];
       let attributes = await BladesHelpers.getStartingAttributes(default_class.name);
@@ -360,7 +359,7 @@ export class BladesActor extends Actor {
    */
   async addPlaybookAbilities(playbook_name, mark_existing_as_owned){
     console.log("%cAdding new playbook abilities", "color: green");
-    let all_abilities = await game.packs.get("blades-in-the-dark.ability").getDocuments();
+    let all_abilities = await BladesHelpers.getSourcedItemsByType("ability")
     // let existing_abilities = this.items.filter(item => item.type == "ability");
     let new_playbook_abilities = all_abilities.filter(ability => ability.data.data.class == playbook_name);
 
@@ -409,7 +408,7 @@ export class BladesActor extends Actor {
    */
   async addPlaybookItems(playbook_name){
     console.log("%cAdding new playbook items", "color: green");
-    let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
+    let all_items = await BladesHelpers.getSourcedItemsByType("item");
     let new_playbook_items = all_items.filter(item => item.data.data.class == playbook_name);
     let items_to_add = BladesHelpers.filterItemsForDuplicatesOnActor(new_playbook_items, "item", this);
     let added = await this.createEmbeddedDocuments("Item", items_to_add.map(item => item.data), {noHook: true});
@@ -433,7 +432,9 @@ export class BladesActor extends Actor {
     //get the original playbook
     let selected_playbook_source;
     if(this.data.data.playbook !== "" && this.data.data.playbook){
-      selected_playbook_source = await game.packs.get("blades-in-the-dark.class").getDocument(this.data.data.playbook);
+      // selected_playbook_source = await game.packs.get("blades-in-the-dark.class").getDocument(this.data.data.playbook);
+      selected_playbook_source = await BladesHelpers.getItemByType("class", this.data.data.playbook);
+
       let startingAttributes = await BladesHelpers.getStartingAttributes(selected_playbook_source.name);
       let currentAttributes = this.data.data.attributes;
       for (const attribute in currentAttributes) {
@@ -443,41 +444,51 @@ export class BladesActor extends Actor {
         skillsChanged = true;
       }
 
+
+
+
+
       //check for added abilities
-      let all_abilities = await game.packs.get("blades-in-the-dark.ability").getDocuments();
-      let pb_abilities = all_abilities.filter(ab=> ab.data.data.class === selected_playbook_source.name);
-      let my_abilities = this.items.filter(i => i.type === "ability");
-      for (const ability of my_abilities) {
-        if(!pb_abilities.some(ab=> ab.name === ability.name)){
-          newAbilities = true;
-        }
-        //check for purchased abilities
-        if(ability.data.data.purchased){
-          ownedAbilities = true;
+      let all_abilities = await BladesHelpers.getSourcedItemsByType("ability");
+      if(all_abilities){
+        let pb_abilities = all_abilities.filter(ab=> ab.data.data.class === selected_playbook_source.name);
+        let my_abilities = this.items.filter(i => i.type === "ability");
+        for (const ability of my_abilities) {
+          if(!pb_abilities.some(ab=> ab.name === ability.name)){
+            newAbilities = true;
+          }
+          //check for purchased abilities
+          if(ability.data.data.purchased){
+            ownedAbilities = true;
+          }
         }
       }
 
       //check for non-default acquaintances
-      let all_acquaintances = await game.packs.get("blades-in-the-dark.npc").getDocuments();
-      let pb_acquaintances = all_acquaintances.filter(acq=>acq.data.data.associated_class === selected_playbook_source.name);
-      let my_acquaintances = this.data.data.acquaintances;
-      for (const my_acq of my_acquaintances) {
-        if(!pb_acquaintances.some(acq=> acq.id === my_acq.id || acq.id === my_acq._id)){
-          acquaintanceList = true;
-        }
-        //check for acquaintance relationships
-        if(my_acq.standing !== "neutral"){
-          relationships = true;
+      let all_acquaintances = await BladesHelpers.getSourcedItemsByType("npc");
+      if(all_acquaintances){
+        let pb_acquaintances = all_acquaintances.filter(acq=>acq.data.data.associated_class === selected_playbook_source.name);
+        let my_acquaintances = this.data.data.acquaintances;
+        for (const my_acq of my_acquaintances) {
+          if(!pb_acquaintances.some(acq=> acq.id === my_acq.id || acq.id === my_acq._id)){
+            acquaintanceList = true;
+          }
+          //check for acquaintance relationships
+          if(my_acq.standing !== "neutral"){
+            relationships = true;
+          }
         }
       }
 
       //check for added items
-      let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
-      let pb_items = all_items.filter(i=> i.data.data.class === selected_playbook_source.name);
-      let my_non_generic_items = this.items.filter(i=> i.type === "item" && i.data.data.class !== "");
-      for (const myNGItem of my_non_generic_items) {
-        if(!pb_items.some(i=> i.name ===  myNGItem.name)){
-          addedItems = true;
+      let all_items = await BladesHelpers.getSourcedItemsByType("item");
+      if(all_items){
+        let pb_items = all_items.filter(i=> i.data.data.class === selected_playbook_source.name);
+        let my_non_generic_items = this.items.filter(i=> i.type === "item" && i.data.data.class !== "");
+        for (const myNGItem of my_non_generic_items) {
+          if(!pb_items.some(i=> i.name ===  myNGItem.name)){
+            addedItems = true;
+          }
         }
       }
     }
@@ -545,7 +556,7 @@ export class BladesActor extends Actor {
    */
   async addGenericItems(){
     console.log("%cAdding generic items", "color: green");
-    let all_items = await game.packs.get("blades-in-the-dark.item").getDocuments();
+    let all_items = await BladesHelpers.getSourcedItemsByType("item");
     let new_items = all_items.filter(item => item.data.data.class == "");
     let items_to_add = BladesHelpers.filterItemsForDuplicatesOnActor(new_items, "item", this);
     let added = await this.createEmbeddedDocuments("Item", items_to_add.map(item => item.data), {noHook: true});
@@ -606,7 +617,7 @@ export class BladesActor extends Actor {
   async addPlaybookAcquaintances(playbook_name){
     console.log("%cAdding new playbook acquaintances", "color: green");
     //add class aquaintances
-    let all_npcs = await game.packs.get("blades-in-the-dark.npc").getDocuments();
+    let all_npcs = await BladesHelpers.getSourcedItemsByType("npc");
     let current_acquaintances = this.data.data.acquaintances;
     let new_class_acquaintances = all_npcs.filter(obj => {
       let class_match = obj.data.data.associated_class == playbook_name

@@ -84,6 +84,7 @@ export class BladesSheet extends ActorSheet {
     }
 
     let items = await BladesHelpers.getAllItemsByType(item_type);
+    items = items.map(i=> i.data);
 
     let html = `<div id="items-to-add">`;
 
@@ -134,6 +135,7 @@ export class BladesSheet extends ActorSheet {
   async addItemsToSheet(item_type, el) {
 
     let items = await BladesHelpers.getAllItemsByType(item_type);
+    items = items.map(i=> i.data);
     let items_to_add = [];
 
     el.find("input:checked").each(function() {
