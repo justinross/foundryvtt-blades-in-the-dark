@@ -381,7 +381,7 @@ export class BladesActorSheet extends BladesSheet {
       data.selected_playbook_full = await BladesHelpers.getItemByType("class", data.data.playbook);
       if(typeof data.selected_playbook_full != "undefined"){
         data.selected_playbook_name = data.selected_playbook_full.name;
-        data.selected_playbook_description = data.selected_playbook_full.data.description;
+        data.selected_playbook_description = data.selected_playbook_full.data.data.description;
       }
     }
     let available_abilities = data.items.filter(item => item.type == "ability" );

@@ -510,6 +510,7 @@ export class BladesActor extends Actor {
       await this.deleteAbilities(selectedOptions.abilities, old_playbook_name);
       await this.deleteAcquaintances(selectedOptions.acquaintances, old_playbook_name);
       await this.deletePlaybookItems(selectedOptions.playbookitems, old_playbook_name);
+      await this.clearGenericItems();
     }
     switch(selectedOptions.skillpoints){
       case "keep":
@@ -521,6 +522,7 @@ export class BladesActor extends Actor {
     await this.addPlaybookAbilities(new_playbook_name);
     await this.addPlaybookAcquaintances(new_playbook_name);
     await this.addPlaybookItems(new_playbook_name);
+    await this.addGenericItems();
   }
 
   /**
@@ -529,16 +531,12 @@ export class BladesActor extends Actor {
    * @param {boolean} keep_custom_items
    * @returns {object} // the OwnedItems deleted
    */
-  async clearGenericItems(keep_custom_items = false){
+  async clearGenericItems(){
     console.log("%cDeleting generic items", "color: orange");
     let current_generic_items = this.items.filter(item => item.type == "item" && item.data.data.class == "");
     let items_to_delete = [];
-    //todo keep_custom_items doesn't do anything, it seems
     for(const item of current_generic_items){
       let keep = false;
-      if(keep_custom_items){
-        keep = false;
-      }
       if(!keep){
         items_to_delete.push(item.id);
       }

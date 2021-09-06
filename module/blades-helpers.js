@@ -352,18 +352,17 @@ export class BladesHelpers {
     return playbook.name;
   }
 
-  static async checkIfCustom(playbook_name, entity){
+  static async checkIfDefault(playbook_name, entity){
     let custom = false;
-    console.log(entity);
     switch(entity.type){
       case "ability":
-        custom = playbook_name == entity.data.data.class;
+        custom = playbook_name === entity.data.data.class;
         break;
       case "item":
-        custom = playbook_name == entity.data.data.class;
+        custom = playbook_name === entity.data.data.class;
         break;
       case "npc":
-        custom = playbook_name == entity.data.data.associated_class;
+        custom = playbook_name === entity.data.data.associated_class;
         break;
     }
     return custom;
