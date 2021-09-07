@@ -10,7 +10,7 @@
                 class="fab fa-creative-commons-zero nullifier"></i></label>-->
         <input type="radio" id="{{../actor._id}}-{{attribute_name}}-exp-0"
                name="data.attributes.{{attribute_name}}.exp" value="0" checked="checked" class="zero">
-        {{#times_from_1 6}}
+        {{#times_from_1 attribute.exp_max}}
           <input type="radio" id="character-{{../../actor._id}}-{{attribute_name}}-{{this}}" name="data.attributes.{{attribute_name}}.exp" value="{{this}}" dtype="Radio" class="radio-toggle" >
           <label for="character-{{../../actor._id}}-{{attribute_name}}-{{this}}" class="{{#if (gte attribute.exp @this)}}on{{/if}} radio-toggle"  ></label>
         {{/times_from_1}}

@@ -95,7 +95,7 @@
                 {{#multiboxes data.experience}}
                   <input type="radio" id="{{../actor.id}}-experience-0"
                         name="data.experience" value="0" checked="checked" class="zero">
-                  {{#times_from_1 8}}
+                  {{#times_from_1 data.experience_max}}
                     <input type="radio" id="character-{{../../actor.id}}-experience-{{this}}" name="data.experience" value="{{this}}" dtype="Radio" class="radio-toggle" >
                     <label for="character-{{../../actor.id}}-experience-{{this}}" class="{{#if (gte ../data.experience @this)}}on{{/if}} radio-toggle"  ></label>
                   {{/times_from_1}}
