@@ -32,32 +32,37 @@ export class BladesActorSheet extends BladesSheet {
   }
 
   async handleDrop(event, droppedEntity){
-	  let droppedEntityFull;
-    if("pack" in droppedEntity){
-      droppedEntityFull = await game.packs.get(droppedEntity.pack).getDocument(droppedEntity.id);
-    }
-    else{
-      switch(droppedEntity.type){
-        case "Actor":
+	  if(this.actor.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OWNER)){
+      let droppedEntityFull;
+      if("pack" in droppedEntity){
+        droppedEntityFull = await game.packs.get(droppedEntity.pack).getDocument(droppedEntity.id);
+      }
+      else{
+        switch(droppedEntity.type){
+          case "Actor":
             droppedEntityFull = game.actors.find(actor=> actor.id === droppedEntity.id);
+            break;
+          case "Item":
+            droppedEntityFull = game.actors.find(actor=> actor.id === droppedEntity.id);
+            break;
+        }
+      }
+      console.log(droppedEntityFull);
+      switch (droppedEntityFull.type) {
+        case "npc":
+          await this.actor.addAcquaintance(droppedEntityFull);
           break;
-        case "Item":
-          droppedEntityFull = game.actors.find(actor=> actor.id === droppedEntity.id);
+        case "item":
+          break;
+        case "ability":
+          break;
+        default:
+          await this.onDroppedFieldItem(droppedEntityFull);
           break;
       }
     }
-    console.log(droppedEntityFull);
-    switch (droppedEntityFull.type) {
-      case "npc":
-        await this.actor.addAcquaintance(droppedEntityFull);
-        break;
-      case "item":
-        break;
-      case "ability":
-        break;
-      default:
-        await this.onDroppedFieldItem(droppedEntityFull);
-        break;
+	  else{
+      ui.notifications.error(`You do not have sufficient permissions to edit this character. Please speak to your GM if you feel you have reached this message in error.`, {permanent: true});
     }
   }
 
