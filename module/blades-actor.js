@@ -46,15 +46,10 @@ export class BladesActor extends Actor {
     //see if the playbook is being changed
     if(changed.data?.playbook && this.data.data.playbook && this.data.data.playbook !== ""){
       //if the promise is resolved, change the playbook and do the housekeeping
-      try{
-        this.showPlaybookChangeDialog(changed).then((selectedOptions)=>{
+        await this.showPlaybookChangeDialog(changed).then((selectedOptions)=>{
           this.setUpNewPlaybook(selectedOptions, this.data.data.playbook, changed.data.playbook);
-        });
-      }
-      //if not, don't change the playbook
-      catch(e){
-        delete changed.data.playbook;
-      }
+        //if not, don't change the playbook
+        }).catch(err => delete changed.data.playbook);
     }
     return await super._preUpdate(changed, options, user);
   }
@@ -123,7 +118,7 @@ export class BladesActor extends Actor {
               }
             }
           },
-          close: () => {console.log("close reject"); reject();}
+          close: () => {reject();}
         });
         pbConfirm.render(true);
       }
