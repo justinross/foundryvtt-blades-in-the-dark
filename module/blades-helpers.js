@@ -34,7 +34,7 @@ export class BladesHelpers {
   }
 
   /**
-   * Identifies duplicate items by type and returns a array of item ids to remove
+   * Compares a list of items to those already present on the provided actor and returns a deduped array
    *
    * @param {Object} item_data
    * @param {Document} actor
@@ -42,15 +42,12 @@ export class BladesHelpers {
    *
    */
   static filterItemsForDuplicatesOnActor(item_list, type, actor, check_trimmed_name = false) {
-    let unduped_list = [];
-    let distinct_types = ["crew_reputation", "class", "vice", "background", "heritage", "ability"];
-    let allowed_types = ["item"];
+    let deduped_list = [];
     let existing_items = actor.items.filter(i=> i.type === type);
-    let should_be_distinct = distinct_types.includes(type);
 
     // If the Item has the exact same name - remove it from list.
     // Remove Duplicate items from the array.
-    unduped_list = item_list.filter(new_item => {
+    deduped_list = item_list.filter(new_item => {
       if(check_trimmed_name){
         return !existing_items.some(existing => this.trimClassFromName(new_item.name) === this.trimClassFromName(existing.name));
       }
@@ -59,7 +56,20 @@ export class BladesHelpers {
       }
     })
 
-    return unduped_list;
+    return deduped_list;
+  }
+
+  /**
+   * Returns a list of owned items with the same type as the passed item
+   *
+   * @param {Object} item_data the item being added
+   * @param {Document} actor
+   * @returns {Array}
+   *
+   */
+  static getExistingItemsByType(item_data, actor) {
+    let ownedItemsOfSameType = actor.items.filter(i=> i.type === item_data.type);
+    return ownedItemsOfSameType;
   }
 
   static groupItemsByClass(item_list, generic_last = true){

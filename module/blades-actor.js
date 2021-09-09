@@ -54,6 +54,45 @@ export class BladesActor extends Actor {
     return await super._preUpdate(changed, options, user);
   }
 
+  async replaceDistinctItems(item_data){
+    let updateData;
+    let all_items_of_type = this.items.filter(item => item.type == item_data.type);
+
+    all_items_of_type = all_items_of_type.map(item => {
+      return item.id;
+    });
+
+    if(all_items_of_type.length > 0){
+      await this.deleteEmbeddedDocuments("Item", all_items_of_type);
+    }
+
+    switch(item_data.type){
+      //set the character playbook if a class is dropped
+      case "class":
+        let class_id = item_data.id;
+        updateData = {data : { playbook : class_id}};
+        break;
+      //set the character background
+      case "background":
+        let background = item_data.name;
+        updateData = {data : { background : background}};
+        break;
+      //set the character heritage
+      case "heritage":
+        let heritage = item_data.name;
+        updateData = {data : { heritage : heritage}};
+        break;
+      //set the character vice
+      case "vice":
+        let vice = item_data.name;
+        updateData = {data : { vice : vice}};
+        break;
+    }
+
+    //finalize the updated data
+    await this.update(updateData);
+  }
+
   /** @override */
   getRollData() {
     const data = super.getRollData();

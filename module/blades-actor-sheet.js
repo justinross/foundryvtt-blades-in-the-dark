@@ -22,47 +22,52 @@ export class BladesActorSheet extends BladesSheet {
   }
 
   async _onDropItem(event, droppedItem) {
-	  this.handleDrop(event, droppedItem);
+    if (!this.actor.isOwner) {
+      ui.notifications.error(`You do not have sufficient permissions to edit this character. Please speak to your GM if you feel you have reached this message in error.`, {permanent: true});
+      return false;
+    }
+	  await this.handleDrop(event, droppedItem);
     return super._onDropItem(event, droppedItem);
   }
 
   async _onDropActor(event, droppedActor){
-    this.handleDrop(event, droppedActor);
+    if (!this.actor.isOwner) {
+      ui.notifications.error(`You do not have sufficient permissions to edit this character. Please speak to your GM if you feel you have reached this message in error.`, {permanent: true});
+      return false;
+    }
+    await this.handleDrop(event, droppedActor);
     return super._onDropActor(event, droppedActor);
   }
 
   async handleDrop(event, droppedEntity){
-	  if(this.actor.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OWNER)){
-      let droppedEntityFull;
-      if("pack" in droppedEntity){
-        droppedEntityFull = await game.packs.get(droppedEntity.pack).getDocument(droppedEntity.id);
-      }
-      else{
-        switch(droppedEntity.type){
-          case "Actor":
-            droppedEntityFull = game.actors.find(actor=> actor.id === droppedEntity.id);
-            break;
-          case "Item":
-            droppedEntityFull = game.actors.find(actor=> actor.id === droppedEntity.id);
-            break;
-        }
-      }
-      console.log(droppedEntityFull);
-      switch (droppedEntityFull.type) {
-        case "npc":
-          await this.actor.addAcquaintance(droppedEntityFull);
+    let droppedEntityFull;
+    //if the dropped entity is from a compendium, get the full entity from there
+    if("pack" in droppedEntity){
+      droppedEntityFull = await game.packs.get(droppedEntity.pack).getDocument(droppedEntity.id);
+    }
+    //otherwise get it from the world
+    else{
+      switch(droppedEntity.type){
+        case "Actor":
+          droppedEntityFull = game.actors.find(actor=> actor.id === droppedEntity.id);
           break;
-        case "item":
-          break;
-        case "ability":
-          break;
-        default:
-          await this.onDroppedFieldItem(droppedEntityFull);
+        case "Item":
+          droppedEntityFull = game.actors.find(actor=> actor.id === droppedEntity.id);
           break;
       }
     }
-	  else{
-      ui.notifications.error(`You do not have sufficient permissions to edit this character. Please speak to your GM if you feel you have reached this message in error.`, {permanent: true});
+    switch (droppedEntityFull.type) {
+      case "npc":
+        await this.actor.addAcquaintance(droppedEntityFull);
+        break;
+      case "item":
+        break;
+      case "ability":
+        break;
+      default:
+        await this.actor.replaceDistinctItems(droppedEntityFull);
+        // await this.onDroppedDistinctItem(droppedEntityFull);
+        break;
     }
   }
 
@@ -126,35 +131,6 @@ export class BladesActorSheet extends BladesSheet {
   }
 
 
-async onDroppedFieldItem(droppedFieldItem){
-  let updateData;
-  switch(droppedFieldItem.type){
-    case "class":
-      let class_id = droppedFieldItem.id;
-      updateData = {data : { playbook : class_id}};
-        console.log(droppedFieldItem);
-        break;
-      case "background":
-        let background = droppedFieldItem.name;
-        updateData = {data : { background : background}};
-        break;
-      case "heritage":
-        let heritage = droppedFieldItem.name;
-        updateData = {data : { heritage : heritage}};
-        break;
-      case "vice":
-        let vice = droppedFieldItem.name;
-        updateData = {data : { vice : vice}};
-        break;
-    }
-
-    await this.actor.update(updateData);
-    let all_items_of_type = this.actor.items.filter(item => item.type == droppedFieldItem.type);
-    all_items_of_type = all_items_of_type.map(item => {
-      return item.id;
-    });
-    await this.actor.deleteEmbeddedDocuments("Item", all_items_of_type);
-  }
 
   itemContextMenu = [
     {
