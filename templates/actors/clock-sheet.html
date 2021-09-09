@@ -3,7 +3,6 @@
     <div class="flexcol blades-clock-name-type">
         {{#if editable}}
         <input type="text" id="{{actor.id}}-clock-name" name="name" value="{{actor.name}}">
-        {{log actor}}
 
         <select data-type="String" name="data.type">
             {{#select data.type}}
@@ -15,7 +14,7 @@
         {{/if}}
 
         <div class="clocks clocks-{{data.type}}">
-            {{{blades-clock "data.value" data.type data.value actor._id}}}
+            {{{blades-clock "data.value" data.type data.value item.id}}}
         </div>
     </div>
 </form>

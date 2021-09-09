@@ -74,7 +74,6 @@ export class BladesSheet extends ActorSheet {
 
   async _onItemAddClick(event) {
     event.preventDefault();
-    console.log("testing");
     const item_type = $(event.currentTarget).data("itemType")
     const distinct = $(event.currentTarget).data("distinct")
     let input_type = "checkbox";

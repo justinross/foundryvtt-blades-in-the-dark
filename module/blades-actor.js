@@ -289,7 +289,7 @@ export class BladesActor extends Actor {
   createListOfDiceMods(rs, re, s) {
   
     var text = ``;
-    var i;
+    var i = 0;
   
     if ( s === "" ) {
       s = 0;
