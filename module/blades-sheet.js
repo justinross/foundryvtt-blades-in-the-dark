@@ -27,7 +27,10 @@ export class BladesSheet extends ActorSheet {
     });
 
     html.find("input.radio-toggle, label.radio-toggle").click(e => e.preventDefault());
-    html.find("input.radio-toggle, label.radio-toggle").mousedown(this._onRadioToggle.bind(this));
+    html.find("input.radio-toggle, label.radio-toggle").mousedown(e => {
+      this._onRadioToggle(e);
+      console.log(e.target);
+    });
   }
 
   //allow for radio button toggling. Clicking an already-clicked radio button will deselect it, and select the next-lowest value. Only works with numeric values, of course.

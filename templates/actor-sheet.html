@@ -93,11 +93,11 @@
                 <span class="context-abilities">{{localize "BITD.SpecialAbilities"}}{{#if actor.flags.blades-in-the-dark.allow-edit}}</span><a class="ability-add-popup add-button" data-item-type="ability" data-group-by="data.class"><i class="fas fa-plus"></i></a>{{/if}}
                 <div class="stripe-tooth-body right">
                 {{#multiboxes data.experience}}
-                  <input type="radio" id="{{../actor.id}}-experience-0"
+                  <input type="radio" id="{{actor.id}}-experience-0"
                         name="data.experience" value="0" checked="checked" class="zero">
                   {{#times_from_1 data.experience_max}}
-                    <input type="radio" id="character-{{../../actor.id}}-experience-{{this}}" name="data.experience" value="{{this}}" dtype="Radio" class="radio-toggle" >
-                    <label for="character-{{../../actor.id}}-experience-{{this}}" class="{{#if (gte ../data.experience @this)}}on{{/if}} radio-toggle"  ></label>
+                    <input type="radio" id="character-{{../actor._id}}-experience-{{this}}" name="data.experience" value="{{this}}" dtype="Radio" class="radio-toggle" >
+                    <label for="character-{{../actor._id}}-experience-{{this}}" class="{{#if (gte ../data.experience @this)}}on{{/if}} radio-toggle"  ></label>
                   {{/times_from_1}}
                 {{/multiboxes}}
                 </div>
