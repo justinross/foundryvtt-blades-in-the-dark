@@ -89,8 +89,8 @@
         <div class="tab" data-tab="playbook" data-group="primary-tabs">
           <div class="playbook">
             <section class="abilities">
-              <header class="full-bar context-abilities">
-                {{localize "BITD.SpecialAbilities"}}{{#if actor.flags.blades-in-the-dark.allow-edit}}<a class="ability-add-popup add-button" data-item-type="ability" data-group-by="data.class"><i class="fas fa-plus"></i></a>{{/if}}
+              <header class="full-bar">
+                <span class="context-abilities">{{localize "BITD.SpecialAbilities"}}{{#if actor.flags.blades-in-the-dark.allow-edit}}</span><a class="ability-add-popup add-button" data-item-type="ability" data-group-by="data.class"><i class="fas fa-plus"></i></a>{{/if}}
                 <div class="stripe-tooth-body right">
                 {{#multiboxes data.experience}}
                   <input type="radio" id="{{../actor.id}}-experience-0"
