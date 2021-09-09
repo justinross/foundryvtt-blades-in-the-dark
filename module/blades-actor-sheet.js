@@ -66,13 +66,72 @@ export class BladesActorSheet extends BladesSheet {
     }
   }
 
+  async generateAddExistingItemDialog(item_type){
+    let all_items = await BladesHelpers.getSourcedItemsByType(item_type);
+    all_items = BladesHelpers.filterItemsForDuplicatesOnActor(all_items, item_type, this.actor, true);
+    let grouped_items = {};
 
-  async onDroppedFieldItem(droppedFieldItem){
-	  let updateData;
-	  switch(droppedFieldItem.type){
-      case "class":
-        let class_id = droppedFieldItem.id;
-        updateData = {data : { playbook : class_id}};
+    let items_html = '<div class="items-list">';
+    let sorted_grouped_items = BladesHelpers.groupItemsByClass(all_items);
+
+    for (const [itemclass, group] of Object.entries(sorted_grouped_items)) {
+      items_html += `<div class="item-group"><header>${itemclass}</header>`;
+      for (const item of group) {
+        let trimmedname = BladesHelpers.trimClassFromName(item.name);
+        items_html += `
+            <div class="item-block">
+              <input type="checkbox" id="character-${this.actor.id}-${item_type}add-${item.id}" data-${item_type}-id="${item.id}" >
+              <label for="character-${this.actor.id}-${item_type}add-${item.id}" title="${item.data.data.description}" class="hover-term">${trimmedname}</label>
+            </div>
+          `;
+      }
+      items_html += '</div>';
+    }
+
+    items_html += '</div>';
+
+    let d = new Dialog({
+      title: game.i18n.localize("BITD.AddExisting" + BladesHelpers.capitalizeFirstLetter(item_type)),
+      content:  `<h3>${game.i18n.localize("BITD.SelectToAdd" + BladesHelpers.capitalizeFirstLetter(item_type))}</h3>
+                    ${items_html}
+                    `,
+      buttons: {
+        add: {
+          icon: "<i class='fas fa-check'></i>",
+          label: game.i18n.localize("BITD.Add"),
+          callback: async (html)=> {
+            let itemInputs = html.find("input:checked");
+            let items = [];
+            for (const itemelement of itemInputs) {
+              let item = await BladesHelpers.getItemByType(item_type, itemelement.dataset[item_type + "Id"]);
+              items.push(item.data);
+            }
+            this.actor.createEmbeddedDocuments("Item", items);
+          }
+        },
+        cancel: {
+          icon: "<i class='fas fa-times'></i>",
+          label: game.i18n.localize("BITD.Cancel"),
+          callback: ()=> close()
+        }
+      },
+      render: (html) => {
+        this.addTermTooltips(html);
+      },
+      close: (html) => {
+
+      }
+    }, {classes:["add-existing-dialog"], width: "650"});
+    d.render(true);
+  }
+
+
+async onDroppedFieldItem(droppedFieldItem){
+  let updateData;
+  switch(droppedFieldItem.type){
+    case "class":
+      let class_id = droppedFieldItem.id;
+      updateData = {data : { playbook : class_id}};
         console.log(droppedFieldItem);
         break;
       case "background":
@@ -119,61 +178,7 @@ export class BladesActorSheet extends BladesSheet {
       name: game.i18n.localize("BITD.AddExistingItem"),
       icon: '<i class="fas fa-plus"></i>',
       callback: async (element) => {
-        let all_items = await BladesHelpers.getSourcedItemsByType("item");
-        let grouped_items = {};
-
-        let items_html = '<div class="items-list">';
-        let sorted_grouped_items = BladesHelpers.groupItemsByClass(all_items);
-
-        for (const [itemclass, group] of Object.entries(sorted_grouped_items)) {
-          items_html += `<div class="item-group"><header>${itemclass}</header>`;
-          for (const item of group) {
-            let trimmedname = item.name.replace(/\([^)]*\)\ /, "");
-            items_html += `
-            <div class="item-block">
-              <input type="checkbox" id="character-${this.actor.id}-itemadd-${item.id}" data-item-id="${item.id}" >
-              <label for="character-${this.actor.id}-itemadd-${item.id}">${trimmedname}</label>
-            </div>
-          `;
-          }
-          items_html += '</div>';
-        }
-        items_html += '</div>';
-
-        console.log(items_html);
-        let d = new Dialog({
-          title: game.i18n.localize("BITD.AddExistingItem"),
-          content:  `<h3>Select items to add:</h3>
-                    ${items_html}
-                    `,
-          buttons: {
-            add: {
-              icon: "<i class='fas fa-check'></i>",
-              label: "Add",
-              callback: async (html)=> {
-                let itemInputs = html.find("input:checked");
-                let items = [];
-                for (const itemelement of itemInputs) {
-                  let item = await BladesHelpers.getItemByType("item", itemelement.dataset.itemId);
-                  items.push(item.data);
-                }
-                this.actor.createEmbeddedDocuments("Item", items);
-              }
-            },
-            cancel: {
-              icon: "<i class='fas fa-times'></i>",
-              label: "Cancel",
-              callback: ()=> close()
-            }
-          },
-          render: (html) => {
-
-          },
-          close: (html) => {
-
-          }
-        }, {classes:["add-existing-dialog"], width: "650"});
-        d.render(true);
+        await this.generateAddExistingItemDialog("item", this.actor);
       }
     }
   ];
@@ -226,60 +231,7 @@ export class BladesActorSheet extends BladesSheet {
       name: game.i18n.localize("BITD.AddExistingAbility"),
       icon: '<i class="fas fa-plus"></i>',
       callback: async (element) => {
-        let all_abilities = await BladesHelpers.getSourcedItemsByType("ability");
-        let grouped_abilities = {};
-
-        let abilities_html = '<div class="items-list">';
-        let sorted_grouped_abilities = BladesHelpers.groupItemsByClass(all_abilities);
-
-        for (const [abilityclass, group] of Object.entries(sorted_grouped_abilities)) {
-          abilities_html += `<div class="item-group"><header>${abilityclass}</header>`;
-          for (const ability of group) {
-            let trimmedname = ability.name.replace(/\([^)]*\)\ /, "");
-            abilities_html += `
-            <div class="item-block">
-              <input type="checkbox" id="character-${this.actor.id}-abilityadd-${ability.id}" data-ability-id="${ability.id}" >
-              <label for="character-${this.actor.id}-abilityadd-${ability.id}">${trimmedname}</label>
-            </div>
-          `;
-          }
-          abilities_html += '</div>';
-        }
-
-        abilities_html += '</div>';
-        let d = new Dialog({
-          title: game.i18n.localize("BITD.AddExistingAbility"),
-          content:  `<h3>Select abilities to add:</h3>
-                    ${abilities_html}
-                    `,
-          buttons: {
-            add: {
-              icon: "<i class='fas fa-check'></i>",
-              label: "Add",
-              callback: async (html)=> {
-                let abilityInputs = html.find("input:checked");
-                let abilities = [];
-                for (const abilityelement of abilityInputs) {
-                  let ability = await BladesHelpers.getItemByType("ability", abilityelement.dataset.abilityId);
-                  abilities.push(ability.data);
-                }
-                this.actor.createEmbeddedDocuments("Item", abilities);
-              }
-            },
-            cancel: {
-              icon: "<i class='fas fa-times'></i>",
-              label: "Cancel",
-              callback: ()=> close()
-            }
-          },
-          render: (html) => {
-
-          },
-          close: (html) => {
-
-          }
-        }, {classes:["add-existing-dialog"], width: "650"});
-        d.render(true);
+        await this.generateAddExistingItemDialog("ability", this.actor);
       }
     }
   ];
@@ -444,7 +396,6 @@ export class BladesActorSheet extends BladesSheet {
 
   addTermTooltips(html){
     html.find('.hover-term').hover(function(e){ // Hover event
-      //todo: the title doesn't need to get added in the hover event
       var titleText;
       if(e.target.title == ""){
         titleText = BladesLookup.getTerm($(this).text());

@@ -25,6 +25,14 @@ export class BladesHelpers {
     return dupe_list;
   }
 
+  static trimClassFromName(name){
+    return name.replace(/\([^)]*\)\ /, "");
+  }
+
+  static capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   /**
    * Identifies duplicate items by type and returns a array of item ids to remove
    *
@@ -33,7 +41,7 @@ export class BladesHelpers {
    * @returns {Array}
    *
    */
-  static filterItemsForDuplicatesOnActor(item_list, type, actor) {
+  static filterItemsForDuplicatesOnActor(item_list, type, actor, check_trimmed_name = false) {
     let unduped_list = [];
     let distinct_types = ["crew_reputation", "class", "vice", "background", "heritage", "ability"];
     let allowed_types = ["item"];
@@ -43,7 +51,12 @@ export class BladesHelpers {
     // If the Item has the exact same name - remove it from list.
     // Remove Duplicate items from the array.
     unduped_list = item_list.filter(new_item => {
-      return !existing_items.some(existing => new_item.name === existing.name);
+      if(check_trimmed_name){
+        return !existing_items.some(existing => this.trimClassFromName(new_item.name) === this.trimClassFromName(existing.name));
+      }
+      else{
+        return !existing_items.some(existing => new_item.name === existing.name);
+      }
     })
 
     return unduped_list;
