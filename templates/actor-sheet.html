@@ -23,14 +23,14 @@
 
         </div>        <div class="stress-trauma-box">
           <header class="stress-bar full-bar">
-            {{localize "BITD.Stress"}}
+            {{localize data.stress.name}}
             <div class="stripe-tooth-body stress">
             {{#multiboxes data.stress.value}}
-              <input type="radio" id="{{../actor.id}}-stress-0"
+              <input type="radio" id="{{../actor._id}}-stress-0"
                      name="data.stress.value" value="0" checked="checked" class="zero">
               {{#times_from_1 data.stress.max}}
-                <input type="radio" id="character-{{../../actor.id}}-stress-{{this}}" name="data.stress.value" value="{{this}}" dtype="Radio" class="radio-toggle" >
-                <label for="character-{{../../actor.id}}-stress-{{this}}" class="{{#if (gte ../data.stress.value @this)}}on{{/if}} radio-toggle"  ></label>
+                <input type="radio" id="character-{{../actor._id}}-stress-{{this}}" name="data.stress.value" value="{{this}}" dtype="Radio" class="radio-toggle" >
+                <label for="character-{{../actor._id}}-stress-{{this}}" class="{{#if (gte ../data.stress.value @this)}}on{{/if}} radio-toggle"  ></label>
               {{/times_from_1}}
             {{/multiboxes}}
             </div>
@@ -42,7 +42,7 @@
                   <div class="trauma-item" data-trauma="{{trauma}}">{{localize (concat "BITD.Trauma" (upper-first trauma))}}</div>
                 {{/each}}
                 {{else}}
-                  <em>{{localize "BITD.Trauma"}}</em>
+                  <em>{{localize data.trauma.name}}</em>
                 {{/if}}
 
                 <i class="fas fa-plus add_trauma"></i>
@@ -54,12 +54,12 @@
         </div>
       </section>
       <div class="name-alias bio">
-        <span class="name">{{{inline-editable-text "name" (localize "BITD.Name") actor.name actor.id this}}}</span> <span class="alias">&bull; "{{{inline-editable-text "data.alias" (localize "BITD.Alias") data.alias actor.id this}}}"</span>
+        <span class="name">{{{inline-editable-text "name" (localize "BITD.Name") actor.name actor._id this}}}</span> <span class="alias">&bull; "{{{inline-editable-text "data.alias" (localize "BITD.Alias") data.alias actor._id this}}}"</span>
       </div>
       <div class="heritage-background bio">
-        {{{inline-editable-text "data.heritage" "Heritage" data.heritage actor.id this}}} &bull; {{{inline-editable-text "data.background" "Background" data.background actor.id this}}} &bull; {{{inline-editable-text "data.background-details" "Background Details" data.background-details actor.id this}}} &bull; {{{inline-editable-text "data.vice" "Vice" data.vice actor.id this}}} &bull; {{{inline-editable-text "data.vice-purveyor" "Vice Purveyor" data.vice-purveyor actor.id this}}}
+        {{{inline-editable-text "data.heritage" "Heritage" data.heritage actor._id this}}} &bull; {{{inline-editable-text "data.background" "Background" data.background actor._id this}}} &bull; {{{inline-editable-text "data.background-details" "Background Details" data.background-details actor._id this}}} &bull; {{{inline-editable-text "data.vice" "Vice" data.vice actor._id this}}} &bull; {{{inline-editable-text "data.vice-purveyor" "Vice Purveyor" data.vice-purveyor actor._id this}}}
       </div>
-      <div class="look bio">{{{inline-editable-text "data.look" "Look" data.look actor.id this}}}</div>
+      <div class="look bio">{{{inline-editable-text "data.look" "Look" data.look actor._id this}}}</div>
       <div class="abilities-list">{{#each my_abilities}}<span title="{{this.data.description}}" class="hover-term">{{this.name}}</span>&nbsp;{{#unless @last}}-&nbsp;{{/unless}}{{/each}}</div>
       <section class="attributes-actions">
         {{> "systems/blades-in-the-dark/templates/parts/attributes.html" actor=actor}}
@@ -93,7 +93,7 @@
                 <span class="context-abilities">{{localize "BITD.SpecialAbilities"}}{{#if actor.flags.blades-in-the-dark.allow-edit}}</span><a class="ability-add-popup add-button" data-item-type="ability" data-group-by="data.class"><i class="fas fa-plus"></i></a>{{/if}}
                 <div class="stripe-tooth-body right">
                 {{#multiboxes data.experience}}
-                  <input type="radio" id="{{actor.id}}-experience-0"
+                  <input type="radio" id="{{actor._id}}-experience-0"
                         name="data.experience" value="0" checked="checked" class="zero">
                   {{#times_from_1 data.experience_max}}
                     <input type="radio" id="character-{{../actor._id}}-experience-{{this}}" name="data.experience" value="{{this}}" dtype="Radio" class="radio-toggle" >
@@ -115,10 +115,10 @@
               {{#each my_items as |item index|}}
                 {{#with ../actor as |actor|}}
                 <div class="item-block" data-item-id="{{item._id}}">
-                  <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor.id}}-item-{{item._id}}-1" {{checked item.data.equipped}}><!--
-                  -->{{#if (gte item.data.load 2)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor.id}}-item-{{item._id}}-2" {{checked item.data.equipped}}>{{/if}}<!--
-                  -->{{#if (eq item.data.load 3)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor.id}}-item-{{item._id}}-3"{{checked item.data.equipped}}>{{/if}}
-                  <label class="item-name {{#if (eq item.data.load "0")}}free-item{{/if}} {{#if actor.flags.blades-in-the-dark.allow-edit}}clickable-edit{{/if}}" for="character-{{actor.id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>{{#if actor.flags.blades-in-the-dark.allow-edit}}<a class="item-delete delete-button" data-type="item" data-id="{{item._id}}"><i class="fas fa-trash"></i></a>{{/if}}
+                  <input type="checkbox" class="item-checkbox main-checkbox" id="character-{{actor._id}}-item-{{item._id}}-1" {{checked item.data.equipped}}><!--
+                  -->{{#if (gte item.data.load 2)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor._id}}-item-{{item._id}}-2" {{checked item.data.equipped}}>{{/if}}<!--
+                  -->{{#if (eq item.data.load 3)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3"{{checked item.data.equipped}}>{{/if}}
+                  <label class="item-name {{#if (eq item.data.load "0")}}free-item{{/if}} {{#if actor.flags.blades-in-the-dark.allow-edit}}clickable-edit{{/if}}" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>{{#if actor.flags.blades-in-the-dark.allow-edit}}<a class="item-delete delete-button" data-type="item" data-id="{{item._id}}"><i class="fas fa-trash"></i></a>{{/if}}
                 </div>
                 {{/with}}
               {{/each}}
@@ -140,10 +140,10 @@
               {{#each generic_items as |item index|}}
                 {{#with ../actor as |actor|}}
                 <div class="item-block" data-item-id="{{item._id}}">
-                  <input type="checkbox" class="item-checkbox main-checkbox {{#if (eq item.data.load "0")}}free-item{{/if}}" id="character-{{actor.id}}-item-{{item._id}}-1" {{checked item.data.equipped}}><!--
-                  -->{{#if (gte item.data.load 2)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox"  id="character-{{actor.id}}-item-{{item._id}}-2" {{checked item.data.equipped}} >{{/if}}<!--
-                  -->{{#if (gte item.data.load 3)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor.id}}-item-{{item._id}}-3" {{checked item.data.equipped}} >{{/if}}
-                  <label class="item-name  {{#if (eq item.data.load "0")}}free-item{{/if}} {{#if actor.flags.blades-in-the-dark.allow-edit}}clickable-edit{{/if}}" for="character-{{actor.id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>{{#if actor.flags.blades-in-the-dark.allow-edit}}<a class="item-delete delete-button" data-type="item" data-id="{{item._id}}"><i class="fas fa-trash"></i></a>{{/if}}
+                  <input type="checkbox" class="item-checkbox main-checkbox {{#if (eq item.data.load "0")}}free-item{{/if}}" id="character-{{actor._id}}-item-{{item._id}}-1" {{checked item.data.equipped}}><!--
+                  -->{{#if (gte item.data.load 2)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox"  id="character-{{actor._id}}-item-{{item._id}}-2" {{checked item.data.equipped}} >{{/if}}<!--
+                  -->{{#if (gte item.data.load 3)}}<span class="join-line"></span><input type="checkbox" class="item-checkbox child-checkbox" id="character-{{actor._id}}-item-{{item._id}}-3" {{checked item.data.equipped}} >{{/if}}
+                  <label class="item-name  {{#if (eq item.data.load "0")}}free-item{{/if}} {{#if actor.flags.blades-in-the-dark.allow-edit}}clickable-edit{{/if}}" for="character-{{actor._id}}-item-{{item._id}}-1" title="{{item.data.description}}">{{item.name}}</label>{{#if actor.flags.blades-in-the-dark.allow-edit}}<a class="item-delete delete-button" data-type="item" data-id="{{item._id}}"><i class="fas fa-trash"></i></a>{{/if}}
                 </div>
                 {{/with}}
               {{/each}}

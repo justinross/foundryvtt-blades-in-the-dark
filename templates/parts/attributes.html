@@ -6,9 +6,7 @@
       <!-- attribute xp -->
       <div class="stripe-tooth-body right">
       {{#multiboxes attribute.exp}}
-        <!-- <label for="{{../actor._id}}-{{attribute_name}}-exp-0"><i
-                class="fab fa-creative-commons-zero nullifier"></i></label>-->
-        <input type="radio" id="{{../actor._id}}-{{attribute_name}}-exp-0"
+        <input type="radio" id="character-{{../actor._id}}-{{attribute_name}}-exp-0"
                name="data.attributes.{{attribute_name}}.exp" value="0" checked="checked" class="zero">
         {{#times_from_1 attribute.exp_max}}
           <input type="radio" id="character-{{../../actor._id}}-{{attribute_name}}-{{this}}" name="data.attributes.{{attribute_name}}.exp" value="{{this}}" dtype="Radio" class="radio-toggle" >
@@ -21,12 +19,12 @@
     {{#each attribute.skills as |skill skill_name|}}
     <div class="action">
         {{#multiboxes skill.value}}
-        <input type="radio" id="attributes-{{../../../actor._id}}-{{skill_name}}-0"
+        <input type="radio" id="skill-{{../../actor._id}}-{{skill_name}}-0"
                name="data.attributes.{{attribute_name}}.skills.{{skill_name}}.value" value="0" class="zero">
           {{#times_from_1 4}}
-          <input type="radio" id="attributes-{{../../../actor._id}}-{{skill_name}}-{{this}}"
+          <input type="radio" id="skill-{{../../../actor._id}}-{{skill_name}}-{{this}}"
                 name="data.attributes.{{attribute_name}}.skills.{{skill_name}}.value" value="{{this}}" class="radio-toggle">
-          <label for="attributes-{{../../../actor._id}}-{{skill_name}}-{{this}}" class="radio-toggle {{#if (gte skill.value this)}}on{{/if}}" ></label>
+          <label for="skill-{{../../../actor._id}}-{{skill_name}}-{{this}}" class="radio-toggle {{#if (gte skill.value this)}}on{{/if}}" ></label>
           {{/times_from_1}}
 
         <div class="attribute-skill-label roll-die-attribute rollable-text" data-roll-attribute="{{skill_name}}">{{localize skill.label}}</div>
