@@ -46,10 +46,13 @@ export class BladesActor extends Actor {
     //see if the playbook is being changed
     if(changed.data?.playbook && this.data.data.playbook && this.data.data.playbook !== ""){
       //if the promise is resolved, change the playbook and do the housekeeping
-        await this.showPlaybookChangeDialog(changed).then((selectedOptions)=>{
-          this.setUpNewPlaybook(selectedOptions, this.data.data.playbook, changed.data.playbook);
+        await this.sheet.showPlaybookChangeDialog(changed).then(async (selectedOptions)=>{
+          //this needs to be awaited to avoid screwing up the drop functionality, but causes a select flicker when it's awaited.
+            this.setUpNewPlaybook(selectedOptions, this.data.data.playbook, changed.data.playbook);
         //if not, don't change the playbook
-        }).catch(err => delete changed.data.playbook);
+        }).catch(() => {
+          delete changed.data.playbook;
+        });
     }
     return await super._preUpdate(changed, options, user);
   }
@@ -102,76 +105,6 @@ export class BladesActor extends Actor {
     return data;
   }
 
-  async showPlaybookChangeDialog(changed){
-    let modifications = await this.modifiedFromPlaybookDefault(this.data.data.playbook);
-    return new Promise(async (resolve, reject)=>{
-      if(modifications){
-        let abilitiesToKeepOptions = {name : "abilities", value:"none", options : {all: "Keep all Abilities", custom: "Keep added abilities", owned: "Keep owned abilities", ghost: `Keep "Ghost" abilities`, none: "Replace all"}};
-        let acquaintancesToKeepOptions = {name : "acquaintances", value:"none", options : {all: "All contacts", friendsrivals: "Keep only friends and rivals", custom: "Keep any added contacts", both: "Keep added contacts and friends/rivals", none: "Replace all"}};
-        let keepSkillPointsOptions = {name : "skillpoints", value:"reset", options : {keep: "Keep current skill points", reset: "Reset to new playbook starting skill points"}};
-        let playbookItemsToKeepOptions = {name : "playbookitems", value: "none", options: {all: "Keep all playbook items", custom: "Keep added items", none: "Replace all"}};
-        let selectTemplate = Handlebars.compile(`<select name="{{name}}" class="pb-migrate-options">{{selectOptions options selected=value}}</select>`)
-        let dialogContent = `
-          <p>Changes have been made to this character that would be overwritten by a playbook switch. Please select how you'd like to handle this data and click "Ok", or click "Cancel" to cancel this change.</p>
-          <p>Note that this process only uses the Item, Ability, Playbook, and NPC compendia to decide what is "default". If you have created entities outside the relevant compendia and added them to your character, those items will be considered "custom" and removed unless you choose to save.</p>
-          <h2>Changes to keep</h2>
-          <div ${modifications.newAbilities || modifications.ownedAbilities ? "" : "hidden"}>
-            <label>Abilities to keep</label>
-            ${selectTemplate(abilitiesToKeepOptions)}
-          </div>
-          <div ${modifications.addedItems ? "" : "hidden"}>
-            <label>Playbook Items</label>
-            ${selectTemplate(playbookItemsToKeepOptions)}
-          </div>
-          <div ${modifications.skillsChanged ? "" : "hidden"}>
-            <label>Skill Points</label>
-            ${selectTemplate(keepSkillPointsOptions)}
-          </div>
-          <div ${modifications.acquaintanceList || modifications.relationships ? "" : "hidden"}>
-            <label>Acquaintances</label>
-            ${selectTemplate(acquaintancesToKeepOptions)}
-          </div>
-        `;
-
-        let pbConfirm = new Dialog({
-          title: `Change playbook to ${await BladesHelpers.getPlaybookName(changed.data.playbook)}?`,
-          content: dialogContent,
-          buttons:{
-            ok:{
-              icon: '<i class="fas fa-check"></i>',
-              label: 'Ok',
-              callback: async (html)=> {
-                let selects = html.find("select.pb-migrate-options");
-                let selectedOptions = {};
-                for (const select of $.makeArray(selects)) {
-                  selectedOptions[select.name] = select.value;
-                };
-                resolve(selectedOptions);
-              }
-            },
-            cancel:{
-              icon: '<i class="fas fa-times"></i>',
-              label: 'Cancel',
-              callback: ()=> {
-                reject();
-              }
-            }
-          },
-          close: () => {reject();}
-        });
-        pbConfirm.render(true);
-      }
-      else{
-        let selectedOptions = {
-          "abilities": "none",
-          "playbookitems": "none",
-          "skillpoints": "reset",
-          "acquaintances": "none"
-        };
-        resolve(selectedOptions);
-      }
-    });
-  }
 
 
   /* -------------------------------------------- */
