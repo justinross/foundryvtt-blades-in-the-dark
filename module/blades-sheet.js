@@ -29,7 +29,6 @@ export class BladesSheet extends ActorSheet {
     html.find("input.radio-toggle, label.radio-toggle").click(e => e.preventDefault());
     html.find("input.radio-toggle, label.radio-toggle").mousedown(e => {
       this._onRadioToggle(e);
-      console.log(e.target);
     });
   }
 
@@ -46,7 +45,7 @@ export class BladesSheet extends ActorSheet {
       //find the next lowest-value input with the same name and click that one instead
       let name = target.name;
       let value = parseInt(target.value) - 1;
-      $(`input[name="${name}"][value="${value}"]`).trigger('click');
+      this.element.find(`input[name="${name}"][value="${value}"]`).trigger('click');
     }
     else{
       //trigger the click on this one
