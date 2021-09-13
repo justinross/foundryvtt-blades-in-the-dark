@@ -179,7 +179,8 @@
         "description": "",
         "class": "",
         "price": 1,
-        "purchased": false
+        "purchased": false,
+        "class_default": false
       },
       "logic": {
         "logic": ""

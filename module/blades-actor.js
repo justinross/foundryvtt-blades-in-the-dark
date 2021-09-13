@@ -26,6 +26,19 @@ export class BladesActor extends Actor {
     return super.create(data, options);
   }
 
+  /** @override */
+  async _onCreateEmbeddedDocuments(embeddedName, documents, result, options, userId){
+    let class_name = await BladesHelpers.getPlaybookName(this.data.data.playbook);
+    if(embeddedName === "Item" && documents.length > 0){
+      for (const document of documents) {
+        if(document.type === "ability" && document.data.data.class_default && document.data.data.class === class_name){
+          await document.update({data : { purchased : true}});
+        }
+      }
+    }
+    super._onCreateEmbeddedDocuments(embeddedName, documents, result, options, userId);
+  }
+
   async _onCreate(data, options, userId) {
     await super._onCreate(data, options, userId);
     console.log(data);
@@ -43,6 +56,8 @@ export class BladesActor extends Actor {
       await this.update(newData);
     }
   }
+
+  // async _onCreateEmbeddedDocuments()
 
   /** @override */
   applyActiveEffects() {

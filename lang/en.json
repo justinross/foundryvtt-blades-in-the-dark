@@ -62,6 +62,7 @@
   "BITD.ExpClues": "Exp Clues",
   "BITD.AbilityPrice": "Ability Price",
   "BITD.AbilityClass": "Ability Class",
+  "BITD.AbilityClassDefault": "Class Default Ability",
   "BITD.Information": "Information",
   "BITD.CohortType": "Cohort Type",
   "BITD.GangType": "Gang Type",

@@ -13,8 +13,11 @@
       <textarea id="{{actor.id}}-item-{{item.id}}-description" name="data.description">{{data.description}}</textarea>
     </section>
     <div class="flex-vertical">
-      <label class="label-stripe">{{localize "BITD.AbilityPrice"}}</label>
-      <input id="ability-price" type="text" name="data.price" value="{{data.price}}" placeholder="{{localize 'BITD.AbilityPrice'}}">
+<!--       <label class="label-stripe">{{localize "BITD.AbilityPrice"}}</label> -->
+<!--       <input id="ability-price" type="text" name="data.price" value="{{data.price}}" placeholder="{{localize 'BITD.AbilityPrice'}}"> -->
+        {{log data}}
+      <label class="label-stripe">{{localize "BITD.AbilityClassDefault"}}</label>
+      <input id="ability-class-default" type="checkbox" name="data.class_default" {{checked data.class_default}} >
       <label class="label-stripe">{{localize "BITD.AbilityClass"}}</label>
       <input id="ability-class" type="text" name="data.class" value="{{data.class}}" placeholder="{{localize 'BITD.AbilityClass'}}">
       {{#if isGM}}
