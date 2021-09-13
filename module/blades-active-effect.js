@@ -35,7 +35,6 @@ export class BladesActiveEffect extends ActiveEffect {
     // Active Effects that might have originated from it.
     //
     this.isSuppressed = itemData.type !== "class" && itemData.data.equipped !== true && itemData.data.purchased !== true;
-    console.log(itemData.data.equipped, itemData.data.purchased, this.isSuppressed);
   }
 
 
