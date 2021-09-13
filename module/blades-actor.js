@@ -7,6 +7,8 @@ import { BladesHelpers } from "./blades-helpers.js";
  */
 export class BladesActor extends Actor {
 
+  playbookChangeOptions = {};
+
   /** @override */
   static async create(data, options={}) {
 
@@ -50,21 +52,31 @@ export class BladesActor extends Actor {
     return super.applyActiveEffects();
   }
 
+  async _onUpdate(changed, options, userId){
+    //see if the playbook is being changed in this update
+    if(changed.data?.playbook && this.data.data.playbook && this.data.data.playbook !== "" && !isObjectEmpty(this.playbookChangeOptions)) {
+      await this.setUpNewPlaybook(this.playbookChangeOptions, this.data.data.playbook, changed.data.playbook);
+      this.playbookChangeOptions = {};
+    }
+    return super._onUpdate(changed, options, userId);
+  }
 
   async _preUpdate(changed, options, user){
     //see if the playbook is being changed in this update
     if(changed.data?.playbook && this.data.data.playbook && this.data.data.playbook !== ""){
       //if the promise is resolved, change the playbook and do the housekeeping
-        await this.sheet.showPlaybookChangeDialog(changed).then(async (selectedOptions)=>{
-          await super._preUpdate(changed, options, user);
-          await this.setUpNewPlaybook(selectedOptions, this.data.data.playbook, changed.data.playbook);
-          return;
-        //if not, don't change the playbook
-        }).catch(() => {
-          delete changed.data.playbook;
-        });
+      try{
+        this.playbookChangeOptions = await this.sheet.showPlaybookChangeDialog(changed);
+      }
+      catch(e){
+        ui.notifications.info("Playbook change cancelled.");
+        delete changed.data.playbook;
+        return super._preUpdate(changed, options, user);
+      }
     }
-    return await super._preUpdate(changed, options, user);
+    else{
+      return super._preUpdate(changed, options, user);
+    }
   }
 
   async setUniqueDroppedItem(item_data){
@@ -509,6 +521,7 @@ export class BladesActor extends Actor {
     await this.addPlaybookAcquaintances(new_playbook_name);
     await this.addPlaybookItems(new_playbook_name);
     await this.addGenericItems();
+    return true;
   }
 
   /**
@@ -568,10 +581,10 @@ export class BladesActor extends Actor {
           keep = acq.standing != "neutral";
           break;
         case "custom":
-          keep = BladesHelpers.checkIfCustom(playbook_name, acq);
+          keep = await BladesHelpers.checkIfCustom(playbook_name, acq);
           break;
         case "both":
-          keep = BladesHelpers.checkIfCustom(playbook_name, acq) || acq.standing != "neutral";
+          keep = await BladesHelpers.checkIfCustom(playbook_name, acq) || acq.standing != "neutral";
           break;
         case "none":
           keep = false;
