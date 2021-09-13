@@ -52,12 +52,13 @@ export class BladesActor extends Actor {
 
 
   async _preUpdate(changed, options, user){
-    //see if the playbook is being changed
+    //see if the playbook is being changed in this update
     if(changed.data?.playbook && this.data.data.playbook && this.data.data.playbook !== ""){
       //if the promise is resolved, change the playbook and do the housekeeping
         await this.sheet.showPlaybookChangeDialog(changed).then(async (selectedOptions)=>{
-          //this needs to be awaited to avoid screwing up the drop functionality, but causes a select flicker when it's awaited.
-            this.setUpNewPlaybook(selectedOptions, this.data.data.playbook, changed.data.playbook);
+          await super._preUpdate(changed, options, user);
+          await this.setUpNewPlaybook(selectedOptions, this.data.data.playbook, changed.data.playbook);
+          return;
         //if not, don't change the playbook
         }).catch(() => {
           delete changed.data.playbook;
