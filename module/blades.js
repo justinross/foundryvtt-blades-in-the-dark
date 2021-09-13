@@ -11,6 +11,7 @@ import { bladesRoll, simpleRollPopup } from "./blades-roll.js";
 import { BladesHelpers } from "./blades-helpers.js";
 import { BladesLookup } from "./blades-lookup.js";
 import { BladesActor } from "./blades-actor.js";
+import { BladesActiveEffect } from "./blades-active-effect.js";
 import { BladesItem } from "./blades-item.js";
 import { BladesItemSheet } from "./blades-item-sheet.js";
 import { BladesActorSheet } from "./blades-actor-sheet.js";
@@ -40,6 +41,7 @@ Hooks.once("init", async function() {
 
   CONFIG.Item.documentClass = BladesItem;
   CONFIG.Actor.documentClass = BladesActor;
+  CONFIG.ActiveEffect.documentClass = BladesActiveEffect;
 
   // Register System Settings
   registerSystemSettings();

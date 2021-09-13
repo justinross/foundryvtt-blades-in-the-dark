@@ -307,4 +307,19 @@
     </section>
     </section>
   </div>
+  {{#if isGM}}
+    <i class="fas fa-bug debug-toggle {{#if actor.flags.blades-in-the-dark.show-debug}}on{{/if}} "></i>
+    {{#if actor.flags.blades-in-the-dark.show-debug}}
+        {{> "systems/blades-in-the-dark/templates/parts/active-effects.html"}}</div>
+        {{#each actor.items as |item id|}}
+            <div class="item flex-horizontal" data-item-id="{{item._id}}">
+                <div class="item-body item-sheet-open flex-horizontal">
+                    <img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/>
+                    <div class="item-name">{{item.name}}</div>
+                </div>
+                <a class="item-control item-delete" title="{{localize 'BITD.TitleDeleteItem'}}"><i class="fas fa-trash"></i></a>
+            </div>
+        {{/each}}
+    {{/if}}
+  {{/if}}
 </form>

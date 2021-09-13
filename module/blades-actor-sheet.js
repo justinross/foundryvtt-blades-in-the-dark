@@ -1,6 +1,7 @@
 
 import { BladesSheet } from "./blades-sheet.js";
-import {onManageActiveEffect, prepareActiveEffectCategories} from "./effects.js";
+// import {onManageActiveEffect, prepareActiveEffectCategories} from "./effects.js";
+import { BladesActiveEffect } from "./blades-active-effect.js";
 import { BladesHelpers } from "./blades-helpers.js";
 import { migrateWorld } from "./migration.js";
 
@@ -245,7 +246,7 @@ export class BladesActorSheet extends BladesSheet {
     data.data = actorData.data;
 
     // Prepare active effects
-    data.effects = prepareActiveEffectCategories(this.actor.effects);
+    data.effects = BladesActiveEffect.prepareActiveEffectCategories(this.actor.effects);
 
     // Calculate Load
     let loadout = 0;
@@ -285,22 +286,18 @@ export class BladesActorSheet extends BladesSheet {
 
     switch (data.data.selected_load_level){
       case "BITD.Light":
-        data.max_load = 3;
+        data.max_load = data.data.base_max_load + 3;
         break;
       case "BITD.Normal":
-        data.max_load = 5;
+        data.max_load = data.data.base_max_load + 5;
         break;
       case "BITD.Heavy":
-        data.max_load = 6;
+        data.max_load = data.data.base_max_load + 6;
         break;
       default:
         data.data.selected_load_level = "BITD.Normal";
-        data.max_load = 5;
+        data.max_load = data.base_max_load + 5;
         break;
-    }
-
-    if(mule_present){
-      data.max_load += 2;
     }
 
     data.load_levels = {"BITD.Light":"BITD.Light", "BITD.Normal":"BITD.Normal", "BITD.Heavy":"BITD.Heavy"};
@@ -488,15 +485,10 @@ export class BladesActorSheet extends BladesSheet {
       await migrateWorld();
     });
 
-    // TODO - fix weird select flickering
-    html.find('.playbook-select').change(async ev =>{
+    html.find('.debug-toggle').click(async ev => {
+      let debug = await this.actor.getFlag('blades-in-the-dark', 'show-debug');
+      await this.actor.setFlag('blades-in-the-dark', 'show-debug', !debug);
     });
-
-    // html.find('.playbook-select').focus(async ev => {
-    //   console.log("focus");
-    //   this.previousPlaybook = await BladesHelpers.getItemByType("class", this.actor.data.data.playbook, game);
-    // });
-
 
     // Update Inventory Item
     html.find('.item-block .clickable-edit').click(ev => {
@@ -650,7 +642,7 @@ export class BladesActorSheet extends BladesSheet {
     });
 
     // manage active effects
-    html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
+    html.find(".effect-control").click(ev => BladesActiveEffect.onManageActiveEffect(ev, this.actor));
 
     html.find(".toggle-expand").click(ev => {
       if(!this._element.hasClass("can-expand")){

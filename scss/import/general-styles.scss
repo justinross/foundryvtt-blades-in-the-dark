@@ -3,6 +3,14 @@ textarea {
   margin-bottom: 20px;
 }
 
+.debug-toggle{
+  opacity: 0.1;
+
+  &.on{
+    opacity: 0.75;
+  }
+}
+
 section.flex {
   margin-bottom: 10px;
   display: flex;

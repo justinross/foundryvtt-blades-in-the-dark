@@ -103,6 +103,12 @@
   margin-top: 10px;
   margin-bottom: 20px;
 }
+.blades-in-the-dark .debug-toggle {
+  opacity: 0.1;
+}
+.blades-in-the-dark .debug-toggle.on {
+  opacity: 0.75;
+}
 .blades-in-the-dark section.flex {
   margin-bottom: 10px;
   display: flex;
