@@ -66,7 +66,7 @@ export class BladesActor extends Actor {
     return await super._preUpdate(changed, options, user);
   }
 
-  async replaceDistinctItems(item_data){
+  async setUniqueDroppedItem(item_data){
     let updateData;
     let all_items_of_type = this.items.filter(item => item.type == item_data.type);
 

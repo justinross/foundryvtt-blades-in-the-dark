@@ -66,7 +66,7 @@ export class BladesActorSheet extends BladesSheet {
       case "ability":
         break;
       default:
-        await this.actor.replaceDistinctItems(droppedEntityFull);
+        await this.actor.setUniqueDroppedItem(droppedEntityFull);
         // await this.onDroppedDistinctItem(droppedEntityFull);
         break;
     }
