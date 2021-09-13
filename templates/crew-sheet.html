@@ -100,8 +100,8 @@
         </div>
         <div class="crew-coins coins-vault">
           {{#multiboxes data.vault.value}}
-<!--          <input type="radio" id="crew-coins-vault-0" name="data.vault.value" value="0" checked="checked">-->
-          {{> "systems/blades-in-the-dark/templates/parts/radiotoggles.html" count=data.vault.max actor=../actor field="data.vault.value" name="coins-vault" currentval=../data.vault.value }}
+            <input type="radio" id="crew-coins-vault-0" name="data.vault.value" value="0" checked="checked" hidden>
+            {{> "systems/blades-in-the-dark/templates/parts/radiotoggles.html" count=data.vault.max actor=../actor field="data.vault.value" name="coins-vault" currentval=../data.vault.value }}
           {{/multiboxes}}
         </div>
 
