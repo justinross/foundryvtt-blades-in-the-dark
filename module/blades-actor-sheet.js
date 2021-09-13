@@ -53,7 +53,7 @@ export class BladesActorSheet extends BladesSheet {
           droppedEntityFull = game.actors.find(actor=> actor.id === droppedEntity.id);
           break;
         case "Item":
-          droppedEntityFull = game.actors.find(actor=> actor.id === droppedEntity.id);
+          droppedEntityFull = game.items.find(actor=> actor.id === droppedEntity.id);
           break;
       }
     }
