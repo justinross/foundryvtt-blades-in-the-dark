@@ -124,7 +124,8 @@
               {{/each}}
             </section>
             <section class="friends-rivals">
-              <header class="full-bar">Strange Friends</header>
+              {{#if data.acquaintances}}
+              <header class="full-bar">{{localize data.acquaintances_label}}</header>
               {{#each data.acquaintances}}
                 <div class="acquaintance" data-acquaintance="{{this.id}}">
                   <i data-acquaintance="{{this.id}}" class="standing-toggle fas
@@ -134,6 +135,7 @@
                     {{/if}}"></i><strong class="standing-toggle">{{this.name}}</strong>{{#if this.description_short}}, {{this.description_short}}{{/if}}
                 </div>
               {{/each}}
+            {{/if}}
             </section>
             <section class="all-items item-list">
               <header class="full-bar">&nbsp;</header>

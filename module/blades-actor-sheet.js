@@ -323,10 +323,10 @@ export class BladesActorSheet extends BladesSheet {
     });
 
     data.available_abilities = data.available_abilities.sort((a, b) => {
-      if(a.name == "Veteran"){
+      if(a.name == "Veteran" || b.data.class_default){
         return 1;
       }
-      if(b.name == "Veteran"){
+      if(b.name == "Veteran" || a.data.class_default){
         return -1;
       }
       if(a.name == b.name){ return 0; }
@@ -590,9 +590,10 @@ export class BladesActorSheet extends BladesSheet {
       ev.stopPropagation();
     });
 
-    html.find('.add_trauma').click(ev => {
+    html.find('.add_trauma').click(async ev => {
       let actorTraumaList = this.actor.data.data.trauma.list;
-      let allTraumas = ["cold", "haunted", "obsessed", "paranoid", "reckless", "soft", "unstable", "vicious"];
+      let allTraumas = this.actor.data.data.trauma.options;
+      let playbookName = await BladesHelpers.getPlaybookName(this.actor.data.data.playbook);
       let unownedTraumas = [];
       for (const traumaListKey of allTraumas) {
         if(!actorTraumaList.includes(traumaListKey)){

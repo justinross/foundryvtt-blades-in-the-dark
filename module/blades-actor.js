@@ -450,8 +450,14 @@ export class BladesActor extends Actor {
 
       let startingAttributes = await BladesHelpers.getStartingAttributes(selected_playbook_source.name);
       let currentAttributes = this.data.data.attributes;
+      //vampire ActiveEffects make this think there's been a change to the base skills, so ignore the exp_max field
       for (const attribute in currentAttributes) {
         currentAttributes[attribute].exp = 0;
+        delete currentAttributes[attribute].exp_max;
+      }
+      for (const attribute in startingAttributes) {
+        startingAttributes[attribute].exp = 0;
+        delete startingAttributes[attribute].exp_max;
       }
       if(!isObjectEmpty(diffObject(currentAttributes, startingAttributes))){
         skillsChanged = true;
@@ -470,8 +476,8 @@ export class BladesActor extends Actor {
           if(!pb_abilities.some(ab=> ab.name === ability.name)){
             newAbilities = true;
           }
-          //check for purchased abilities
-          if(ability.data.data.purchased){
+          //check for purchased abilities that aren't class defaults
+          if(ability.data.data.purchased && (ability.data.data.class_default && ability.data.data.class === BladesHelpers.getPlaybookName(this.data.data.playbook))){
             ownedAbilities = true;
           }
         }
@@ -532,10 +538,19 @@ export class BladesActor extends Actor {
         await this.setToPlaybookBaseSkills(new_playbook_name);
         break;
     }
+
+    let all_playbooks = await BladesHelpers.getSourcedItemsByType('class');
+    let new_playbook = all_playbooks.find(pb=> pb.id === new_playbook_id);
+    if(new_playbook){
+      await this.createEmbeddedDocuments('Item', [new_playbook.toObject()]);
+    }
+
     await this.addPlaybookAbilities(new_playbook_name);
     await this.addPlaybookAcquaintances(new_playbook_name);
     await this.addPlaybookItems(new_playbook_name);
-    await this.addGenericItems();
+    if(new_playbook_name !== "Ghost"){
+      await this.addGenericItems();
+    }
     return true;
   }
 

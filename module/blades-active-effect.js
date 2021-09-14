@@ -16,6 +16,23 @@ export class BladesActiveEffect extends ActiveEffect {
   /** @inheritdoc */
   apply(actor, change) {
     if ( this.isSuppressed ) return null;
+    //this allows for math and actor data references in the change values. Probably not necessary for
+    // blades, but it was simple, and you never know what users will do. Probably ruin everything.
+    change.value = Roll.replaceFormulaData(change.value, actor.data);
+    try {
+      change.value = Roll.safeEval(change.value).toString();
+    } catch (e) {
+      // this is a valid case, e.g., if the effect change simply is a string
+    }
+    let parsed;
+    try{
+      parsed = JSON.parse(change.value);
+    }
+    catch(e){
+    }
+    if(parsed instanceof Array){
+      change.value = parsed;
+    }
     return super.apply(actor, change);
   }
   /* --------------------------------------------- */
