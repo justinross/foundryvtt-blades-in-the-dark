@@ -2,7 +2,7 @@
   "name": "blades-in-the-dark",
   "title": "Blades in the Dark",
   "description": "Blades in the dark game system.",
-  "version": "4.0.0-b7",
+  "version": "4.0.0-b8",
   "minimumCoreVersion": "0.8.5",
   "compatibleCoreVersion": "0.8.9",
   "templateVersion": 1,
@@ -45,7 +45,7 @@
   ],
   "url": "https://github.com/justinross/foundryvtt-blades-in-the-dark/",
   "manifest": "https://raw.githubusercontent.com/justinross/foundryvtt-blades-in-the-dark/tidy-sheet-redesign/system.json",
-  "download": "https://github.com/justinross/foundryvtt-blades-in-the-dark/archive/refs/tags/4.0.0-b7.zip",
+  "download": "https://github.com/justinross/foundryvtt-blades-in-the-dark/archive/refs/tags/4.0.0-b8.zip",
   "packs": [
     {
       "name": "class",
