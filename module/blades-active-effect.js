@@ -42,7 +42,7 @@ export class BladesActiveEffect extends ActiveEffect {
    */
   determineSuppression() {
     this.isSuppressed = false;
-    if ( this.data.disabled || (this.parent.documentName !== "Actor") ) return;
+    if ( this.data.disabled || (this.parent.documentName !== "Actor") || this.parent.type !== "character" ) return;
     const [parentType, parentId, documentType, documentId] = this.data.origin?.split(".") ?? [];
     if ( (parentType !== "Actor") || (parentId !== this.parent.id) || (documentType !== "Item") ) return;
     const item = this.parent.items.get(documentId);
