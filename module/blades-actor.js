@@ -124,6 +124,20 @@ export class BladesActor extends Actor {
 
   }
 
+  async toggleTrauma(traumaName){
+    console.log(`Toggling trauma "${traumaName}"`);
+    let currentlyOwnedTraumas = this.data.data.trauma.list;
+    let newOwnedTraumas = [...currentlyOwnedTraumas];
+    if(currentlyOwnedTraumas.includes(traumaName)){
+      newOwnedTraumas = newOwnedTraumas.filter(trauma=> trauma !== traumaName);
+    }
+    else{
+      newOwnedTraumas.push(traumaName);
+    }
+    let updateData = expandObject({"data.trauma.list": newOwnedTraumas});
+    let newActorData = await this.update(updateData);
+  }
+
   /* -------------------------------------------- */
   
   async rollAttribute(attribute_name = "", additional_dice_amount = 0, position, effect) {

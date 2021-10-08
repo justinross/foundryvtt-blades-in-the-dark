@@ -25,7 +25,7 @@
       "value": [0],
       "name": "BITD.Trauma",
       "name_default": "BITD.Trauma",
-      "options": ["cold", "haunted", "obsessed", "paranoid", "reckless", "soft", "unstable", "vicious"],
+      "options": ["BITD.TraumaCold", "BITD.TraumaHaunted", "BITD.TraumaObsessed", "BITD.TraumaParanoid", "BITD.TraumaReckless", "BITD.TraumaSoft", "BITD.TraumaUnstable", "BITD.TraumaVicious"],
       "list": []
     },
     "healing-clock": [0],

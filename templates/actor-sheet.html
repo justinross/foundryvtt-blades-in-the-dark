@@ -109,7 +109,7 @@
 
     </div>
     <div id="character-{{actor._id}}-trauma-container" class="small-teeth-container">
-      {{#traumacounter data.trauma.list}}
+      {{#traumacounter data.trauma}}
       <div id="character-{{actor._id}}-trauma" class="small-teeth-wrap">
         <label class="black-label" for="character-{{actor._id}}-trauma-counter-0">{{localize data.trauma.name}}</label>
         <div id="character-{{actor._id}}-trauma-teeth" class="small-teeth">
@@ -125,38 +125,44 @@
     </div>
 
     <div id="character-{{actor._id}}-trauma-list" class="trauma-list">
-      <label>
-        <input type="checkbox" name="data.trauma.list.cold" value="cold" {{checked data.trauma.list.cold}}>
-        <span class="checkmark">{{localize "BITD.TraumaCold"}}</span>
+    {{#each data.trauma.options}}
+      <label class="trauma" data-trauma="{{this}}">
+        <input type="checkbox" {{checked (includes ../data.trauma.list this)}}>
+        <span class="checkmark">{{localize this}}</span>
       </label>
-      <label>
-        <input type="checkbox" name="data.trauma.list.haunted" value="haunted" {{checked data.trauma.list.haunted}}>
-        <span class="checkmark">{{localize "BITD.TraumaHaunted"}}</span>
-      </label>
-      <label>
-        <input type="checkbox" name="data.trauma.list.obsessed" value="obsessed" {{checked data.trauma.list.obsessed}}>
-        <span class="checkmark">{{localize "BITD.TraumaObsessed"}}</span>
-      </label>
-      <label>
-        <input type="checkbox" name="data.trauma.list.paranoid" value="paranoid" {{checked data.trauma.list.paranoid}}>
-        <span class="checkmark">{{localize "BITD.TraumaParanoid"}}</span>
-      </label>
-      <label>
-        <input type="checkbox" name="data.trauma.list.reckless" value="reckless" {{checked data.trauma.list.reckless}}>
-        <span class="checkmark">{{localize "BITD.TraumaReckless"}}</span>
-      </label>
-      <label>
-        <input type="checkbox" name="data.trauma.list.soft" value="soft" {{checked data.trauma.list.soft}}>
-        <span class="checkmark">{{localize "BITD.TraumaSoft"}}</span>
-      </label>
-      <label>
-        <input type="checkbox" name="data.trauma.list.unstable" value="unstable" {{checked data.trauma.list.unstable}}>
-        <span class="checkmark">{{localize "BITD.TraumaUnstable"}}</span>
-      </label>
-      <label>
-        <input type="checkbox" name="data.trauma.list.vicious" value="vicious" {{checked data.trauma.list.vicious}}>
-        <span class="checkmark">{{localize "BITD.TraumaVicious"}}</span>
-      </label>
+    {{/each}}
+<!--       <label> -->
+<!--         <input type="checkbox" name="data.trauma.list.cold" value="cold" {{checked data.trauma.list.cold}}> -->
+<!--         <span class="checkmark">{{localize "BITD.TraumaCold"}}</span> -->
+<!--       </label> -->
+<!--       <label> -->
+<!--         <input type="checkbox" name="data.trauma.list.haunted" value="haunted" {{checked data.trauma.list.haunted}}> -->
+<!--         <span class="checkmark">{{localize "BITD.TraumaHaunted"}}</span> -->
+<!--       </label> -->
+<!--       <label> -->
+<!--         <input type="checkbox" name="data.trauma.list.obsessed" value="obsessed" {{checked data.trauma.list.obsessed}}> -->
+<!--         <span class="checkmark">{{localize "BITD.TraumaObsessed"}}</span> -->
+<!--       </label> -->
+<!--       <label> -->
+<!--         <input type="checkbox" name="data.trauma.list.paranoid" value="paranoid" {{checked data.trauma.list.paranoid}}> -->
+<!--         <span class="checkmark">{{localize "BITD.TraumaParanoid"}}</span> -->
+<!--       </label> -->
+<!--       <label> -->
+<!--         <input type="checkbox" name="data.trauma.list.reckless" value="reckless" {{checked data.trauma.list.reckless}}> -->
+<!--         <span class="checkmark">{{localize "BITD.TraumaReckless"}}</span> -->
+<!--       </label> -->
+<!--       <label> -->
+<!--         <input type="checkbox" name="data.trauma.list.soft" value="soft" {{checked data.trauma.list.soft}}> -->
+<!--         <span class="checkmark">{{localize "BITD.TraumaSoft"}}</span> -->
+<!--       </label> -->
+<!--       <label> -->
+<!--         <input type="checkbox" name="data.trauma.list.unstable" value="unstable" {{checked data.trauma.list.unstable}}> -->
+<!--         <span class="checkmark">{{localize "BITD.TraumaUnstable"}}</span> -->
+<!--       </label> -->
+<!--       <label> -->
+<!--         <input type="checkbox" name="data.trauma.list.vicious" value="vicious" {{checked data.trauma.list.vicious}}> -->
+<!--         <span class="checkmark">{{localize "BITD.TraumaVicious"}}</span> -->
+<!--       </label> -->
     </div>
 
   </div>

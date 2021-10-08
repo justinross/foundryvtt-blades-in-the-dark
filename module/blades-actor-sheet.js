@@ -96,6 +96,12 @@ export class BladesActorSheet extends BladesSheet {
       element.slideUp(200, () => this.render(false));
     });
 
+    //toggle traumas
+    html.find(".trauma-list .trauma").click(ev => {
+      ev.preventDefault();
+      this.actor.toggleTrauma(ev.currentTarget.dataset.trauma);
+    });
+
     // manage active effects
     html.find(".effect-control").click(ev => BladesActiveEffect.onManageActiveEffect(ev, this.actor));
   }

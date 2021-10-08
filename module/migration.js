@@ -1,3 +1,48 @@
+export async function migrateActorsTrauma() {
+  //figure out how to migrate the old trauma storage over to a pure list. The thing below isn't really doing anything yet.
+  function _migrateTrauma(data) {
+    let arrayList;
+    if(Array.isArray(data.data.trauma.list)) {
+      arrayList = data.data.trauma.list;
+    }
+    //if the current list isn't an array (it's an object, the old style), convert it to an array of the "owned" traumas
+    else{
+      let objectList = data.data.trauma.list;
+      arrayList = Object.keys(objectList).filter(key => objectList[key]);
+    }
+    //then make sure the array list is localized string keys. Not necessarily valid ones, mind you.
+    arrayList = arrayList.filter(item=> item || typeof item !== "undefined").map((item)=>{
+      if(item.startsWith("BITD.Trauma")){
+        return item;
+      }
+      else{
+        return `BITD.Trauma${item.charAt(0).toUpperCase() + item.slice(1)}`;
+      }
+    });
+    
+    let newTraumaListData = {"data.trauma.list" : arrayList};
+    newTraumaListData["data.trauma.options"] = ["BITD.TraumaCold", "BITD.TraumaHaunted", "BITD.TraumaObsessed", "BITD.TraumaParanoid", "BITD.TraumaReckless", "BITD.TraumaSoft", "BITD.TraumaUnstable", "BITD.TraumaVicious"];
+    newTraumaListData = expandObject(newTraumaListData);
+    return newTraumaListData;
+  }
+
+  for ( let a of game.actors.contents ) {
+    if (a.data.type === 'character') {
+      try {
+        const updateData = _migrateTrauma(a.data);
+        if ( !isObjectEmpty(updateData) ) {
+          console.log(`Migrating trauma for Actor ${a.name}`);
+          await a.update(updateData, {enforceTypes: false});
+        }
+      } catch(err) {
+        console.error(err);
+      }
+    }
+  }
+  game.settings.set("bitd", "systemMigrationVersion", game.system.data.version);
+  ui.notifications.info(`BITD Actor Trauma Migration to version ${game.system.data.version} completed!`, {permanent: true});
+}
+
 /**
  * Perform a system migration for the entire World, applying migrations for Actors, Items, and Compendium packs
  * @return {Promise}      A Promise which resolves once the migration is completed

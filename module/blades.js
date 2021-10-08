@@ -65,6 +65,10 @@ Hooks.once("init", async function() {
     }
   });
 
+  Handlebars.registerHelper('includes', function(arr, value) {
+    return arr.includes(value);
+  });
+
   // Multiboxes.
   Handlebars.registerHelper('multiboxes', function(selected, options) {
 
@@ -88,14 +92,17 @@ Hooks.once("init", async function() {
   });
 
   // Trauma Counter
-  Handlebars.registerHelper('traumacounter', function(selected, options) {
+  Handlebars.registerHelper('traumacounter', function(traumaObj, options) {
 
     let html = options.fn(this);
+    console.log()
 
     var count = 0;
-    for (const trauma in selected) {
-      if (selected[trauma] === true) {
-        count++;
+    //this should only compare the current trauma to the trauma options for counting, so traumas don't silently carry
+    //over from the old playbook, which could be confusing. They'll still be stored, but not reflected in trauma count.
+    for(const traumaOption of traumaObj.options){
+      if(traumaObj.list.includes(traumaOption)){
+        count ++;
       }
     }
 
@@ -276,13 +283,21 @@ Hooks.once("ready", function() {
 
   // Determine whether a system migration is required
   const currentVersion = game.settings.get("bitd", "systemMigrationVersion");
+  console.log(currentVersion);
   const NEEDS_MIGRATION_VERSION = 2.15;
+  const NEEDS_TRAUMA_MIGRATION_VERSION = 3.9;
 
   let needMigration = (currentVersion < NEEDS_MIGRATION_VERSION) || (currentVersion === null);
+  let needTraumaMigration = !isNewerVersion(currentVersion, NEEDS_TRAUMA_MIGRATION_VERSION);
 
   // Perform the migration
   if ( needMigration && game.user.isGM ) {
     migrations.migrateWorld();
+  }
+
+  console.log(currentVersion, needTraumaMigration);
+  if( needTraumaMigration && game.user.isGM){
+    migrations.migrateActorsTrauma();
   }
 });
 
