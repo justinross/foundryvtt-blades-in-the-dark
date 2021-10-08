@@ -283,19 +283,17 @@ Hooks.once("ready", function() {
 
   // Determine whether a system migration is required
   const currentVersion = game.settings.get("bitd", "systemMigrationVersion");
-  console.log(currentVersion);
   const NEEDS_MIGRATION_VERSION = 2.15;
-  const NEEDS_TRAUMA_MIGRATION_VERSION = 3.9;
+  const NEEDS_TRAUMA_MIGRATION_VERSION = 3.11;
 
-  let needMigration = (currentVersion < NEEDS_MIGRATION_VERSION) || (currentVersion === null);
-  let needTraumaMigration = !isNewerVersion(currentVersion, NEEDS_TRAUMA_MIGRATION_VERSION);
+  let needMigration = !BladesHelpers.isNewerVersion(currentVersion, NEEDS_MIGRATION_VERSION) || (currentVersion === null);
+  let needTraumaMigration = !BladesHelpers.isNewerVersion(currentVersion, NEEDS_TRAUMA_MIGRATION_VERSION) || (currentVersion === null);
 
   // Perform the migration
   if ( needMigration && game.user.isGM ) {
     migrations.migrateWorld();
   }
 
-  console.log(currentVersion, needTraumaMigration);
   if( needTraumaMigration && game.user.isGM){
     migrations.migrateActorsTrauma();
   }

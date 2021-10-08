@@ -254,4 +254,33 @@ export class BladesHelpers {
 
   }
 
+  static isNewerVersion(a,b) {
+    if(typeof a !== "string"){
+      a = a.toString();
+    }
+    if(typeof b !== "string"){
+      b = b.toString();
+    }
+    let av = a.match(/([0-9]+|[^0-9]+)/g)
+    let bv = b.match(/([0-9]+|[^0-9]+)/g)
+    for (;;) {
+      let ia = av.shift();
+      let ib = bv.shift();
+      if ( (typeof ia === 'undefined') && (typeof ib === 'undefined') ) { return false; }
+      if (typeof ia === 'undefined') { ia = '' }
+      if (typeof ib === 'undefined') { ib = '' }
+
+      let ian = parseInt(ia);
+      let ibn = parseInt(ib);
+      if ( isNaN(ian) || isNaN(ibn) ) {
+        // non-numeric comparison
+        if (ia < ib) { return false;}
+        if (ia > ib) { return true;}
+      } else {
+        if (ian < ibn) { return false;}
+        if (ian > ibn) { return true;}
+      }
+    }
+  }
+
 }
