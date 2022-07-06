@@ -163,6 +163,7 @@
   "BITD.RollResistance": "You <strong>reduce</strong> or <strong>avoid</strong> the effects of the consequence (GM chooses).<br/>Suffer <strong>{stress} stress</strong>.",
   "BITD.RollResistanceCritical": "You <strong>reduce</strong> or <strong>avoid</strong> the effects of the consequence (GM chooses).<br/>Clear <strong>1 stress</strong>.",
 
+  "BITD.PositionFortune": "Fortune",
   "BITD.PositionControlled": "Controlled",
   "BITD.PositionRisky": "Risky",
   "BITD.PositionDesperate": "Desperate",
@@ -197,6 +198,7 @@
   "BITD.Position": "Position",
   "BITD.Effect": "Effect",
   "BITD.Modifier": "Modifier",
+  "BITD.RollWithModifier": "Roll With Modifier",
 
   "BITD.Encumbered": "encumbered",
   "BITD.OverMax": "over max",

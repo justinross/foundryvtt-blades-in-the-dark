@@ -1600,6 +1600,37 @@
   color: red;
 }
 
+.roll-dialog .dice.disabled {
+  opacity: 0.7;
+  pointer-events: none;
+}
+.roll-dialog .position, .roll-dialog .effect, .roll-dialog .dice {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  align-items: center;
+}
+.roll-dialog .position header, .roll-dialog .effect header, .roll-dialog .dice header {
+  width: 13em;
+}
+.roll-dialog .position label, .roll-dialog .effect label, .roll-dialog .dice label {
+  flex-grow: 1;
+  text-align: center;
+  margin: 3px;
+  padding: 4px 8px;
+  background-color: #ccc;
+  border-radius: 4px;
+}
+.roll-dialog .position input[type=radio]:checked + label, .roll-dialog .effect input[type=radio]:checked + label, .roll-dialog .dice input[type=radio]:checked + label {
+  background-color: #f2a000;
+}
+.roll-dialog .position input[type=radio], .roll-dialog .effect input[type=radio], .roll-dialog .dice input[type=radio] {
+  display: none;
+}
+.roll-dialog .dice button {
+  padding: 0 8px;
+}
+
 .items-to-add {
   display: flex;
   flex-direction: column;

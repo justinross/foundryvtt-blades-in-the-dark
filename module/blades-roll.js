@@ -49,6 +49,11 @@ async function showChatRollMessage(r, zeromode, attribute_name = "", position = 
         position_localize = 'BITD.PositionDesperate'
         break;
       case 'risky':
+        position_localize = 'BITD.PositionRisky'
+        break;
+      case 'fortune':
+        position_localize = 'BITD.PositionFortune'
+        break;
       default:
         position_localize = 'BITD.PositionRisky'
     }

@@ -1,0 +1,49 @@
+<div class="roll-dialog">
+  <h2>{{localize "BITD.Roll"}} {{localize attribute_label}}</h2>
+  {{#if is_action}}
+  <section class="position">
+    <header>{{localize "BITD.Position"}}</header>
+    <input type="radio" name="pos" id="{{actor_id}}-{{attribute_name}}-pos-desperate" value="desperate">
+    <label for="{{actor_id}}-{{attribute_name}}-pos-desperate">{{localize "BITD.PositionDesperate"}}</label>
+    <input type="radio" name="pos" id="{{actor_id}}-{{attribute_name}}-pos-risky" value="risky">
+    <label for="{{actor_id}}-{{attribute_name}}-pos-risky">{{localize "BITD.PositionRisky"}}</label>
+    <input type="radio" name="pos" id="{{actor_id}}-{{attribute_name}}-pos-controlled" value="controlled">
+    <label for="{{actor_id}}-{{attribute_name}}-pos-controlled">{{localize "BITD.PositionControlled"}}</label>
+    <input type="radio" name="pos" id="{{actor_id}}-{{attribute_name}}-pos-fortune" value="fortune">
+    <label for="{{actor_id}}-{{attribute_name}}-pos-fortune">{{localize "BITD.PositionFortune"}}</label>
+  </section>
+  <section class="effect">
+    <header>{{localize "BITD.Effect"}}</header>
+    <input type="radio" name="effect" id="{{actor_id}}-{{attribute_name}}-effect-limited" value="limited">
+    <label for="{{actor_id}}-{{attribute_name}}-effect-limited">{{localize "BITD.EffectLimited"}}</label>
+    <input type="radio" name="effect" id="{{actor_id}}-{{attribute_name}}-effect-standard" value="standard">
+    <label for="{{actor_id}}-{{attribute_name}}-effect-standard">{{localize "BITD.EffectStandard"}}</label>
+    <input type="radio" name="effect" id="{{actor_id}}-{{attribute_name}}-effect-great" value="great">
+    <label for="{{actor_id}}-{{attribute_name}}-effect-great">{{localize "BITD.EffectGreat"}}</label>
+  </section>
+  {{/if}}
+  {{#if is_simple}}
+  <section class="dice {{#if is_disabled}}disabled{{/if}}">
+    <header>{{localize "BITD.Roll"}}:</header>
+    <button class="roll neg" {{#if is_disabled}}disabled{{/if}} data-dice="-1">-</button>
+    <button class="roll zero" {{#if is_disabled}}disabled{{/if}} data-dice="0">0</button>
+    <button class="roll one" {{#if is_disabled}}disabled{{/if}} data-dice="1">1</button>
+    <button class="roll two" {{#if is_disabled}}disabled{{/if}} data-dice="2">2</button>
+    <button class="roll three" {{#if is_disabled}}disabled{{/if}} data-dice="3">3</button>
+    <button class="roll four" {{#if is_disabled}}disabled{{/if}} data-dice="4">4</button>
+    <button class="roll five" {{#if is_disabled}}disabled{{/if}} data-dice="5">5</button>
+    <button class="roll six" {{#if is_disabled}}disabled{{/if}} data-dice="6">6</button>
+  </section>
+  {{else}}
+  <section class="dice {{#if is_disabled}}disabled{{/if}}">
+    <span>{{localize "BITD.RollWithModifier"}}:</span>
+    <button class="roll-mod neg3" {{#if is_disabled}}disabled{{/if}} data-modifier="-3">-3d</button>
+    <button class="roll-mod neg2" {{#if is_disabled}}disabled{{/if}} data-modifier="-2">-2d</button>
+    <button class="roll-mod neg1" {{#if is_disabled}}disabled{{/if}} data-modifier="-1">-1d</button>
+    <button class="roll-mod zero" {{#if is_disabled}}disabled{{/if}} data-modifier="0">0</button>
+    <button class="roll-mod pos1" {{#if is_disabled}}disabled{{/if}} data-modifier="1">+1d</button>
+    <button class="roll-mod pos2" {{#if is_disabled}}disabled{{/if}} data-modifier="2">+2d</button>
+    <button class="roll-mod pos3" {{#if is_disabled}}disabled{{/if}} data-modifier="3">+3d</button>
+  </section>
+  {{/if}}
+</div>
