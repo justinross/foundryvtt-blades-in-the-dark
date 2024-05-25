@@ -290,6 +290,25 @@
   "BITD.RollAcquireAssetCritical": "Exceptional result.",
   "BITD.RollAcquireAssetSuccess": "Good result.",
   "BITD.RollAcquireAssetPartialSuccess": "Mixed result.",
-  "BITD.RollAcquireAssetFailure": "Bad result."
+  "BITD.RollAcquireAssetFailure": "Bad result.",
+  "TYPES.Actor.character": "Character",
+  "TYPES.Item.ability": "Ability",
+  "TYPES.Item.background": "Background",
+  "TYPES.Item.class": "Class",
+  "TYPES.Item.cohort": "Cohort",
+  "TYPES.Item.crew_ability": "Crew Ability",
+  "TYPES.Item.crew_reputation": "Crew Reputation",
+  "TYPES.Item.crew_type": "Crew Type",
+  "TYPES.Item.crew_upgrade": "Crew Upgrade",
+  "TYPES.Item.faction": "Faction",
+  "TYPES.Item.heritage": "Heritage",
+  "TYPES.Item.hunting_grounds": "Hunting Grounds",
+  "TYPES.Item.item": "Item",
+  "TYPES.Item.prison": "Prison",
+  "TYPES.Item.vice": "Vice",
+  "TYPES.Actor.🕛 clock": "🕛 Clock",
+  "TYPES.Actor.crew": "Crew",
+  "TYPES.Actor.factions": "Factions",
+  "TYPES.Actor.npc": "NPC"
 
 }
