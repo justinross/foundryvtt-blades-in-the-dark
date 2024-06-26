@@ -148,7 +148,7 @@ export class BladesActor extends Actor {
     }
     dice_amount += additional_dice_amount;
 
-    await bladesRoll(dice_amount, attribute_name, position, effect, note, this.system.stress.value);
+    await bladesRoll(this, dice_amount, attribute_name, position, effect, note, this.system.stress.value);
   }
 
   /* -------------------------------------------- */

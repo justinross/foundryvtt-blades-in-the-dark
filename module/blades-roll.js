@@ -5,7 +5,7 @@
  * @param {string} position
  * @param {string} effect
  */
-export async function bladesRoll(dice_amount, attribute_name = "", position = "risky", effect = "standard", note = "", current_stress, current_crew_tier) {
+export async function bladesRoll(actor, dice_amount, attribute_name = "", position = "risky", effect = "standard", note = "", current_stress, current_crew_tier) {
 
   // ChatMessage.getSpeaker(controlledToken)
   let zeromode = false;
@@ -17,7 +17,7 @@ export async function bladesRoll(dice_amount, attribute_name = "", position = "r
 
   // show 3d Dice so Nice if enabled
   await r.evaluate();
-  await showChatRollMessage(r, zeromode, attribute_name, position, effect, note, current_stress, current_crew_tier);
+  await showChatRollMessage(actor, r, zeromode, attribute_name, position, effect, note, current_stress, current_crew_tier);
 }
 
 /**
@@ -29,7 +29,7 @@ export async function bladesRoll(dice_amount, attribute_name = "", position = "r
  * @param {string} position
  * @param {string} effect
  */
-async function showChatRollMessage(r, zeromode, attribute_name = "", position = "", effect = "", note = "", current_stress, current_crew_tier) {
+async function showChatRollMessage(actor, r, zeromode, attribute_name = "", position = "", effect = "", note = "", current_stress, current_crew_tier) {
 
   let speaker = ChatMessage.getSpeaker();
   let rolls = (r.terms)[0].results;
@@ -74,8 +74,10 @@ async function showChatRollMessage(r, zeromode, attribute_name = "", position = 
       default:
         effect_localize = 'BITD.EffectStandard'
     }
-
-    result = await renderTemplate("systems/blades-in-the-dark/templates/chat/action-roll.html", {rolls: rolls, method: method, roll_status: roll_status, attribute_label: attribute_label, position: position, position_localize: position_localize, effect: effect, effect_localize: effect_localize, note: note});
+    const attribute_parent_id = BladesHelpers.getAttributeParent(attribute_name);
+    const attribute_parent = attribute_parent_id.charAt(0).toUpperCase() + attribute_parent_id.slice(1);;
+    console.log(actor);
+    result = await renderTemplate("systems/blades-in-the-dark/templates/chat/action-roll.html", {rolls: rolls, method: method, roll_status: roll_status, attribute_label: attribute_label, position: position, position_localize: position_localize, effect: effect, effect_localize: effect_localize, note: note, speaker: speaker, attribute_parent: attribute_parent, actor: actor});
   }
   // Check for Resistance roll
   else if (BladesHelpers.isAttributeAttribute(attribute_name)) {
@@ -348,20 +350,20 @@ export async function simpleRollPopup() {
             if (input[i].checked) {
               switch (input[i].id) {
                 case 'gatherInfo':
-                  await bladesRoll(diceQty,"BITD.GatherInformation","","",note,"");
+                  await bladesRoll('', diceQty,"BITD.GatherInformation","","",note,"");
                   break;
                 case 'engagement':
-                  await bladesRoll(diceQty,"BITD.Engagement","","",note,"");
+                  await bladesRoll('', diceQty,"BITD.Engagement","","",note,"");
                   break;
                 case 'indulgeVice':
-                  await bladesRoll(diceQty,"BITD.Vice","","",note,stress);
+                  await bladesRoll('', diceQty,"BITD.Vice","","",note,stress);
                   break;
                 case 'acqurieAsset':
-                  await bladesRoll(diceQty,"BITD.AcquireAsset","","",note,"",tier);
+                  await bladesRoll('', diceQty,"BITD.AcquireAsset","","",note,"",tier);
                   break;
 
                 default:
-                  await bladesRoll(diceQty,"","","",note,"");
+                  await bladesRoll('', diceQty,"","","",note,"");
                   break;
               }
               break;

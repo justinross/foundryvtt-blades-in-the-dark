@@ -344,3 +344,19 @@ Hooks.on("renderSceneControls", async (app, html) => {
   html.children().first().append( dice_roller );
 
 });
+
+Hooks.on("renderChatMessage", async (app, html) => {
+  html.find('.action-roll button').click((ev)=>{
+    const elData = $(ev.currentTarget).data();
+    const actor = game.actors.get(elData.actor);
+    switch (elData.buttonType) {
+      case 'desperateRoll':
+        console.log("Desperate roll", actor)
+        
+        break;
+    
+      default:
+        break;
+    }
+  })
+})

@@ -105,6 +105,23 @@ export class BladesHelpers {
   }
 
   /**
+   * Returns the label for attribute.
+   *
+   * @param {string} attribute_name
+   * @returns {string}
+   */
+  static getAttributeParent(skillKeyName) {
+        const attributes = game.model.Actor.character.attributes;
+        for (const attributeKey in attributes) {
+          const attribute = attributes[attributeKey];
+          if (attribute.skills && attribute.skills[skillKeyName]) {
+            return attributeKey;
+          }
+        }
+        return null;
+  }
+
+  /**
    * Returns the label for roll type.
    *
    * @param {string} roll_name

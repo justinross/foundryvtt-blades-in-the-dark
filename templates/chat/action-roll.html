@@ -1,4 +1,4 @@
-<div class="dice-tooltip blades-die-tooltip">
+<div class="dice-tooltip blades-die-tooltip action-roll">
   {{#if attribute_label}}<div class="chat-label label-stripe-chat">{{localize attribute_label}}</div>{{/if}}
   {{#if position}}
     <div class="chat-label-small label-stripe-chat-small">
@@ -64,5 +64,8 @@
       {{/unless}}
     {{/if}}
   </ol>
+  {{#if (eq position "desperate")}}
+  <button data-actor="{{actor._id}}" data-button-type="desperateRoll">Desperate: Add 1 XP to {{attribute_parent}}</button>
+  {{/if}}
 
 </div>
