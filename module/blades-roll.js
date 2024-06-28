@@ -76,8 +76,26 @@ async function showChatRollMessage(actor, r, zeromode, attribute_name = "", posi
     }
     const attribute_parent_id = BladesHelpers.getAttributeParent(attribute_name);
     const attribute_parent = attribute_parent_id.charAt(0).toUpperCase() + attribute_parent_id.slice(1);;
-    console.log(actor);
-    result = await renderTemplate("systems/blades-in-the-dark/templates/chat/action-roll.html", {rolls: rolls, method: method, roll_status: roll_status, attribute_label: attribute_label, position: position, position_localize: position_localize, effect: effect, effect_localize: effect_localize, note: note, speaker: speaker, attribute_parent: attribute_parent, actor: actor});
+    result = await renderTemplate(
+      "systems/blades-in-the-dark/templates/chat/action-roll.html",
+      {
+        rolls: rolls,
+        method: method,
+        roll_status: roll_status,
+        attribute_label: attribute_label,
+        position: position,
+        position_localize: position_localize,
+        effect: effect,
+        effect_localize: effect_localize,
+        note: note,
+        speaker: speaker,
+        attribute_parent: attribute_parent,
+        attribute_parent_id: attribute_parent_id,
+        actor: actor,
+        current_xp: actor.system.attributes[attribute_parent_id].exp,
+        max_xp: actor.system.attributes[attribute_parent_id].exp_max
+      }
+    );
   }
   // Check for Resistance roll
   else if (BladesHelpers.isAttributeAttribute(attribute_name)) {

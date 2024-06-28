@@ -119,6 +119,11 @@ Hooks.once("init", async function() {
     return (a !== b) ? options.fn(this) : '';
   });
 
+  // NotEquals handlebar.
+  Handlebars.registerHelper('log', (input, input2, input3, input4) => {
+    console.log('{{log}}', input)
+  });
+
   // ReputationTurf handlebar.
   Handlebars.registerHelper('repturf', (turfs_amount, options) => {
     let html = options.fn(this);
@@ -351,8 +356,19 @@ Hooks.on("renderChatMessage", async (app, html) => {
     const actor = game.actors.get(elData.actor);
     switch (elData.buttonType) {
       case 'desperateRoll':
-        console.log("Desperate roll", actor)
-        
+        console.log("Desperate roll", actor, elData.attribute)
+        const update_data = {};
+        console.log("data", 
+          parseInt(actor.system.attributes[elData.attribute].exp) + 1, 
+          parseInt(actor.system.attributes[elData.attribute].exp_max)
+        )
+        update_data[`system.attributes.${elData.attribute}.exp`] = Math.min(
+          parseInt(actor.system.attributes[elData.attribute].exp) + 1, 
+          parseInt(actor.system.attributes[elData.attribute].exp_max)
+        );
+        actor.update(
+          update_data
+        );
         break;
     
       default:

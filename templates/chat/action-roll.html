@@ -1,4 +1,4 @@
-<div class="dice-tooltip blades-die-tooltip action-roll">
+<div class="dice-tooltip blades-die-tooltip action-roll roll-message">
   {{#if attribute_label}}<div class="chat-label label-stripe-chat">{{localize attribute_label}}</div>{{/if}}
   {{#if position}}
     <div class="chat-label-small label-stripe-chat-small">
@@ -65,7 +65,7 @@
     {{/if}}
   </ol>
   {{#if (eq position "desperate")}}
-  <button data-actor="{{actor._id}}" data-button-type="desperateRoll">Desperate: Add 1 XP to {{attribute_parent}}</button>
+  <button data-attribute="{{attribute_parent_id}}" data-actor="{{actor._id}}" data-tooltip="{{#if (eq max_xp current_xp)}}XP already maxed out{{/if}}" data-button-type="desperateRoll" {{#if (eq max_xp current_xp)}}disabled{{/if}} >Desperate: Add 1 XP to {{attribute_parent}}</button>
   {{/if}}
 
 </div>

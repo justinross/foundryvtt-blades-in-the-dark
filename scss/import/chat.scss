@@ -40,6 +40,13 @@
   font-weight: bold;
 }
 
+.roll-message {
+  button:disabled {
+    opacity: 0.5;
+    cursor: initial;
+  }
+}
+
 .blades-die-tooltip {
 
   .die {
