@@ -73,41 +73,12 @@ export class BladesActorSheet extends BladesSheet {
 
     sheetData.system.description = await TextEditor.enrichHTML(sheetData.system.description, {secrets: sheetData.owner, async: true});
 
-    // catch unmigrated actor data
-    for( const a in sheetData.system.attributes ) {
-      for( const s in sheetData.system.attributes[a].skills ) {
-        if( sheetData.system.attributes[a].skills[s].max === undefined || sheetData.system.attributes[a].skills[s].max === 4){
-          sheetData.system.attributes[a].skills[s].max = 3;
-        }
-		
-		//include Active Effect alterations to skill minimums
-		if( sheetData.system.attributes[a].skills[s].value <= sheetData.system.attributes[a].skills[s].min ) { 
-			sheetData.system.attributes[a].skills[s].value = sheetData.system.attributes[a].skills[s].min;
-		}
-      }
-    }
+    // catch unmigrated actor data and apply the Mastery crew ability to attribute maxes
+    sheetData.system.attributes = this.actor.getComputedAttributes();
 	
-	//check for additional stress, trauma, and mastery from crew
-		//check for a crew and get its data
-		if (sheetData.system.crew.length > 0){
-			let crew_id = sheetData.system.crew[0].id;
-			let crew_actor = game.actors.get(crew_id);
-			//add to max stress
-			sheetData.system.stress.max = sheetData.system.stress.max + crew_actor.system.scoundrel.add_stress;
-			//add to max trauma
-			sheetData.system.trauma.max = sheetData.system.trauma.max + crew_actor.system.scoundrel.add_trauma;
-			//check for mastery
-			let has_mastery = crew_actor.system.scoundrel.mastery;
-			if (has_mastery) {
-				for( const b in sheetData.system.attributes ) {
-					for( const t in sheetData.system.attributes[b].skills ) {
-						if (sheetData.system.attributes[b].skills[t].max === 3) {
-							sheetData.system.attributes[b].skills[t].max = 4;
-						}
-					}
-				}
-			}
-		}
+    //check for additional stress and trauma from crew sources
+    sheetData.system.stress.max = this.actor.getMaxStress();
+    sheetData.system.trauma.max = this.actor.getMaxTrauma();
 
     return sheetData;
   }

@@ -222,5 +222,61 @@ export class BladesActor extends Actor {
   }
 
   /* -------------------------------------------- */
+  getComputedAttributes() {
+    let attributes = this.system.attributes;
+    console.log(attributes);
+    for( const a in attributes ) {
+      for( const s in attributes[a].skills ) {
+        if( attributes[a].skills[s].max === undefined || attributes[a].skills[s].max === 4){
+          attributes[a].skills[s].max = 3;
+        }
+		
+		//include Active Effect alterations to skill minimums
+        if( attributes[a].skills[s].value <= attributes[a].skills[s].min ) { 
+          attributes[a].skills[s].value = attributes[a].skills[s].min;
+        }
+      }
+    }
+    //check for mastery
+    if (this.getHasMastery()) {
+      for( const b in attributes ) {
+        for( const t in attributes[b].skills ) {
+          if (attributes[b].skills[t].max === 3) {
+            attributes[b].skills[t].max = 4;
+          }
+        }
+      }
+    }
+    return attributes;
+  }
 
+  getMaxStress() {
+    let max_stress = this.system.stress.max;
+    let crew = this.system.crew;
+    if (crew.length > 0) {
+      let crew_actor = game.actors.get(crew[0].id);
+      max_stress = max_stress + crew_actor.system.scoundrel.add_stress;
+    }
+    return max_stress;
+  }
+
+  getMaxTrauma() {
+    let max_trauma = this.system.trauma.max;
+    let crew = this.system.crew;
+    if (crew.length > 0) {
+      let crew_actor = game.actors.get(crew[0].id);
+      max_trauma = max_trauma + crew_actor.system.scoundrel.add_trauma;
+    }
+    return max_trauma;
+  }
+
+  getHasMastery(){
+    let has_mastery = false;
+    let crew = this.system.crew;
+    if (crew.length > 0) {
+      let crew_actor = game.actors.get(crew[0].id);
+      has_mastery = crew_actor.system.scoundrel.mastery;
+    }
+    return has_mastery
+  }
 }
