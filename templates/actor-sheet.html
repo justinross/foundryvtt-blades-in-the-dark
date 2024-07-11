@@ -201,8 +201,8 @@
             </td>
             <td>{{localize "BITD.NeedHelp"}}</td>
             <td rowspan="3">
-              <div id="character-{{_id}}-health-clock" class="character-health-clock">
-				{{{blades-clock "system.healing-clock" 4 system.healing-clock _id}}}
+              <div id="character-{{_id}}-health-clock" class="character-health-clock clocks-{{system.healing_clock.max}}">
+				{{{blades-clock "system.healing_clock.value" system.healing_clock.max system.healing_clock.value _id}}}
               </div>
             </td>
             <td rowspan="3" id="character-{{_id}}-armor-uses" class="character-armor-uses">

@@ -30,6 +30,11 @@
       "list": []
     },
     "healing-clock": [0],
+    "healing_clock": {
+      "value": [0],
+      "max": 4,
+      "min": 0
+    },
     "experience": [0],
     "experience_max": 8,
     "experience_clues": ["BITD.ClassExpClue3", "BITD.ClassExpClue2"],

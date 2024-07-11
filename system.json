@@ -2,10 +2,10 @@
   "id": "blades-in-the-dark",
   "title": "Blades in the Dark",
   "description": "Blades in the Dark game system.",
-  "version": "5.2.0",
+  "version": "5.2.0.1",
   "compatibility": {
     "minimum": 11,
-    "verified": "12.327"
+    "verified": "12.328"
   },
   "background": "systems/blades-in-the-dark/images/BITD_title.webp",
   "url": "https://github.com/Dez384/foundryvtt-blades-in-the-dark/",

@@ -76,9 +76,17 @@ export class BladesActorSheet extends BladesSheet {
     // catch unmigrated actor data and apply the Mastery crew ability to attribute maxes
     sheetData.system.attributes = this.actor.getComputedAttributes();
 	
+
     //check for additional stress and trauma from crew sources
     sheetData.system.stress.max = this.actor.getMaxStress();
     sheetData.system.trauma.max = this.actor.getMaxTrauma();
+
+	//check for healing minimums
+	let current_healing = parseInt(sheetData.system.healing_clock.value);
+	if (current_healing < sheetData.system.healing_clock.min) {
+		sheetData.system.healing_clock.value = sheetData.system.healing_clock.min;
+	}
+
 
     return sheetData;
   }

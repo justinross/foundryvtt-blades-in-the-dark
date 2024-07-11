@@ -14,27 +14,15 @@
 		<div class="clock-config-group">
 			<label for="system.type"><i class="fa fa-chart-pie"></i></label>
 			<select data-type="String" name="system.type">
-				{{#select system.type}}
-				<option value="4">4</option>
-				<option value="6">6</option>
-				<option value="8">8</option>
-				<option value="10">10</option>
-				<option value="12">12</option>
-				{{/select}}
+				{{selectOptions this.sizeDropdown selected=system.type}}
+
 			</select>
 		</div>
 		<div class="clock-config-group">
 			<label for="system.color"><i class="fa fa-palette"></i></label>
 			<select data-type="String" name="system.color">
-				{{#select system.color}}
-				<option value="black">black</option>
-				<option value="blue">blue</option>
-				<option value="green">green</option>
-				<option value="grey">grey</option>
-				<option value="red">red</option>
-				<option value="white">white</option>
-				<option value="yellow">yellow</option>
-				{{/select}}
+				{{selectOptions this.colorDropdown selected=system.color localize=true}}
+
 			</select>
 		</div>
 	</div>

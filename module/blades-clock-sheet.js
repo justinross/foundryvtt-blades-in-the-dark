@@ -26,6 +26,22 @@ export class BladesClockSheet extends BladesSheet {
     sheetData.owner = superData.owner;
     sheetData.editable = superData.editable;
     sheetData.isGM = game.user.isGM;
+	sheetData.sizeDropdown = {
+		"4": "4",
+		"6": "6",
+		"8": "8",
+		"10": "10",
+		"12": "12",
+	};
+	sheetData.colorDropdown = {
+		"black": "BITD.Colors.Black",
+		"blue": "BITD.Colors.Blue",
+		"green": "BITD.Colors.Green",
+		"grey": "BITD.Colors.Grey",
+		"red": "BITD.Colors.Red",
+		"white": "BITD.Colors.White",
+		"yellow": "BITD.Colors.Yellow"
+	};
 
     return sheetData;
   }

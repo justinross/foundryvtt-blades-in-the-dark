@@ -315,6 +315,15 @@
   "BITD.Full": "Full",
   "BITD.Associated": "Associated",
   "BITD.DisabledByAE": "Minimum Value set by an Active Effect",
-  "BITD.NoMastery": "This Scoundrel lacks Mastery"
-
+  "BITD.NoMastery": "This Scoundrel lacks Mastery",
+  
+  "BITD.Colors": {
+    "Black": "Black",
+    "Blue": "Blue",
+    "Green": "Green",
+    "Grey": "Grey",
+    "Red": "Red",
+    "White": "White",
+    "Yellow": "Yellow"
+  }
 }
